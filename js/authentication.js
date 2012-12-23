@@ -72,7 +72,7 @@ var changePassword;
 
 
 
-var _storage			= new goog.net.Cookies(document);
+var _storage;
 var _tokenKey			= 'napsterfm-token';
 var _useridKey			= 'napsterfm-userid';
 var _usernameKey		= 'napsterfm-username';
@@ -82,6 +82,8 @@ var _usernameToEmail	= function (username) { return '{0}@firebase.com'.assign({0
 
 
 self.init	= function () {
+	_storage		= new goog.net.Cookies(document);
+
 	self.token		= self._storage.get(self._tokenKey);
 	self.userid		= self._storage.get(self._useridKey);
 	self.username	= self._storage.get(self._usernameKey);
