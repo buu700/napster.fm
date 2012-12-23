@@ -16,22 +16,18 @@ var self	= this;
 * @property {string}
 */
 var token;
-var _tokenKey		= 'napsterfm-token';
 
 /**
 * @field
 * @property {int}
 */
 var userid;
-var _useridKey		= 'napsterfm-userid';
 
 /**
 * @field
 * @property {string}
 */
 var username;
-var _usernameKey	= 'napsterfm-username';
-var _usernameToEmail	= function (username) { return '{0}@firebase.com'.assign({0: username}); };
 
 
 
@@ -70,9 +66,18 @@ var changePassword;
 
 
 
-self.token		= goog.storage.Storage.get(self._tokenKey);
-self.userid		= goog.storage.Storage.get(self._useridKey);
-self.username	= goog.storage.Storage.get(self._usernameKey);
+var _storage			= new goog.storage.Storage();
+var _tokenKey			= 'napsterfm-token';
+var _useridKey			= 'napsterfm-userid';
+var _usernameKey		= 'napsterfm-username';
+var _usernameToEmail	= function (username) { return '{0}@firebase.com'.assign({0: username}); };
+
+
+
+
+self.token		= self._storage.get(self._tokenKey);
+self.userid		= self._storage.get(self._useridKey);
+self.username	= self._storage.get(self._usernameKey);
 
 
 
@@ -82,9 +87,9 @@ self.login		= function (username, password) {
 
 	new FirebaseAuthClient(datastore.root).login('password', self._usernameToEmail(username), password, function (error, token, user) {
 		if (!error) {
-			goog.storage.Storage.set(self._tokenKey, token);
-			goog.storage.Storage.set(self._useridKey, user.id);
-			goog.storage.Storage.set(self._usernameKey, username);
+			self._storage.set(self._tokenKey, token);
+			self._storage.set(self._useridKey, user.id);
+			self._storage.set(self._usernameKey, username);
 
 			document.location.reload(true);
 		}
@@ -101,9 +106,9 @@ self.login		= function (username, password) {
 self.logout		= function () {
 	datastore.root.unauth();
 
-	goog.storage.Storage.remove(self._tokenKey);
-	goog.storage.Storage.remove(self._useridKey);
-	goog.storage.Storage.remove(self._usernameKey);
+	self._storage.remove(self._tokenKey);
+	self._storage.remove(self._useridKey);
+	self._storage.remove(self._usernameKey);
 
 	document.location.reload(true);
 };
