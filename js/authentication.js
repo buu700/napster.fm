@@ -88,6 +88,8 @@ self.init	= function () {
 	/* Authenticate on startup when possible */
 	if (self.token) {
 		datastore.root.auth(self.token);
+		datastore.user().isOnline.set(true);
+		datastore.user().isOnline.setOnDisconnect(false);
 	}
 };
 

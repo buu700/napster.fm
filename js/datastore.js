@@ -112,6 +112,8 @@ self.user	= function (id) {
 		id	= id.toString();
 		return user.hotlist.child(id);
 	};
+
+	user.isOnline		= user.child('isOnline');
 	
 	user.library		= user.child('library');
 	user.libraryTrack	= function (id) {
