@@ -1,7 +1,3 @@
-goog.require('goog.dom');
-goog.require('goog.dom.query');
-
-
 Function.prototype.partial	= function () {
 	var fn		= this;
 	var args	= Array.prototype.slice.call(arguments);
