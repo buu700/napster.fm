@@ -82,7 +82,7 @@ var _usernameToEmail	= function (username) { return '{0}@firebase.com'.assign({0
 
 
 self.init	= function () {
-	_storage		= new goog.net.Cookies(document);
+	self._storage		= new goog.net.Cookies(document);
 
 	self.token		= self._storage.get(self._tokenKey);
 	self.userid		= self._storage.get(self._useridKey);
