@@ -1,0 +1,101 @@
+{
+	"rules": {
+		".read": true,
+		".write": false,
+		"group": {
+			"$group": {
+				".write": "data.val() == null",
+				"members": {
+					"$member": {
+						".write": "data.val() == null || data.val() == auth.id",
+						".validate": "newData.isString() && root.child('user/' + newData.val()).exists()"
+					}
+				},
+				"messages": {
+					"$message": {
+						".write": "data.val() == null",
+						"author": {
+							".validate": "newData.isString() && newData.val() == auth.id && root.child('user/' + newData.val()).exists()"
+						},
+						"created": {
+							".validate": "newData.isNumber() && newData.val() < now"
+						},
+						"text": {
+							".validate": "newData.isString()"
+						}
+					}
+				}
+			}
+		},
+		"track": {
+			"$track": {
+				".write": "data.val() == null",
+				"$trackAttribute": {
+					".write": "data.val() == null"
+				},
+				"artist": {
+					".validate": "newData.isString()"
+				},
+				"lastPlayed": {
+					".write": true,
+					".validate": "newData.isNumber() && (data.val() == null || data.val() < newData.val()) && newData.val() < now"
+				},
+				"lastPlayedBy": {
+					".write": true,
+					".validate": "newData.isString() && newData.val() == auth.id && root.child('user/' + newData.val()).exists()"
+				},
+				"length": {
+					".validate": "newData.isNumber()"
+				},
+				"playCount": {
+					".write": true,
+					".validate": "newData.isNumber() && (data.val() == null || data.val() + 1 == newData.val())"
+				},
+				"title": {
+					".validate": "newData.isString()"
+				},
+				"year": {
+					".validate": "newData.isNumber()"
+				},
+				"youtubeid": {
+					".validate": "newData.isString()"
+				},
+				"youtubeviews": {
+					".validate": "newData.isNumber()"
+				}
+			}
+		},
+		"user": {
+			"$user": {
+				".write": "$user == auth.id",
+				"groups": {
+					"$group": {
+						".write": "data.val() == null",
+						".validate": "newData.isString() && root.child('group/' + newData.val()).exists()"
+					}
+				},
+				"hotlist": {
+					"$user": {
+						".validate": "newData.isString() && root.child('user/' + newData.val()).exists()"
+					}
+				},
+				"library": {
+					"$track": {
+						".validate": "newData.isString() && root.child('track/' + newData.val()).exists()"
+					}
+				},
+				"transfers": {
+					"$transfer": {
+						".write": "data.val() == null",
+						"from": {
+							".validate": "newData.isString() && newData.val() == auth.id && root.child('user/' + newData.val()).exists()"
+						},
+						"track": {
+							".validate": "newData.isString() && root.child('track/' + newData.val()).exists()"
+						}
+					}
+				}
+			}
+		}
+	}
+}
