@@ -72,7 +72,6 @@ var changePassword;
 
 
 
-var _storage			= new goog.net.Cookies(document);
 var _tokenKey			= 'napsterfm-token';
 var _useridKey			= 'napsterfm-userid';
 var _usernameKey		= 'napsterfm-username';
@@ -82,9 +81,9 @@ var _usernameToEmail	= function (username) { return '{0}@firebase.com'.assign({0
 
 
 self.init	= function () {
-	self.token		= _storage.get(_tokenKey);
-	self.userid		= _storage.get(_useridKey);
-	self.username	= _storage.get(_usernameKey);
+	self.token		= goog.net.cookies.get(_tokenKey);
+	self.userid		= goog.net.cookies.get(_useridKey);
+	self.username	= goog.net.cookies.get(_usernameKey);
 
 	/* Authenticate on startup when possible */
 	if (self.token) {
@@ -98,9 +97,9 @@ self.login	= function (username, password) {
 
 	new FirebaseAuthClient(datastore.root).login('password', _usernameToEmail(username), password, function (error, token, user) {
 		if (!error) {
-			_storage.set(_tokenKey, token);
-			_storage.set(_useridKey, user.id);
-			_storage.set(_usernameKey, username);
+			goog.net.cookies.set(_tokenKey, token);
+			goog.net.cookies.set(_useridKey, user.id);
+			goog.net.cookies.set(_usernameKey, username);
 
 			document.location.reload(true);
 		}
@@ -117,9 +116,9 @@ self.login	= function (username, password) {
 self.logout	= function () {
 	datastore.root.unauth();
 
-	_storage.remove(_tokenKey);
-	_storage.remove(_useridKey);
-	_storage.remove(_usernameKey);
+	goog.net.cookies.remove(_tokenKey);
+	goog.net.cookies.remove(_useridKey);
+	goog.net.cookies.remove(_usernameKey);
 
 	document.location.reload(true);
 };

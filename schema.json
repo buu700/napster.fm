@@ -4,16 +4,16 @@
 		".write": false,
 		"group": {
 			"$group": {
-				".write": "data.val() == null",
+				".write": "!data.exists()",
 				"members": {
 					"$member": {
-						".write": "data.val() == null || data.val() == auth.id",
+						".write": "!data.exists() || data.val() == auth.id",
 						".validate": "newData.isString() && root.child('user/' + newData.val()).exists()"
 					}
 				},
 				"messages": {
 					"$message": {
-						".write": "data.val() == null",
+						".write": "!data.exists()",
 						"author": {
 							".validate": "newData.isString() && newData.val() == auth.id && root.child('user/' + newData.val()).exists()"
 						},
@@ -32,16 +32,16 @@
 		},
 		"track": {
 			"$track": {
-				".write": "data.val() == null",
+				".write": "!data.exists()",
 				"$trackAttribute": {
-					".write": "data.val() == null"
+					".write": "!data.exists()"
 				},
 				"artist": {
 					".validate": "newData.isString()"
 				},
 				"lastPlayed": {
 					".write": true,
-					".validate": "newData.isNumber() && (data.val() == null || data.val() < newData.val()) && newData.val() < now"
+					".validate": "newData.isNumber() && (!data.exists() || data.val() < newData.val()) && newData.val() < now"
 				},
 				"lastPlayedBy": {
 					".write": true,
@@ -52,7 +52,7 @@
 				},
 				"playCount": {
 					".write": true,
-					".validate": "newData.isNumber() && (data.val() == null || data.val() + 1 == newData.val())"
+					".validate": "newData.isNumber() && (!data.exists() || data.val() + 1 == newData.val())"
 				},
 				"title": {
 					".validate": "newData.isString()"
@@ -73,7 +73,7 @@
 				".write": "$user == auth.id",
 				"groups": {
 					"$group": {
-						".write": "data.val() == null",
+						".write": "!data.exists()",
 						".validate": "newData.isString() && root.child('group/' + newData.val()).exists()"
 					}
 				},
@@ -92,7 +92,7 @@
 				},
 				"transfers": {
 					"$transfer": {
-						".write": "data.val() == null",
+						".write": "!data.exists()",
 						"from": {
 							".validate": "newData.isString() && newData.val() == auth.id && root.child('user/' + newData.val()).exists()"
 						},
