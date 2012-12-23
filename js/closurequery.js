@@ -22,6 +22,12 @@ var $	= function (selector) {
 		for( var i = 0 ; i < elements.length ; ++i ) {
 			elements[i][key]	= goog.dom[key].partial(elements[i]);
 		}
+
+		elements[key]	= function (key) {
+			for( var i = 0 ; i < elements.length ; ++i ) {
+				elements[i][key]();
+			}
+		};
 	});
 
 	return elements;
