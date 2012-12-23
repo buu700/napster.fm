@@ -23,11 +23,7 @@ var $	= function (selector) {
 			elements[i][key]	= goog.dom[key].partial(elements[i]);
 		}
 
-		elements[key]	= function (key) {
-			for( var i = 0 ; i < elements.length ; ++i ) {
-				elements[i][key]();
-			}
-		};
+		elements[key]	= elements[0][key];
 	});
 
 	return elements;
