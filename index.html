@@ -1,20 +1,12 @@
-<!DOCTYPE html>
-<html class="no-js">
-	<head>
-		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-		<title>Napster.fm</title>
-		<meta name="description" content="A throwback to a simpler time">
-		<meta name="viewport" content="width=device-width">
 
-		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css">
-		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootswatch/2.1.1/cosmo/bootstrap.min.css">
-		<link rel="stylesheet" href="css/main.css">
-
-		<!--[if lt IE 9]>
-			<script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js"></script>
-		<![endif]-->
-	</head>
+<!doctype html>
+<html lang="en" ng-app>
+<head>
+  <meta charset="utf-8">
+  <title>Google Phone Gallery</title>
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.3/angular.min.js"></script>
+  <script src="js/controllers.js"></script>
+</head>
 <body ng-controller="PhoneListCtrl">
 
   <ul>
@@ -25,24 +17,4 @@
   </ul>
 
 </body>
-
-		<script src="//cdn.firebase.com/v0/firebase.js"></script>
-		<script src="//cdnjs.cloudflare.com/ajax/libs/sugar/1.3.7/sugar.min.js"></script>
-		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.3/angular.min.js"></script>
-
-		<script src="js/closure-library/closure/goog/base.js"></script>
-		<script>
-			goog.require('goog.async.Deferred');
-			goog.require('goog.dom');
-			goog.require('goog.dom.query');
-		</script>
-		
-		<script src="js/closurequery.js"></script>
-
-		<script src="js/controllers.js"></script>
-		<script src="js/main.js"></script>
-		<script>
-			napster.init();
-		</script>
-	</body>
 </html>
