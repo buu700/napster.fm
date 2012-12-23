@@ -24,6 +24,9 @@
 							".validate": "newData.isString()"
 						}
 					}
+				},
+				"name": {
+					".validate": "newData.isString()"
 				}
 			}
 		},
