@@ -32,7 +32,7 @@ var bar;
 
 /**
 * @function
-* @property {void} Does stuff
+* @property {void} Initialises this namespace
 */
 var init;
 
@@ -51,10 +51,7 @@ var balls;
 
 
 self.init	= function () {
-	self.foo								= 'foo';
-	self.bar								= false;
-	self.datastore							= {};
-	self.datastore.page						= function (value, recover) { return self.balls('page', value, recover) || ''; };
+	authentication.init();
 };
 
 

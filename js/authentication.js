@@ -34,6 +34,12 @@ var username;
 
 /**
 * @function
+* @property {void} Initialises this namespace
+*/
+var init;
+
+/**
+* @function
 * @property {goog.async.Deferred}
 * @param {string} username
 * @param {string} password
@@ -66,7 +72,7 @@ var changePassword;
 
 
 
-var _storage			= new goog.net.Cookies(window);
+var _storage			= new goog.net.Cookies(document);
 var _tokenKey			= 'napsterfm-token';
 var _useridKey			= 'napsterfm-userid';
 var _usernameKey		= 'napsterfm-username';
@@ -75,11 +81,16 @@ var _usernameToEmail	= function (username) { return '{0}@firebase.com'.assign({0
 
 
 
-self.token		= self._storage.get(self._tokenKey);
-self.userid		= self._storage.get(self._useridKey);
-self.username	= self._storage.get(self._usernameKey);
+self.init	= function () {
+	self.token		= self._storage.get(self._tokenKey);
+	self.userid		= self._storage.get(self._useridKey);
+	self.username	= self._storage.get(self._usernameKey);
 
-
+	/* Authenticate on startup when possible */
+	if (self.token) {
+		datastore.root.auth(self.token);
+	}
+};
 
 
 self.login		= function (username, password) {
@@ -146,14 +157,6 @@ self.changePassword		= function (username, oldPassword, newPassword) {
 
 	return status;
 };
-
-
-
-
-/* Authenticate on startup */
-if (self.token) {
-	datastore.root.auth(self.token);
-}
 
 
 
