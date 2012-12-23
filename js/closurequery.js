@@ -11,7 +11,7 @@ var $	= function (selector) {
 
 	domHelpers.forEach(function (key) {
 		for( var i = 0 ; i < elements.length ; ++i ) {
-			elements[i][key]	= goog.dom[key].fill(elements[i]);
+			elements[i][key]	= elements[i][key] || goog.dom[key].fill(elements[i]);
 		}
 
 		elements[key]	= elements[0] && elements[0][key];
