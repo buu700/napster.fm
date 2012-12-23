@@ -1,4 +1,4 @@
-var napster	= (new function () {
+var napster	= new function () {
 
 
 
@@ -65,4 +65,4 @@ self.balls	= function (type, route, input, callback) {
 
 
 
-}());
+};

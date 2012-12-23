@@ -13,3 +13,7 @@ var $	= function (selector) {
 
 	return elements;
 };
+
+domHelpers.forEach(function (key) {
+	$[key]	= goog.dom[key];
+});
