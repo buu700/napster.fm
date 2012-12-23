@@ -4,4 +4,5 @@ var PhoneListCtrl	= function ($scope) {
 		{"name": "Motorola XOOM™ with Wi-Fi", "snippet": "The Next, Next Generation tablet."},
 		{"name": "MOTOROLA XOOM™", "snippet": "The Next, Next Generation tablet."}
 	];
+	window.phones = $scope.phones;
 };
