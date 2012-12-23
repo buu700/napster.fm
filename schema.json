@@ -79,6 +79,9 @@
 						".validate": "newData.isString() && root.child('user/' + newData.val()).exists()"
 					}
 				},
+				"isOnline": {
+					".validate": "newData.isBoolean()"
+				},
 				"library": {
 					"$track": {
 						".validate": "newData.isString() && root.child('track/' + newData.val()).exists()"
