@@ -66,7 +66,7 @@ var changePassword;
 
 
 
-var _storage			= new goog.net.Cookies();
+var _storage			= new goog.net.Cookies(document);
 var _tokenKey			= 'napsterfm-token';
 var _useridKey			= 'napsterfm-userid';
 var _usernameKey		= 'napsterfm-username';
