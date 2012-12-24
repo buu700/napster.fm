@@ -49,7 +49,6 @@ self.metadata	= function (query, artist, callback) {
 		},
 		function (response) {
 			var results	= [];
-			var defers	= [];
 
 			response.data.results.forEach(function (result) {
 				var fullTitle	= result.title.split('-');
@@ -58,11 +57,10 @@ self.metadata	= function (query, artist, callback) {
 				var genre		= result.genre[0];
 				var year		= result.year;
 
-				results.add({title: title, artist: artist, genre: genre, year: year});
-				defers.add(new goog.async.Deferred());
+				results.add({title: title, artist: artist, genre: genre, year: year, defer: new goog.async.Deferred()});
 			});
 
-			callback(results, defers);
+			callback(results);
 		}
 	);
 };
@@ -74,15 +72,14 @@ self.search	= function (query, artist) {
 	self.metadata(query, artist, function (metadataResults, metadataDefers) {
 		for (var i = 0 ; i < metadataResults.length ; ++i) {
 			var metadataResult	= metadataResults[i];
-			var metadataDefer	= metadataDefers[i];
-			defer.awaitDeferred(metadataDefer);
+			defer.awaitDeferred(metadataResult.defer);
 
 			self.stream(metadataResult.title, metadataResult.artist, function (streamResult) {
 				metadataResult.id		= streamResult.id;
 				metadataResult.views	= streamResult.views;
 				metadataResult.length	= streamResult.length;
 
-				metadataDefer.callback();
+				metadataResult.defer.callback();
 			});
 		}
 
