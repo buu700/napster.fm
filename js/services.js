@@ -81,7 +81,7 @@ self.search	= function (query, artist) {
 			});
 		}
 
-		defer.Addcallback(function (results) {
+		defer.addCallback(function (results) {
 			results.forEach(function (a) {
 				var streamResult	= a[0];
 				var i				= a[1];
