@@ -76,7 +76,7 @@ self.search	= function (query, artist) {
 			var metadataResult	= metadataResults[i];
 			var metadataDefer	= metadataDefers[i];
 			defer.awaitDeferred(metadataDefer);
-			
+
 			self.stream(metadataResult.title, metadataResult.artist, function (streamResult) {
 				metadataResult.id		= streamResult.id;
 				metadataResult.views	= streamResult.views;
@@ -86,7 +86,7 @@ self.search	= function (query, artist) {
 			});
 		}
 
-		defer.addCallback(function () { defer.callback(metadataResult); });
+		defer.callback(metadataResult);
 	});
 
 	return defer;
