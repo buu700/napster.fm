@@ -81,7 +81,7 @@ self.search	= function (query, artist) {
 				metadataResult.id		= streamResult.id;
 				metadataResult.views	= streamResult.views;
 				metadataResult.length	= streamResult.length;
-
+				
 				metadataResult.defer.callback();
 
 				delete metadataResult.defer;
