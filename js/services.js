@@ -75,8 +75,12 @@ self.search	= function (query, artist) {
 			defer.awaitDeferred(metadataResult.defer);
 
 			self.stream(metadataResult.title, metadataResult.artist, i, function (streamResult, i) {
-				metadataResult	= metadataResults[i];
-				
+				metadataResult			= metadataResults[i];
+
+				if (!metadataResult) {
+					return;
+				}
+
 				metadataResult.id		= streamResult.id;
 				metadataResult.views	= streamResult.views;
 				metadataResult.length	= streamResult.length;
