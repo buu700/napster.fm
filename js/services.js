@@ -93,7 +93,7 @@ self.search	= function (query, artist, callback) {
 				metadataResult.length	= streamResult.length;
 			});
 
-			nextDefer.callback(metadataResults.findAll(function (o) { return o.id; }).sortBy(function (o) { return o.views; }, true));
+			nextDefer.callback(metadataResults.findAll(function (o) { return o.id; }).unique(function (o) { return o.id; }).sortBy(function (o) { return o.views; }, true));
 		});
 	});
 
