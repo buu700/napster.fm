@@ -30,9 +30,10 @@ var search;
 
 /**
 * @function
-* @property {goog.async.Deferred} Searches music streams
+* @property {void} Searches music streams
 * @param {string} title
 * @param {string} artist
+* @param {int} index Used for managing asynchronous execution
 * @param {function} callback
 */
 var stream;
@@ -75,7 +76,7 @@ self.search	= function (query, artist) {
 			defer.awaitDeferred(metadataResult.defer);
 
 			self.stream(metadataResult.title, metadataResult.artist, i, function (streamResult, i) {
-				metadataResult			= metadataResults[i];
+				metadataResult	= metadataResults[i];
 
 				if (!metadataResult) {
 					return;
@@ -86,6 +87,8 @@ self.search	= function (query, artist) {
 				metadataResult.length	= streamResult.length;
 
 				metadataResult.defer.callback();
+
+				metadataResult.defer	= undefined;
 			});
 		}
 
@@ -96,7 +99,7 @@ self.search	= function (query, artist) {
 };
 
 
-self.stream	= function (title, artist, i, callback) {
+self.stream	= function (title, artist, index, callback) {
 	new goog.net.Jsonp('http://gdata.youtube.com/feeds/api/videos').send({
 			callback: 'callback',
 			alt: 'json-in-script',
@@ -113,7 +116,7 @@ self.stream	= function (title, artist, i, callback) {
 			var views	= response.feed.entry[0].yt$statistics.viewCount;
 			var length	= result.media$group.media$content[0].duration;
 
-			callback({id: id, views: views, length: length}, i);
+			callback({id: id, views: views, length: length}, index);
 		}
 	);
 };
