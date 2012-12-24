@@ -74,7 +74,9 @@ self.search	= function (query, artist) {
 			var metadataResult	= metadataResults[i];
 			defer.awaitDeferred(metadataResult.defer);
 
-			self.stream(metadataResult.title, metadataResult.artist, function (streamResult) {
+			self.stream(metadataResult.title, metadataResult.artist, i, function (streamResult, i) {
+				metadataResult	= metadataResults[i];
+				
 				metadataResult.id		= streamResult.id;
 				metadataResult.views	= streamResult.views;
 				metadataResult.length	= streamResult.length;
@@ -90,7 +92,7 @@ self.search	= function (query, artist) {
 };
 
 
-self.stream	= function (title, artist, callback) {
+self.stream	= function (title, artist, i, callback) {
 	new goog.net.Jsonp('http://gdata.youtube.com/feeds/api/videos').send({
 			callback: 'callback',
 			alt: 'json-in-script',
@@ -107,7 +109,7 @@ self.stream	= function (title, artist, callback) {
 			var views	= response.feed.entry[0].yt$statistics.viewCount;
 			var length	= result.media$group.media$content[0].duration;
 
-			callback({id: id, views: views, length: length});
+			callback({id: id, views: views, length: length}, i);
 		}
 	);
 };
