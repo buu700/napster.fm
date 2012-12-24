@@ -33,6 +33,7 @@ var search;
 * @property {goog.async.Deferred} Searches music streams
 * @param {string} title
 * @param {string} artist
+* @param {function} callback
 */
 var stream;
 
@@ -75,7 +76,7 @@ self.search	= function (query, artist) {
 		for (var i = 0 ; i < metadataResults.length ; ++i) {
 			var metadataResult	= metadataResults[i];
 			var metadataDefer	= metadataDefers[i];
-			self.stream(metadataResult.title, metadataResult.artist).addCallback(function (streamResult) {
+			self.stream(metadataResult.title, metadataResult.artist, function (streamResult) {
 				metadataResult.id		= streamResult.id;
 				metadataResult.views	= streamResult.views;
 				metadataResult.length	= streamResult.length;
@@ -92,9 +93,7 @@ self.search	= function (query, artist) {
 };
 
 
-self.stream	= function (title, artist) {
-	var defer	= new goog.async.Deferred();
-
+self.stream	= function (title, artist, callback) {
 	new goog.net.Jsonp('http://gdata.youtube.com/feeds/api/videos').send({
 			callback: 'callback',
 			alt: 'json-in-script',
@@ -103,7 +102,7 @@ self.stream	= function (title, artist) {
 		},
 		function (response) {
 			if (!response.feed.entry) {
-				return defer.callback({});
+				return callback({});
 			}
 
 			var result	= response.feed.entry.slice(0, 3).last();
@@ -111,11 +110,9 @@ self.stream	= function (title, artist) {
 			var views	= response.feed.entry[0].yt$statistics.viewCount;
 			var length	= result.media$group.media$content[0].duration;
 
-			defer.callback({id: id, views: views, length: length});
+			callback({id: id, views: views, length: length});
 		}
 	);
-
-	return defer;
 };
 
 
