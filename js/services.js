@@ -71,7 +71,7 @@ self.search	= function (query, artist) {
 	var nextDefer	= new goog.async.Deferred();
 
 	self.metadata(query, artist, function (metadataResults) {
-		var defer	= goog.async.DeferredList.gatherResults(metadataResults.map(function (o) { return o.deferred; }));
+		var defer	= goog.async.DeferredList.gatherResults(metadataResults.map(function (o) { return o.defer; }));
 
 		for (var i = 0 ; i < metadataResults.length ; ++i) {
 			var metadataResult	= metadataResults[i];
