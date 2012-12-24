@@ -68,33 +68,32 @@ self.metadata	= function (query, artist, callback) {
 
 
 self.search	= function (query, artist) {
-	var defer;
 	var nextDefer	= new goog.async.Deferred();
 
 	self.metadata(query, artist, function (metadataResults) {
-		defer	= new goog.async.DeferredList(metadataResults.map(function (o) { return o.deferred; }));
+		var defer	= goog.async.DeferredList.gatherResults(metadataResults.map(function (o) { return o.deferred; }));
 
 		for (var i = 0 ; i < metadataResults.length ; ++i) {
 			var metadataResult	= metadataResults[i];
 
 			self.stream(metadataResult.title, metadataResult.artist, i, function (streamResult, i) {
-				metadataResult	= metadataResults[i];
+				metadataResults[i].defer.callback([streamResult, i]);
+			});
+		}
+
+		defer.Addcallback(function (results) {
+			results.forEach(function (a) {
+				var streamResult	= a[0];
+				var i				= a[1];
+				var metadataResult	= metadataResults[i];
 
 				metadataResult.id		= streamResult.id;
 				metadataResult.views	= streamResult.views;
 				metadataResult.length	= streamResult.length;
-
-				metadataResult.defer.callback();
-
-				delete metadataResult.defer;
 			});
-		}
 
-		defer.callback(metadataResults);
-	});
-
-	defer.addCallback(function (data) {
-		nextDefer.callback(data.findAll(function (o) { return o.id; }).sortBy(function (o) { return o.views; }, true));
+			nextDefer.callback(metadataResults.findAll(function (o) { return o.id; }).sortBy(function (o) { return o.views; }, true));
+		});
 	});
 
 	return nextDefer;
