@@ -50,6 +50,7 @@ self.metadata	= function (query, artist, callback) {
 		},
 		function (response) {
 			var results	= [];
+			var defers	= [];
 
 			response.data.results.forEach(function (result) {
 				var fullTitle	= result.title.split('-');
@@ -58,10 +59,11 @@ self.metadata	= function (query, artist, callback) {
 				var genre		= result.genre[0];
 				var year		= result.year;
 
-				results.add({title: title, artist: artist, genre: genre, year: year, defer: new goog.async.Deferred()});
+				results.add({title: title, artist: artist, genre: genre, year: year});
+				defers.add(new goog.async.Deferred());
 			});
 
-			callback(results);
+			callback(results, defers);
 		}
 	);
 };
@@ -70,21 +72,19 @@ self.metadata	= function (query, artist, callback) {
 self.search	= function (query, artist) {
 	var nextDefer	= new goog.async.Deferred();
 
-	self.metadata(query, artist, function (metadataResults) {
-		var defer	= goog.async.DeferredList.gatherResults(metadataResults.map(function (o) { return o.defer; }));
+	self.metadata(query, artist, function (metadataResults, metadataDefers) {
+		var defer	= goog.async.DeferredList.gatherResults(metadataDefers);
 
 		for (var i = 0 ; i < metadataResults.length ; ++i) {
 			var metadataResult	= metadataResults[i];
 
 			self.stream(metadataResult.title, metadataResult.artist, i, function (streamResult, i) {
-				metadataResults[i].defer.callback([streamResult, i]);
+				metadataDefers[i].callback(streamResult, i);
 			});
 		}
 
 		defer.addCallback(function (results) {
-			results.forEach(function (a) {
-				var streamResult	= a[0];
-				var i				= a[1];
+			results.forEach(function (streamResult, i) {
 				var metadataResult	= metadataResults[i];
 
 				metadataResult.id		= streamResult.id;
