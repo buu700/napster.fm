@@ -81,12 +81,18 @@ self.search	= function (query, artist) {
 				metadataResult.id		= streamResult.id;
 				metadataResult.views	= streamResult.views;
 				metadataResult.length	= streamResult.length;
-				
+
 				metadataResult.defer.callback();
 
 				delete metadataResult.defer;
+
+				if (!streamResult.id) {
+					delete metadataResults[i];
+				}
 			});
 		}
+
+		defer.addCallback(function (data) { defer.callback(data.compact().sortBy(function (o) { return o.views; }, true)); });
 
 		defer.callback(metadataResults);
 	});
@@ -109,7 +115,7 @@ self.stream	= function (title, artist, index, callback) {
 
 			var result	= response.feed.entry[0];
 			var id		= result.id.$t.split('video:')[1];
-			var views	= response.feed.entry[0].yt$statistics.viewCount;
+			var views	= response.feed.entry[0].yt$statistics.viewCount.toNumber();
 			var length	= result.media$group.media$content[0].duration;
 
 			callback({id: id, views: views, length: length}, index);
