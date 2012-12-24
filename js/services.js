@@ -89,7 +89,7 @@ self.search	= function (query, artist) {
 			});
 		}
 
-		defer.callback(metadataResult);
+		defer.callback(metadataResults);
 	});
 
 	return defer;
