@@ -92,7 +92,7 @@ self.search	= function (query, artist) {
 			});
 		}
 
-		defer.callback(metadataResults.sortBy(function (o) { return o.views; }, true));
+		defer.callback(metadataResults.filter(function (o) { return o.id; }).sortBy(function (o) { return o.views; }, true));
 	});
 
 	return defer;
@@ -111,7 +111,7 @@ self.stream	= function (title, artist, index, callback) {
 				return callback({});
 			}
 
-			var result	= response.feed.entry.slice(0, 3).last();
+			var result	= response.feed.entry[0];
 			var id		= result.id.$t.split('video:')[1];
 			var views	= response.feed.entry[0].yt$statistics.viewCount;
 			var length	= result.media$group.media$content[0].duration;
