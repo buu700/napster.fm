@@ -68,10 +68,9 @@ self.metadata	= function (query, artist, callback) {
 
 
 self.search	= function (query, artist) {
-	(function () {
+	var defer	= (function () {
 
 	var defer		= new goog.async.Deferred();
-	var nextDefer	= new goog.async.Deferred();
 
 	self.metadata(query, artist, function (metadataResults, metadataDefers) {
 		for (var i = 0 ; i < metadataResults.length ; ++i) {
@@ -96,7 +95,11 @@ self.search	= function (query, artist) {
 
 	return defer;
 
-	}()).addCallback(function (data) {
+	}());
+	
+	var nextDefer	= new goog.async.Deferred();
+
+	defer.addCallback(function (data) {
 		nextDefer.callback(data.findAll(function (o) { return o.id; }).sortBy(function (o) { return o.views; }, true));
 	});
 
