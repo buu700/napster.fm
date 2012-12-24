@@ -88,7 +88,7 @@ self.search	= function (query, artist) {
 
 				metadataResult.defer.callback();
 
-				metadataResult.defer	= undefined;
+				delete metadataResult.defer;
 			});
 		}
 
