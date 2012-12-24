@@ -25,6 +25,7 @@ var metadata;
 * @property {goog.async.Deferred} Performs integrated end-to-end query
 * @param {string} query
 * @param {string} artist
+* @param {function} callback
 */
 var search;
 
@@ -69,7 +70,7 @@ self.metadata	= function (query, artist, callback) {
 };
 
 
-self.search	= function (query, artist) {
+self.search	= function (query, artist, callback) {
 	var nextDefer	= new goog.async.Deferred();
 
 	self.metadata(query, artist, function (metadataResults, metadataDefers) {
@@ -96,6 +97,8 @@ self.search	= function (query, artist) {
 		});
 	});
 
+	nextDefer.addCallback(callback);
+	
 	return nextDefer;
 };
 
