@@ -12,86 +12,31 @@ var self	= this;
 
 
 /**
-* @field
-* @property {string}
+* @function
+* @property {void} Searches music metadata
+* @param {string} query
+* @param {string} artist
+* @param {function} callback
 */
-var token;
-
-/**
-* @field
-* @property {int}
-*/
-var userid;
-
-/**
-* @field
-* @property {string}
-*/
-var username;
-
-
-
+var metadata;
 
 /**
 * @function
-* @property {void} Initialises this namespace
+* @property {goog.async.Deferred} Performs integrated end-to-end query
+* @param {string} query
+* @param {string} artist
 */
-var init;
+var search;
 
 /**
 * @function
-* @property {goog.async.Deferred}
-* @param {string} username
-* @param {string} password
+* @property {goog.async.Deferred} Searches music streams
+* @param {string} title
+* @param {string} artist
 */
-var login;
-
-/**
-* @function
-* @property {void}
-*/
-var logout;
-
-/**
-* @function
-* @property {goog.async.Deferred}
-* @param {string} username
-* @param {string} password
-*/
-var createUser;
-
-/**
-* @function
-* @property {goog.async.Deferred}
-* @param {string} username
-* @param {string} oldPassword
-* @param {string} newPassword
-*/
-var changePassword;
+var stream;
 
 
-
-
-var _tokenKey			= 'napsterfm-token';
-var _useridKey			= 'napsterfm-userid';
-var _usernameKey		= 'napsterfm-username';
-var _usernameToEmail	= function (username) { return '{0}@firebase.com'.assign({0: username}); };
-
-
-
-
-self.init	= function () {
-	self.token		= goog.net.cookies.get(_tokenKey);
-	self.userid		= goog.net.cookies.get(_useridKey);
-	self.username	= goog.net.cookies.get(_usernameKey);
-
-	/* Authenticate on startup when possible */
-	if (self.token) {
-		datastore.root.auth(self.token);
-		datastore.user().isOnline.set(true);
-		datastore.user().isOnline.setOnDisconnect(false);
-	}
-};
 
 
 self.metadata	= function (query, artist, callback) {
@@ -170,51 +115,6 @@ self.stream	= function (title, artist) {
 	);
 
 	return defer;
-};
-
-
-self.logout	= function () {
-	datastore.root.unauth();
-
-	goog.net.cookies.remove(_tokenKey);
-	goog.net.cookies.remove(_useridKey);
-	goog.net.cookies.remove(_usernameKey);
-
-	document.location.reload(true);
-};
-
-
-self.createUser	= function (username, password) {
-	var status	= new goog.async.Deferred();
-
-	new FirebaseAuthClient(datastore.root).createUser(_usernameToEmail(username), password, function (error, user) {
-		if (!error) {
-			/* TODO: Do something here */
-		}
-		else
-		{
-			status.callback(error);
-		}
-	});
-
-	return status;
-};
-
-
-self.changePassword	= function (username, oldPassword, newPassword) {
-	var status	= new goog.async.Deferred();
-
-	new FirebaseAuthClient(datastore.root).changePassword(_usernameToEmail(username), oldPassword, newPassword, function (error, success) {
-		if (!error) {
-			/* TODO: Do something here */
-		}
-		else
-		{
-			status.callback(error);
-		}
-	});
-
-	return status;
 };
 
 
