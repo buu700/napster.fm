@@ -38,14 +38,10 @@ var init;
 
 /**
 * @function
-* @property {string} Returns stuff
-* @param {string} type HTTP verb to use
-* @param {string} route URL route
-* @param {string} input
-* @param {function} callback
-* @example -> 'stuff'
+* @property {string} Hashes specified text
+* @param {string} text
 */
-var balls;
+var hash;
 
 
 
@@ -55,8 +51,8 @@ self.init	= function () {
 };
 
 
-self.balls	= function (type, route, input, callback) {
-	return 'stuff';
+self.hash	= function (text) {
+	return new goog.crypt.Hmac(new goog.crypt.Sha256(), 'napster').getHmac(text).map(function (n) { return n.toString(36); }).join('');
 };
 
 
