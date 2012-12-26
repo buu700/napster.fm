@@ -30,6 +30,12 @@
 				}
 			}
 		},
+		"lastPlayed": {
+			"$track": {
+				".write": "!data.exists()",
+				".validate": "newData.isString() && root.child('track/' + newData.val()).exists()"
+			}
+		},
 		"track": {
 			"$track": {
 				".write": "!data.exists()",
