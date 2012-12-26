@@ -14,7 +14,7 @@ var self	= this;
 /**
 * @function
 * @property {void} Searches music metadata
-* @param {string} query
+* @param {string} title
 * @param {string} artist
 * @param {function} callback
 */
@@ -22,8 +22,8 @@ var metadata;
 
 /**
 * @function
-* @property {goog.async.Deferred} Performs integrated end-to-end query
-* @param {string} query
+* @property {void} Performs integrated end-to-end query
+* @param {string} title
 * @param {string} artist
 * @param {function} callback
 */
@@ -42,38 +42,41 @@ var stream;
 
 
 
-self.metadata	= function (query, artist, callback) {
-	new goog.net.Jsonp('http://api.discogs.com/database/search').send({
-			callback: 'callback',
-			type: 'master',
-			q: query,
-			artist: artist
-		},
-		function (response) {
-			var results	= [];
-			var defers	= [];
+self.metadata	= function (title, artist, callback) {
+	var request	= {
+		callback: 'callback',
+		type: 'master',
+		q: title
+	};
 
-			response.data.results.forEach(function (result) {
-				var fullTitle	= result.title.split('-');
-				var title		= fullTitle.slice(1).join('').trim();
-				var artist		= fullTitle[0].split('(')[0].trim();
-				var genre		= result.genre[0];
-				var year		= result.year;
+	if (artist) {
+		goog.object.add(request, 'artist', artist);
+	}
 
-				results.add({title: title, artist: artist, genre: genre, year: year});
-				defers.add(new goog.async.Deferred());
-			});
+	new goog.net.Jsonp('http://api.discogs.com/database/search').send(request, function (response) {
+		var results	= [];
+		var defers	= [];
 
-			callback(results, defers);
-		}
-	);
+		response.data.results.slice(0, 20).forEach(function (result) {
+			var fullTitle	= result.title.split('-');
+			var title		= fullTitle.slice(1).join('').trim();
+			var artist		= fullTitle[0].split('(')[0].trim();
+			var genre		= result.genre[0];
+			var year		= result.year;
+
+			var id			= napster.hash(title + artist + year);
+
+			results.add({title: title, artist: artist, genre: genre, year: year, id: id});
+			defers.add(new goog.async.Deferred());
+		});
+
+		callback(results, defers);
+	});
 };
 
 
-self.search	= function (query, artist, callback) {
-	var nextDefer	= new goog.async.Deferred();
-
-	self.metadata(query, artist, function (metadataResults, metadataDefers) {
+self.search	= function (title, artist, callback) {
+	self.metadata(title, artist, function (metadataResults, metadataDefers) {
 		var defer	= goog.async.DeferredList.gatherResults(metadataDefers);
 
 		for (var i = 0 ; i < metadataResults.length ; ++i) {
@@ -88,18 +91,17 @@ self.search	= function (query, artist, callback) {
 			results.forEach(function (streamResult, i) {
 				var metadataResult	= metadataResults[i];
 
-				metadataResult.id		= streamResult.id;
-				metadataResult.views	= streamResult.views;
-				metadataResult.length	= streamResult.length;
+				metadataResult.youtubeid	= streamResult.youtubeid;
+				metadataResult.youtubeviews	= streamResult.youtubeviews;
+				metadataResult.length		= streamResult.length;
 			});
 
-			nextDefer.callback(metadataResults.findAll(function (o) { return o.id; }).unique(function (o) { return o.id; }).sortBy(function (o) { return o.views; }, true));
+			var fnYoutubeid		= function (o) { return o.youtubeid; };
+			var fnYoutubeviews	= function (o) { return o.youtubeviews; };
+
+			callback(metadataResults.findAll(fnYoutubeid).unique(fnYoutubeid).sortBy(fnYoutubeviews, true));
 		});
 	});
-
-	nextDefer.addCallback(callback);
-	
-	return nextDefer;
 };
 
 
@@ -115,12 +117,12 @@ self.stream	= function (title, artist, index, callback) {
 				return callback({}, index);
 			}
 
-			var result	= response.feed.entry[0];
-			var id		= result.id.$t.split('video:')[1];
-			var views	= response.feed.entry[0].yt$statistics.viewCount.toNumber();
-			var length	= result.media$group.media$content[0].duration;
+			var result			= response.feed.entry[0];
+			var youtubeid		= result.id.$t.split('video:')[1];
+			var youtubeviews	= response.feed.entry[0].yt$statistics.viewCount.toNumber();
+			var length			= result.media$group.media$content[0].duration;
 
-			callback({id: id, views: views, length: length}, index);
+			callback({youtubeid: youtubeid, youtubeviews: youtubeviews, length: length}, index);
 		}
 	);
 };

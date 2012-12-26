@@ -39,6 +39,9 @@
 				"artist": {
 					".validate": "newData.isString()"
 				},
+				"genre": {
+					".validate": "newData.isString()"
+				},
 				"lastPlayed": {
 					".write": true,
 					".validate": "newData.isNumber() && (!data.exists() || data.val() < newData.val()) && newData.val() < now"
