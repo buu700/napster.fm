@@ -1,4 +1,4 @@
-var domHelpers	= Object.keys(goog.dom).filter(function (key) { return !key.has('_') && typeof goog.dom[key] === 'function'; });
+var domHelpers	= goog.object.getKeys(goog.dom).filter(function (key) { return !key.has('_') && typeof goog.dom[key] === 'function'; });
 
 var $	= function (selector) {
 	var elements	= goog.dom.query(selector);

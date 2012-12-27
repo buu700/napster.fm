@@ -15,6 +15,12 @@ var self	= this;
 * @field
 * @property {object}
 */
+var data;
+
+/**
+* @field
+* @property {Firebase}
+*/
 var root;
 
 
@@ -22,21 +28,27 @@ var root;
 
 /**
 * @function
-* @property {object}
+* @property {Firebase}
 * @param {string} id (Optional; global group by default)
 */
 var group;
 
 /**
 * @function
-* @property {object}
+* @property {Firebase}
+*/
+var lastPlayed;
+
+/**
+* @function
+* @property {Firebase}
 * @param {string} id
 */
 var track;
 
 /**
 * @function
-* @property {object}
+* @property {Firebase}
 * @param {string} id (Optional; current user by default)
 */
 var user;
@@ -44,7 +56,17 @@ var user;
 
 
 
+self.data	= {
+	group: {},
+	lastPlayed: {},
+	track: {},
+	user: {}
+};
+
+
 self.root	= new Firebase('https://napsterfm.firebaseio.com/');
+
+
 
 
 self.group	= function (id) {
@@ -74,6 +96,11 @@ self.group	= function (id) {
 	group.name		= group.child('name');
 
 	return group;
+};
+
+
+self.lastPlayed	= function () {
+	return self.root.child('lastPlayed');
 };
 
 
