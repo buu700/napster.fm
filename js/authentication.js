@@ -13,6 +13,12 @@ var self	= this;
 
 /**
 * @field
+* @property {int}
+*/
+var cookieAge;
+
+/**
+* @field
 * @property {string}
 */
 var token;
@@ -81,6 +87,7 @@ var _usernameToEmail	= function (username) { return '{0}@firebase.com'.assign({0
 
 
 self.init	= function () {
+	self.cookieAge	= 5000000;
 	self.token		= goog.net.cookies.get(_tokenKey);
 	self.userid		= goog.net.cookies.get(_useridKey);
 	self.username	= goog.net.cookies.get(_usernameKey);
@@ -99,9 +106,9 @@ self.login	= function (username, password) {
 
 	new FirebaseAuthClient(datastore.root).login('password', _usernameToEmail(username), password, function (error, token, user) {
 		if (!error) {
-			goog.net.cookies.set(_tokenKey, token);
-			goog.net.cookies.set(_useridKey, user.id);
-			goog.net.cookies.set(_usernameKey, username);
+			goog.net.cookies.set(_tokenKey, token, self.cookieAge);
+			goog.net.cookies.set(_useridKey, user.id, self.cookieAge);
+			goog.net.cookies.set(_usernameKey, username, self.cookieAge);
 
 			document.location.reload(true);
 		}
