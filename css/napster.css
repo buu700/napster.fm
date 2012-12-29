@@ -1,22 +1,25 @@
+/***** Bootstrap navbar adjustments *****/
 
+.navbar .container
+{
+	width			: 95%;
+}
 
-/* ==========================================================================
-   Author's custom styles
-   ========================================================================== */
+.navbar-inner
+{
+	min-height		: 0px;
+	max-height		: 30px;
+}
 
+.navbar a
+{
+	padding-top		: 5px !important;
+	padding-bottom	: 5px !important;
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+.navbar form * {
+	padding-top		: 0px !important;
+	padding-bottom	: 0px !important;
+	margin-top		: 5px !important;
+}
 
