@@ -107,11 +107,18 @@ self.search	= function (title, artist, callback) {
 
 
 self.stream	= function (title, artist, index, callback) {
+	var exclude	= function (array) {
+		return array.reduce(function (a, b) {
+			var s	= b.toLowerCase();
+			return a + (!title.toLowerCase().has(s) && !artist.toLowerCase().has(s) ? ' -"{0}"'.assign({0: s}) : '');
+		}, '');
+	};
+
 	new goog.net.Jsonp('http://gdata.youtube.com/feeds/api/videos').send({
 			callback: 'callback',
 			alt: 'json-in-script',
 			v: 2,
-			q: '{0} {1} -parody'.assign({0: title, 1: artist})
+			q: '{0} {1} {2}'.assign({0: title, 1: artist, 2: exclude(['parody', 'how to', 'dance'])})
 		},
 		function (response) {
 			if (!response.feed.entry) {
