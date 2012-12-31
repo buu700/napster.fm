@@ -1,6 +1,5 @@
 #stream, #streamPlayer
 {
-	display				: none;
 	position			: fixed;
 	right				: -100%;
 }
