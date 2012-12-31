@@ -72,6 +72,9 @@
 				"youtubeid": {
 					".validate": "newData.isString()"
 				},
+				"youtubeuser": {
+					".validate": "newData.isString()"
+				},
 				"youtubeviews": {
 					".validate": "newData.isNumber()"
 				}

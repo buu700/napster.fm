@@ -33,6 +33,7 @@ var hash;
 
 self.init	= function () {
 	authentication.init();
+	stream.init();
 };
 
 

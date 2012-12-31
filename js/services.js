@@ -93,6 +93,7 @@ self.search	= function (title, artist, callback) {
 
 				metadataResult.youtubeid	= streamResult.youtubeid;
 				metadataResult.youtubeviews	= streamResult.youtubeviews;
+				metadataResult.youtubeuser	= streamResult.youtubeuser;
 				metadataResult.length		= streamResult.length;
 			});
 
@@ -110,19 +111,27 @@ self.stream	= function (title, artist, index, callback) {
 			callback: 'callback',
 			alt: 'json-in-script',
 			v: 2,
-			q: '{0} {1} lyrics -parody'.assign({0: title, 1: artist})
+			q: '{0} {1} cover'.assign({0: title, 1: artist})
 		},
 		function (response) {
 			if (!response.feed.entry) {
 				return callback({}, index);
 			}
 
-			var result			= response.feed.entry[0];
-			var youtubeid		= result.id.$t.split('video:')[1];
-			var youtubeviews	= response.feed.entry[0].yt$statistics.viewCount.toNumber();
-			var length			= result.media$group.media$content[0].duration;
+			var results	= response.feed.entry.map(function (result) {
+				var youtubeid		= result.id.$t.split('video:')[1];
+				var youtubeuser		= result.author[0].name.$t;
+				var youtubeviews	= result.yt$statistics.viewCount.toNumber();
+				var length			= result.media$group.media$content[0].duration;
 
-			callback({youtubeid: youtubeid, youtubeviews: youtubeviews, length: length}, index);
+				var permission		= (result.yt$accessControl.find(function (o) { return o.action == 'embed'; }) || {}).permission;
+				var state			= result.app$control && (result.app$control.yt$state || {}).name;
+				var isEmbeddable	= !(permission != 'allowed' || state == 'restricted');
+
+				return {youtubeid: youtubeid, youtubeuser: youtubeuser, youtubeviews: youtubeviews, length: length, isEmbeddable: isEmbeddable};
+			});
+
+			callback(results.find(function (result) { return result.isEmbeddable; }), index);
 		}
 	);
 };
