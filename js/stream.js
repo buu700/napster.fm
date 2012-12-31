@@ -28,10 +28,44 @@ var init;
 
 /**
 * @function
+* @property {bool} Indicates whether or not current track has completed
+*/
+var isFinished;
+
+/**
+* @function
 * @property {void} Loads track in player
-* @param {string} track
+* @param {string} trackid
 */
 var loadTrack;
+
+/**
+* @function
+* @property {void} Mutes or unmutes player
+* @param {bool} shouldMute
+*/
+var mute;
+
+/**
+* @function
+* @property {void} Plays or pauses current track
+* @param {bool} shouldPlay
+*/
+var play;
+
+/**
+* @function
+* @property {int} Gets or sets time in current track
+* @param {int} newTime
+*/
+var time;
+
+/**
+* @function
+* @property {int} Gets or sets player volume
+* @param {int} newVolume
+*/
+var volume;
 
 
 
@@ -53,9 +87,53 @@ self.init	= function () {
 };
 
 
-self.loadTrack	= function (track) {
-	self.player.loadVideoById(track);
-	datastore.track(track).lastPlayed.set(authentication.userid);
+self.isFinished	= function (shouldMute) {
+	return self.time() == self.player.getDuration();
+};
+
+
+self.loadTrack	= function (trackid) {
+	self.player.stopVideo();
+
+	var track	= datastore.track(trackid);
+
+	track.once('value', function (o) {
+		var val	= o.val();
+
+		track.lastPlayed.set(Date.now());
+		track.lastPlayedBy.set(authentication.userid);
+		track.playCount.set(++val.playCount);
+
+		self.player.loadVideoById(val.youtubeid);
+	});
+};
+
+
+self.mute	= function (shouldMute) {
+	shouldMute != false ? self.player.mute() : self.player.unMute();
+};
+
+
+self.play	= function (shouldPlay) {
+	shouldPlay != false ? self.player.playVideo() : self.player.pauseVideo();
+};
+
+
+self.time	= function (newTime) {
+	if (newTime) {
+		self.player.seekTo(newTime, true);
+	}
+
+	return self.player.getCurrentTime();
+};
+
+
+self.volume	= function (newVolume) {
+	if (newVolume) {
+		self.player.setVolume(newVolume);
+	}
+
+	return self.player.getVolume();
 };
 
 

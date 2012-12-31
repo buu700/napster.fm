@@ -99,7 +99,24 @@ self.search	= function (title, artist, callback) {
 			var fnYoutubeid		= function (o) { return o.youtubeid; };
 			var fnYoutubeviews	= function (o) { return o.youtubeviews; };
 
-			callback(metadataResults.findAll(fnYoutubeid).unique(fnYoutubeid).sortBy(fnYoutubeviews, true));
+			var finalResults	= metadataResults.findAll(fnYoutubeid).unique(fnYoutubeid).sortBy(fnYoutubeviews, true);
+
+			finalResults.forEach(function (o) {
+				datastore.track(o.id).set(
+					{
+						artist: o.artist,
+						genre: o.genre,
+						length: (o.length || 0).toNumber(),
+						playCount: 0,
+						title: o.title,
+						year: (o.year || 42).toNumber(),
+						youtubeid: o.youtubeid,
+						youtubeviews: (o.youtubeviews || 0).toNumber()
+					}
+				);
+			});
+
+			callback(finalResults);
 		});
 	});
 };

@@ -110,6 +110,7 @@ self.track	= function (id) {
 	var track	= self.root.child('track').child(id);
 
 	track.artist		= track.child('artist');
+	track.genre			= track.child('genre');
 	track.lastPlayed	= track.child('lastPlayed');
 	track.lastPlayedBy	= track.child('lastPlayedBy');
 	track.length		= track.child('length');
