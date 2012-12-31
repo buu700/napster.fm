@@ -40,7 +40,7 @@ self.init	= function () {
 	window.onYouTubePlayerReady = function () { stream.player = $('#streamPlayer')[0]; };
 
 	swfobject.embedSWF(
-		'http://www.youtube.com/apiplayer?enablejsapi=1&playerapiid=ytplayer&version=3',
+		'http://www.youtube.com/apiplayer?enablejsapi=1&version=3',
 		'stream',
 		'600',
 		'600',
