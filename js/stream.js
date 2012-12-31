@@ -42,8 +42,8 @@ self.init	= function () {
 	swfobject.embedSWF(
 		'http://www.youtube.com/apiplayer?enablejsapi=1&playerapiid=ytplayer&version=3',
 		'stream',
-		'200',
-		'200',
+		'600',
+		'600',
 		'8',
 		null,
 		null,
