@@ -1,6 +1,7 @@
 #stream
 {
-	display			: none;
+	position			: fixed;
+	right				: -100%;
 }
 
 
