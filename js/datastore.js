@@ -117,7 +117,6 @@ self.track	= function (id) {
 	track.title			= track.child('title');
 	track.year			= track.child('year');
 	track.youtubeid		= track.child('youtubeid');
-	track.youtubeuser	= track.child('youtubeuser');
 	track.youtubeviews	= track.child('youtubeviews');
 
 	return track;

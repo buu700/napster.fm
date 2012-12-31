@@ -93,7 +93,6 @@ self.search	= function (title, artist, callback) {
 
 				metadataResult.youtubeid	= streamResult.youtubeid;
 				metadataResult.youtubeviews	= streamResult.youtubeviews;
-				metadataResult.youtubeuser	= streamResult.youtubeuser;
 				metadataResult.length		= streamResult.length;
 			});
 
@@ -127,7 +126,6 @@ self.stream	= function (title, artist, index, callback) {
 
 			var results	= response.feed.entry.map(function (result) {
 				var youtubeid		= result.id.$t.split('video:')[1];
-				var youtubeuser		= result.author[0].name.$t;
 				var youtubeviews	= result.yt$statistics.viewCount.toNumber();
 				var length			= result.media$group.media$content[0].duration;
 
@@ -135,7 +133,7 @@ self.stream	= function (title, artist, index, callback) {
 				var state			= result.app$control && result.app$control.yt$state;
 				var isEmbeddable	= !(permission != 'allowed' || state);
 
-				return {youtubeid: youtubeid, youtubeuser: youtubeuser, youtubeviews: youtubeviews, length: length, isEmbeddable: isEmbeddable};
+				return {youtubeid: youtubeid, youtubeviews: youtubeviews, length: length, isEmbeddable: isEmbeddable};
 			});
 
 			callback(results.find(function (result) { return result.isEmbeddable; }), index);
