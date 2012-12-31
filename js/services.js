@@ -126,7 +126,7 @@ self.stream	= function (title, artist, index, callback) {
 
 				var permission		= (result.yt$accessControl.find(function (o) { return o.action == 'embed'; }) || {}).permission;
 				var state			= result.app$control && (result.app$control.yt$state || {}).name;
-				var isEmbeddable	= !(permission != 'allowed' || state == 'restricted');
+				var isEmbeddable	= !(permission != 'allowed' || state);
 
 				return {youtubeid: youtubeid, youtubeuser: youtubeuser, youtubeviews: youtubeviews, length: length, isEmbeddable: isEmbeddable};
 			});
