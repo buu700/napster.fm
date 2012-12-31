@@ -111,7 +111,7 @@ self.stream	= function (title, artist, index, callback) {
 			callback: 'callback',
 			alt: 'json-in-script',
 			v: 2,
-			q: '{0} {1} cover'.assign({0: title, 1: artist})
+			q: '{0} {1} -parody'.assign({0: title, 1: artist})
 		},
 		function (response) {
 			if (!response.feed.entry) {
