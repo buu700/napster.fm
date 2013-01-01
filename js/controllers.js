@@ -1,7 +1,6 @@
 var Napster	= function ($scope) {
 	$scope.authentication	= authentication;
 	$scope.datastore		= datastore;
-	$scope.napster			= napster;
 	$scope.services			= services;
 
 
