@@ -64,7 +64,7 @@ self.metadata	= function (title, artist, callback) {
 			var genre		= result.genre[0];
 			var year		= result.year;
 
-			var id			= napster.hash(title + artist + year);
+			var id			= authentication.hash(title + artist + year);
 
 			results.add({title: title, artist: artist, genre: genre, year: year, id: id});
 			defers.add(new goog.async.Deferred());

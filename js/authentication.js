@@ -46,6 +46,13 @@ var init;
 
 /**
 * @function
+* @property {string} Hashes specified text
+* @param {string} text
+*/
+var hash;
+
+/**
+* @function
 * @property {goog.async.Deferred}
 * @param {string} username
 * @param {string} password
@@ -98,6 +105,11 @@ self.init	= function () {
 		datastore.user().isOnline.set(true);
 		datastore.user().isOnline.setOnDisconnect(false);
 	}
+};
+
+
+self.hash	= function (text) {
+	return new goog.crypt.Hmac(new goog.crypt.Sha256(), 'napster').getHmac(text).map(function (n) { return n.toString(36); }).join('');
 };
 
 
