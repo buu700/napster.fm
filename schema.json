@@ -38,10 +38,7 @@
 		},
 		"track": {
 			"$track": {
-				".write": "!data.exists()",
-				"$trackAttribute": {
-					".write": "!data.exists()"
-				},
+				".write": true,
 				"artist": {
 					".validate": "newData.isString()"
 				},
@@ -49,19 +46,16 @@
 					".validate": "newData.isString()"
 				},
 				"lastPlayed": {
-					".write": true,
 					".validate": "newData.isNumber() && (!data.exists() || data.val() < newData.val()) && newData.val() < now"
 				},
 				"lastPlayedBy": {
-					".write": true,
 					".validate": "newData.isString() && newData.val() == auth.id && root.child('user/' + newData.val()).exists()"
 				},
 				"length": {
 					".validate": "newData.isNumber()"
 				},
 				"playCount": {
-					".write": true,
-					".validate": "newData.isNumber() && (!data.exists() || data.val() + 1 == newData.val())"
+					".validate": "newData.isNumber() && ((!data.exists() && newData.val() == 0) || data.val() + 1 == newData.val())"
 				},
 				"title": {
 					".validate": "newData.isString()"
