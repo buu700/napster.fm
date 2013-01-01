@@ -155,7 +155,12 @@ self.stream	= function (title, artist, index, callback) {
 				return {youtubeid: youtubeid, youtubeviews: youtubeviews, length: length, isEmbeddable: isEmbeddable};
 			});
 
-			callback(results.find(function (result) { return result.isEmbeddable; }), index);
+			var fnEmbeddable	= function (o) { return o.isEmbeddable; };
+			var fnYoutubeviews	= function (o) { return o.youtubeviews; };
+
+			var finalResults	= results.findAll(fnEmbeddable).slice(0, 5).sortBy(fnYoutubeviews, true);
+
+			callback(finalResults[0], index);
 		}
 	);
 };
