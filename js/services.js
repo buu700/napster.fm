@@ -123,6 +123,8 @@ self.search	= function (title, artist, callback) {
 
 
 self.stream	= function (title, artist, index, callback) {
+	artist	= artist.replace('Various', 'Song');
+
 	var exclude	= function (array) {
 		return array.reduce(function (a, b) {
 			var s	= b.toLowerCase();
