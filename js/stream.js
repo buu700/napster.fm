@@ -99,10 +99,13 @@ self.loadTrack	= function (trackid) {
 
 	track.once('value', function (o) {
 		var val	= o.val();
+		var id	= o.name();
 
 		track.lastPlayed.set(Date.now());
 		track.lastPlayedBy.set(authentication.userid);
 		track.playCount.set(++val.playCount);
+
+		datastore.lastPlayed().push(id);
 
 		self.player.loadVideoById(val.youtubeid);
 	});
