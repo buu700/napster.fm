@@ -23,14 +23,29 @@ var Napster	= function ($scope) {
 		return cacheKey ? fnChildAddedCache[cacheKey] : fn;
 	};
 
+	var trackKeys	= function (o) { return goog.object.getKeys(o).exclude('processed'); };
 
-	datastore.lastPlayed().limit(500).on('child_added', fnChildAdded(datastore.data.lastPlayed));
+
+	datastore.lastPlayed().limit(500).on('child_added', function (newData) {
+		fnChildAdded(datastore.data.lastPlayed)(newData);
+
+		trackKeys(datastore.data.lastPlayed).forEach(function (key) {
+			var trackid		= datastore.data.lastPlayed[key];
+			var cacheKey	= 'track' + trackid;
+
+			datastore.track(trackid).off('value', fnValue(datastore.data.track, trackid, cacheKey));
+			datastore.track(trackid).on('value', function (track) {
+				fnValue(datastore.data.track, trackid, cacheKey)(track);
+				datastore.data.lastPlayed.processed[trackid]	= track.val();
+			});
+		});
+	});
 
 	datastore.user().on('value', function (newData) {
 		fnValue(datastore.data.user, authentication.userid)(newData);
 
 		var user	= datastore.data.user[authentication.userid];
-
+		
 		for (var key in user.groups) {
 			var group		= user.groups[key];
 			var cacheKey	= 'group' + group;
@@ -50,12 +65,18 @@ var Napster	= function ($scope) {
 			name.on('value', fnValue(datastore.data.group[group], 'name', cacheKeys.name));
 		}
 
-		for (var key in user.library) {
-			var track		= user.library[key];
-			var cacheKey	= 'track' + track;
-			datastore.track(track).off('value', fnValue(datastore.data.track, track, cacheKey));
-			datastore.track(track).on('value', fnValue(datastore.data.track, track, cacheKey));
-		}
+		user.library			= user.library || {};
+		user.library.processed	= user.library.processed || {};
+		trackKeys(user.library).forEach(function (key) {
+			var trackid		= user.library[key];
+			var cacheKey	= 'track' + trackid;
+
+			datastore.track(trackid).off('value', fnValue(datastore.data.track, trackid, cacheKey));
+			datastore.track(trackid).on('value', function (track) {
+				fnValue(datastore.data.track, trackid, cacheKey)(track);
+				user.library.processed[trackid]	= track.val();
+			});
+		});
 
 		datastore.data.user.current	= user;
 		$scope.$apply();

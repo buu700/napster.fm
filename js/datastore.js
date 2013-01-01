@@ -58,7 +58,9 @@ var user;
 
 self.data	= {
 	group: {},
-	lastPlayed: {},
+	lastPlayed: {
+		processed: {}
+	},
 	track: {},
 	user: {}
 };
