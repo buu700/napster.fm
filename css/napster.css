@@ -4,6 +4,14 @@
 	right				: -100%;
 }
 
+[hash-location]
+{
+	display				: none;
+}
+[hash-location].active
+{
+	display				: block;
+}
 
 
 
