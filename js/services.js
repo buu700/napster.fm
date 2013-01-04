@@ -102,18 +102,20 @@ self.search	= function (title, artist, callback) {
 			var finalResults	= metadataResults.findAll(fnYoutubeid).unique(fnYoutubeid).sortBy(fnYoutubeviews, true);
 
 			finalResults.forEach(function (o) {
-				datastore.track(o.id).set(
+				var track	= datastore.track(o.id);
+
+				track.update(
 					{
 						artist: o.artist,
 						genre: o.genre,
 						length: (o.length || 0).toNumber(),
-						playCount: 0,
 						title: o.title,
 						year: (o.year || 42).toNumber(),
 						youtubeid: o.youtubeid,
 						youtubeviews: (o.youtubeviews || 0).toNumber()
 					}
 				);
+				track.update({playCount: 0});
 			});
 
 			callback(finalResults);

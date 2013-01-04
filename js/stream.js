@@ -40,6 +40,12 @@ var isFinished;
 
 /**
 * @function
+* @property {int} Length of current track
+*/
+var length;
+
+/**
+* @function
 * @property {void} Loads track in player
 * @param {string} trackid
 * @param {function} callback
@@ -106,6 +112,7 @@ self.init	= function () {
 		self.player.addEventListener('onStateChange', 'window.onYouTubeVideoStarted');
 		self.player.addEventListener('onStateChange', 'window.onYouTubeVideoFinished');
 
+		self.onFinished();
 		self.sync();
 	};
 
@@ -127,8 +134,13 @@ self.init	= function () {
 };
 
 
-self.isFinished	= function (shouldMute) {
-	return self.time() == self.player.getDuration();
+self.isFinished	= function () {
+	return self.time() == self.length();
+};
+
+
+self.length	= function () {
+	return self.player.getDuration();
 };
 
 
@@ -201,7 +213,7 @@ self.sync	= function (userid) {
 
 	user.nowPlayingChild.lastChange.on('value', function (o) {
 		var lastChange	= o.val();
-		var timeOffset	= (Date.now () - lastChange) / 1000;
+		var timeOffset	= (Date.now() - lastChange) / 1000;
 
 		user.nowPlaying.once('value', function (o) {
 			var nowPlaying	= o.val();
