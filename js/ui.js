@@ -34,7 +34,7 @@ self.init	= function () {
 		setActive('[hash-location]', 'hash-location');
 	};
 
-	window.location.hash	= $('.navbar li.active')[0].getChildren()[0].getAttribute('href');
+	window.location.hash	= window.location.hash || $('.navbar li.active')[0].getChildren()[0].getAttribute('href');
 };
 
 
