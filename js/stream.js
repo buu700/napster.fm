@@ -42,6 +42,8 @@ var isFinished;
 * @function
 * @property {void} Loads track in player
 * @param {string} trackid
+* @param {function} callback
+* @param {bool} noUpdate
 */
 var loadTrack;
 
@@ -63,6 +65,7 @@ var onFinished;
 * @function
 * @property {void} Plays or pauses current track
 * @param {bool} shouldPlay
+* @param {bool} noUpdate
 */
 var play;
 
@@ -74,10 +77,24 @@ var resumePlaying;
 
 /**
 * @function
+* @property {void} Syncs player state with specified user
+* @param {string} userid Optional; if undefined, will default to current user (thereby syncing multiple instances of Napster.fm owned by the same user)
+*/
+var sync;
+
+/**
+* @function
 * @property {int} Gets or sets time in current track
 * @param {int} newTime
+* @param {bool} noUpdate
 */
 var time;
+
+/**
+* @function
+* @property {void} Updates datastore.data.user.current.nowPlaying with current state of player
+*/
+var updateNowPlaying;
 
 /**
 * @function
