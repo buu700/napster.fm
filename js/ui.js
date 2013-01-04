@@ -40,6 +40,12 @@ self.init	= function () {
 	else {
 		window.location.hash	= $('.navbar li.active')[0].getChildren()[0].getAttribute('href');
 	}
+
+
+	/*** Library ***/
+	var tableSorter	= new goog.ui.TableSorter();
+	tableSorter.setDefaultSortFunction(goog.ui.TableSorter.alphaSort);
+	tableSorter.decorate($('#library-table')[0]);
 };
 
 

@@ -37,67 +37,96 @@
 			</div>
 		</div>
 
+		<div hash-location='#home'>
+			<div class='hero-unit'>
+				<h1>Hello, world!</h1>
+				<h2>{{datastore.data.user.current.isOnline}}</h2>
+				<p>This is a template for a simple marketing or informational website. It includes a large callout called the hero unit and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
+				<p><a class='btn btn-primary btn-large'>Learn more &raquo;</a></p>
+			</div>
+
+			<div class='row'>
+				<div class='span4'>
+					<h2>Heading</h2>
+					<p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+					<p><a class='btn' href='#'>View details &raquo;</a></p>
+				</div>
+				<div class='span4'>
+					<h2>Heading</h2>
+					<p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+					<p><a class='btn' href='#'>View details &raquo;</a></p>
+			   </div>
+				<div class='span4'>
+					<h2>Heading</h2>
+					<p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+					<p><a class='btn' href='#'>View details &raquo;</a></p>
+				</div>
+			</div>
+		</div>
+
+		<div hash-location='#chat'>
+			
+		</div>
+
+		<div hash-location='#library'>
+			<table id='library-table'>
+				<thead>
+					<tr>
+						<th>Title</th>
+						<th>Artist</th>
+						<th>Genre</th>
+						<th>Year</th>
+						<th>Length</th>
+						<th>Last Played By</th>
+						<th>Last Played</th>
+						<th>Plays</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat='track in datastore.data.user.current.library.processed'>
+						<td>{{track.title}}</td>
+						<td>{{track.artist}}</td>
+						<td>{{track.genre}}</td>
+						<td>{{track.year}}</td>
+						<td>{{track.length}}</td>
+						<td>{{track.lastPlayedBy}}</td>
+						<td>{{track.lastPlayed}}</td>
+						<td>{{track.playCount}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<div hash-location='#search'>
+			
+		</div>
+
+		<div hash-location='#hotlist'>
+			
+		</div>
+
+		<div hash-location='#transfer'>
+			
+		</div>
+
+		<div hash-location='#discovery'>
+			
+		</div>
+
+		<div hash-location='#about'>
+			
+		</div>
+
 		<div class='container'>
-
-			<div hash-location='#home'>
-				<div class='hero-unit'>
-					<h1>Hello, world!</h1>
-					<h2>{{datastore.data.user.current.isOnline}}</h2>
-					<p>This is a template for a simple marketing or informational website. It includes a large callout called the hero unit and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
-					<p><a class='btn btn-primary btn-large'>Learn more &raquo;</a></p>
-				</div>
-
-				<div class='row'>
-					<div class='span4'>
-						<h2>Heading</h2>
-						<p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-						<p><a class='btn' href='#'>View details &raquo;</a></p>
-					</div>
-					<div class='span4'>
-						<h2>Heading</h2>
-						<p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-						<p><a class='btn' href='#'>View details &raquo;</a></p>
-				   </div>
-					<div class='span4'>
-						<h2>Heading</h2>
-						<p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-						<p><a class='btn' href='#'>View details &raquo;</a></p>
-					</div>
-				</div>
-			</div>
-
-			<div hash-location='#chat'>
-				
-			</div>
-
-			<div hash-location='#library'>
-				
-			</div>
-
-			<div hash-location='#search'>
-				
-			</div>
-
-			<div hash-location='#hotlist'>
-				
-			</div>
-
-			<div hash-location='#transfer'>
-				
-			</div>
-
-			<div hash-location='#discovery'>
-				
-			</div>
-
-			<div hash-location='#about'>
-				
-			</div>
-
-			<hr>
-
+			<hr />
 			<footer>
-				<p>&copy; Napster.fm 2012 &nbsp;&bull;&nbsp; <a href='mailto:hacker@linux.com' style='color: inherit; text-decoration: none;'>hacker@linux.com</a> &nbsp;&bull;&nbsp; +1(337) 935 0016</p>
+				<p>
+					&copy; Napster.fm 2012
+						&nbsp;&bull;&nbsp;
+					<a href='mailto:hacker@linux.com' style='color: inherit; text-decoration: none;'>hacker@linux.com</a>
+						&nbsp;&bull;&nbsp;
+					+1(337) 935 0016
+				</p>
 			</footer>
 
 		</div>
@@ -124,12 +153,14 @@
 			goog.require('goog.async.DeferredList');
 			goog.require('goog.crypt.Hmac');
 			goog.require('goog.crypt.Sha256');
+			goog.require('goog.date.Interval');
 			goog.require('goog.dom');
 			goog.require('goog.dom.classes');
 			goog.require('goog.dom.query');
 			goog.require('goog.net.cookies');
 			goog.require('goog.net.Jsonp');
 			goog.require('goog.object');
+			goog.require('goog.ui.TableSorter');
 		</script>
 		
 		<script src='js/closurequery.js'></script>

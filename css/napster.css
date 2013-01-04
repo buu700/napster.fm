@@ -4,6 +4,11 @@
 	right				: -100%;
 }
 
+body
+{
+	margin-top			: 50px;
+}
+
 [hash-location]
 {
 	display				: none;
