@@ -71,12 +71,6 @@ var play;
 
 /**
 * @function
-* @property {void} Continues playing previously played track
-*/
-var resumePlaying;
-
-/**
-* @function
 * @property {void} Syncs player state with specified user
 * @param {string} userid Optional; if undefined, will default to current user (thereby syncing multiple instances of Napster.fm owned by the same user)
 */
@@ -156,7 +150,6 @@ self.loadTrack	= function (trackid, callback, noUpdate) {
 
 		track.lastPlayed.set(Date.now());
 		track.lastPlayedBy.set(authentication.userid);
-		track.playCount.set(++val.playCount);
 
 		datastore.lastPlayed().push(id);
 
@@ -166,6 +159,7 @@ self.loadTrack	= function (trackid, callback, noUpdate) {
 		self.isPlaying		= true;
 		
 		if (noUpdate != true) {
+			track.playCount.set(++val.playCount);
 			self.updateNowPlaying();
 		}
 	});
@@ -194,16 +188,6 @@ self.play	= function (shouldPlay, noUpdate) {
 	if (noUpdate != true) {
 		self.updateNowPlaying();
 	}
-};
-
-
-self.resumePlaying	= function () {
-	var nowPlaying	= goog.object.clone(datastore.data.user.current.nowPlaying);
-
-	self.loadTrack(nowPlaying.track, function () {
-		self.play(nowPlaying.isPlaying);
-		self.time(nowPlaying.time);
-	});
 };
 
 
