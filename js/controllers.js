@@ -45,6 +45,11 @@ var Napster	= function ($scope) {
 		fnValue(datastore.data.user, authentication.userid)(newData);
 
 		var user	= datastore.data.user[authentication.userid];
+
+		if (user.isOnline == false) {
+			datastore.user().isOnline.set(true);
+			return;
+		}
 		
 		for (var key in user.groups) {
 			var group		= user.groups[key];
