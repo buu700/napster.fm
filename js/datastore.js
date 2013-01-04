@@ -137,6 +137,8 @@ self.user	= function (id) {
 		return user.groups.child(id);
 	};
 	
+	user.following		= user.child('following');
+	
 	user.hotlist		= user.child('hotlist');
 	user.hotlistMember	= function (id) {
 		id	= id.toString();
@@ -144,6 +146,14 @@ self.user	= function (id) {
 	};
 
 	user.isOnline		= user.child('isOnline');
+	
+	user.nowPlaying			= user.child('nowPlaying');
+	user.nowPlayingChild	= {
+		isPlaying: user.nowPlaying.child('isPlaying'),
+		lastChange: user.nowPlaying.child('lastChange'),
+		time: user.nowPlaying.child('time'),
+		track: user.nowPlaying.child('track')
+	};
 	
 	user.library		= user.child('library');
 	user.libraryTrack	= function (id) {

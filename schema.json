@@ -80,6 +80,9 @@
 						".validate": "newData.isString() && root.child('group/' + newData.val()).exists()"
 					}
 				},
+				"following": {
+					".validate": "newData.isString() && root.child('user/' + newData.val()).exists()"
+				},
 				"hotlist": {
 					"$user": {
 						".validate": "newData.isString() && root.child('user/' + newData.val()).exists()"
@@ -90,6 +93,20 @@
 				},
 				"library": {
 					"$track": {
+						".validate": "newData.isString() && root.child('track/' + newData.val()).exists()"
+					}
+				},
+				"nowPlaying": {
+					"isPlaying": {
+						".validate": "newData.isBoolean()"
+					},
+					"lastChange": {
+						".validate": "newData.isNumber() && (!data.exists() || data.val() < newData.val()) && newData.val() < now"
+					},
+					"time": {
+						".validate": "newData.isNumber()"
+					},
+					"track": {
 						".validate": "newData.isString() && root.child('track/' + newData.val()).exists()"
 					}
 				},
