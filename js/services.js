@@ -57,11 +57,11 @@ self.metadata	= function (title, artist, callback) {
 		var results	= [];
 		var defers	= [];
 
-		response.data.results.slice(0, 20).forEach(function (result) {
-			var fullTitle	= result.title.split('-');
+		(goog.object.getValueByKeys(response, 'data', 'results') || []).slice(0, 20).forEach(function (result) {
+			var fullTitle	= (result.title || '').split('-');
 			var title		= fullTitle.slice(1).join('').trim();
 			var artist		= fullTitle[0].split('(')[0].trim();
-			var genre		= result.genre[0];
+			var genre		= (result.genre || [])[0];
 			var year		= result.year;
 
 			var id			= authentication.hash(title + artist + year);
@@ -141,17 +141,17 @@ self.stream	= function (title, artist, index, callback) {
 			q: '{0} {1} {2}'.assign({0: title, 1: artist, 2: exclude(['parody', 'how to', 'dance'])})
 		},
 		function (response) {
-			if (!response.feed.entry) {
+			if (!goog.object.getValueByKeys(response, 'feed', 'entry')) {
 				return callback({}, index);
 			}
 
 			var results	= response.feed.entry.map(function (result) {
-				var youtubeid		= result.id.$t.split('video:')[1];
-				var youtubeviews	= result.yt$statistics.viewCount.toNumber();
-				var length			= result.media$group.media$content[0].duration;
+				var youtubeid		= (goog.object.getValueByKeys(result, 'id', '$t') || '').split('video:')[1];
+				var youtubeviews	= (goog.object.getValueByKeys(result, 'yt$statistics', 'viewCount') || 0).toNumber();
+				var length			= goog.object.getValueByKeys(result, 'media$group', 'media$content', 0, 'duration');
 
-				var permission		= (result.yt$accessControl.find(function (o) { return o.action == 'embed'; }) || {}).permission;
-				var state			= result.app$control && result.app$control.yt$state;
+				var permission		= ((result.yt$accessControl || {}).find(function (o) { return o.action == 'embed'; }) || {}).permission;
+				var state			= goog.object.getValueByKeys(result, 'app$control', 'yt$state');
 				var isEmbeddable	= !(permission != 'allowed' || state);
 
 				return {youtubeid: youtubeid, youtubeviews: youtubeviews, length: length, isEmbeddable: isEmbeddable};
