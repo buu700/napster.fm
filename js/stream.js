@@ -174,8 +174,8 @@ self.mute	= function (shouldMute) {
 self.onFinished	= function (callback) {
 	window.onYouTubeVideoFinished	= function (state) {
 		if (state === 0) {
+			self.play(false);
 			callback && callback();
-			self.isPlaying	= false;
 		}
 	};
 };
