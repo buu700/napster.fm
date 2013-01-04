@@ -13,14 +13,14 @@ var Napster	= function ($scope) {
 	var fnValue			= function (dataLocation, key, cacheKey) {
 		var fn	= function (newData) { dataLocation[key] = newData.val(); $scope.$apply(); };
 		fnValueCache[cacheKey]	= fnValueCache[cacheKey] || fn;
-		return cacheKey ? fnValueCache[cacheKey] : fn;
+		return fnValueCache[cacheKey];
 	};
 
 	var fnChildAddedCache	= {};
 	var fnChildAdded		= function (dataLocation, cacheKey) {
 		var fn	= function (newData) { dataLocation[newData.name()] = newData.val(); $scope.$apply(); };
 		fnChildAddedCache[cacheKey]	= fnChildAddedCache[cacheKey] || fn;
-		return cacheKey ? fnChildAddedCache[cacheKey] : fn;
+		return fnChildAddedCache[cacheKey];
 	};
 
 	var trackKeys	= function (o) { return goog.object.getKeys(o).exclude('processed'); };
