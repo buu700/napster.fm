@@ -80,6 +80,7 @@
 			<table id='library-table'>
 				<thead>
 					<tr>
+						<th></th>
 						<th>Title</th>
 						<th>Artist</th>
 						<th>Genre</th>
@@ -91,7 +92,8 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-repeat='track in datastore.data.user.current.library.processed'>
+					<tr ng-repeat='track in datastore.data.user.current.library.processed' ng-class='track.nowPlayingClass'>
+						<td ng-click='stream.loadTrack(track.id)'></td>
 						<td>{{track.title}}</td>
 						<td>{{track.artist}}</td>
 						<td>{{track.genre}}</td>

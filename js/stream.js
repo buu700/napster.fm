@@ -260,6 +260,13 @@ self.updateNowPlaying	= function () {
 		time: self.time(),
 		track: self.currentTrack
 	});
+
+	var o	= datastore.data.user.current.library.processed;
+	for (var k in o) {
+		var track	= o[k];
+		track.nowPlayingClass	= track.id == self.currentTrack ? 'now-playing' : '';
+	}
+	ui.update();
 };
 
 

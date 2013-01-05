@@ -173,6 +173,8 @@ self.user	= function (id) {
 		return transfer;
 	};
 
+	user.username		= user.child('username');
+
 	return user;
 };
 

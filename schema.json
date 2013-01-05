@@ -120,6 +120,9 @@
 							".validate": "newData.isString() && root.child('track/' + newData.val()).exists()"
 						}
 					}
+				},
+				"username": {
+					".validate": "newData.isString() && newData.val() == auth.email"
 				}
 			}
 		}

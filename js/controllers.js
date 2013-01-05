@@ -2,6 +2,7 @@ var Napster	= function ($scope) {
 	$scope.authentication	= authentication;
 	$scope.datastore		= datastore;
 	$scope.services			= services;
+	$scope.stream			= stream;
 	$scope.ui				= ui;
 
 
@@ -10,11 +11,26 @@ var Napster	= function ($scope) {
 	}
 
 
-	var updateUI	= ui.update;
-	ui.update		= function () {
-		updateUI();
-		$scope.$apply();
+
+	/* https://coderwall.com/p/ngisma */
+	$scope.safeApply = function(fn) {
+		var phase = this.$root.$$phase;
+
+		if(phase == '$apply' || phase == '$digest') {
+			fn && (typeof(fn) === 'function') && fn();
+		}
+		else {
+			this.$apply(fn);
+		}
 	};
+
+	var updateUI	= ui.update;
+	ui.update		= function (fn) {
+		updateUI();
+		$scope.safeApply(fn);
+	};
+
+
 
 	var fnValueCache	= {};
 	var fnValue			= function (dataLocation, key, cacheKey) {
@@ -77,6 +93,7 @@ var Napster	= function ($scope) {
 			name.on('value', fnValue(datastore.data.group[group], 'name', cacheKeys.name));
 		}
 
+		/* TODO: Factor this out; the logic will be needed elsewhere */
 		user.library			= user.library || {};
 		user.library.processed	= user.library.processed || {};
 		trackKeys(user.library).forEach(function (key) {
@@ -86,7 +103,17 @@ var Napster	= function ($scope) {
 			datastore.track(trackid).off('value', fnValue(datastore.data.track, trackid, cacheKey));
 			datastore.track(trackid).on('value', function (track) {
 				fnValue(datastore.data.track, trackid, cacheKey)(track);
-				user.library.processed[trackid]	= track.val();
+				
+				var processedTrack			= track.val();
+				processedTrack.id			= trackid;
+				processedTrack.length		= [].add(new Date (0, 0, 0, 0, 0, processedTrack.length).toLocaleTimeString().match('[^0:].*'))[0];
+				processedTrack.lastPlayed	= new Date(processedTrack.lastPlayed).format('{12hr}{tt}, {yyyy}-{MM}-{dd}');
+
+				authentication.getUsername(processedTrack.lastPlayedBy, function (username) {
+					processedTrack.lastPlayedBy		= username;
+					user.library.processed[trackid]	= processedTrack;
+					ui.update();
+				});
 			});
 		});
 

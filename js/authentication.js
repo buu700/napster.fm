@@ -46,6 +46,14 @@ var init;
 
 /**
 * @function
+* @property {string} Gets username of specified user
+* @param {string} userid
+* @param {function} callback
+*/
+var getUsername;
+
+/**
+* @function
 * @property {string} Hashes specified text
 * @param {string} text
 */
@@ -105,6 +113,13 @@ self.init	= function () {
 		datastore.user().isOnline.set(true);
 		datastore.user().isOnline.setOnDisconnect(false);
 	}
+};
+
+
+self.getUsername	= function (userid, callback) {
+	datastore.user(userid).username.once('value', function (o) {
+		callback(o.val().replace('@firebase.com', ''));
+	});
 };
 
 

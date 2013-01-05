@@ -8,6 +8,7 @@ body
 {
 	margin				: 20px;
 	margin-top			: 50px;
+	overflow-x			: hidden;
 }
 
 [hash-location]
@@ -70,6 +71,22 @@ body
 {
 	width				: 100%;
 	text-align			: left;
+}
+#library-table th
+{
+	cursor 				: pointer;
+}
+#library-table [ng-repeat] [ng-click]
+{
+	height				: 22px;
+	width				: 100%;
+	position			: absolute;
+	cursor 				: pointer;
+}
+
+.now-playing
+{
+	background-color	: rgba(0, 50, 255, 0.30);
 }
 
 
