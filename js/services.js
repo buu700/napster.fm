@@ -162,7 +162,7 @@ self.stream	= function (title, artist, index, callback) {
 
 			var finalResults	= results.findAll(fnEmbeddable).slice(0, 5).sortBy(fnYoutubeviews, true);
 
-			callback(finalResults[0], index);
+			callback(finalResults[0] || {}, index);
 		}
 	);
 };

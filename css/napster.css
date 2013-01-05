@@ -12,6 +12,8 @@ body
 
 [hash-location]
 {
+	background-color	: #eee;
+	padding				: 10px;
 	display				: none;
 }
 [hash-location].active
@@ -61,6 +63,13 @@ body
 	height				: 10px;
 	width				: 10px;
 	top					: 3px;
+}
+
+
+#library-table
+{
+	width				: 100%;
+	text-align			: left;
 }
 
 
