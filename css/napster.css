@@ -21,6 +21,11 @@ body
 
 
 
+#player
+{
+	height				: 50px;
+}
+
 #player .play-button
 {
 	background			: none;
