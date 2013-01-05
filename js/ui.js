@@ -12,10 +12,25 @@ var self	= this;
 
 
 /**
+* @field
+* @property {string}
+*/
+var playButtonClass;
+
+
+
+
+/**
 * @function
 * @property {void} Initialises this namespace
 */
 var init;
+
+/**
+* @function
+* @property {void} Updates UI
+*/
+var update;
 
 
 
@@ -46,6 +61,10 @@ self.init	= function () {
 	var tableSorter	= new goog.ui.TableSorter();
 	tableSorter.setDefaultSortFunction(goog.ui.TableSorter.alphaSort);
 	tableSorter.decorate($('#library-table')[0]);
+};
+
+self.update	= function () {
+	self.playButtonClass	= stream.isPlaying ? 'playing' : 'paused';
 };
 
 

@@ -21,6 +21,22 @@ body
 
 
 
+#player .play-button
+{
+	background			: none;
+	border				: 0px;
+}
+#player .play-button.playing:before
+{
+	content				: '\25AE\25AE';
+}
+#player .play-button.paused:before
+{
+	content				: '\2023';
+	font-size			: 200%;
+}
+
+
 /***** Bootstrap navbar adjustments *****/
 
 .navbar .container

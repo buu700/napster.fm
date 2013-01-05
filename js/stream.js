@@ -111,6 +111,7 @@ self.init	= function () {
 		stream.player = $('#streamPlayer')[0];
 		self.player.addEventListener('onStateChange', 'window.onYouTubeVideoStarted');
 		self.player.addEventListener('onStateChange', 'window.onYouTubeVideoFinished');
+		self.player.addEventListener('onStateChange', 'ui.update');
 
 		self.onFinished();
 		self.sync();

@@ -2,6 +2,7 @@ var Napster	= function ($scope) {
 	$scope.authentication	= authentication;
 	$scope.datastore		= datastore;
 	$scope.services			= services;
+	$scope.ui				= ui;
 
 
 	if (!authentication.token) {
@@ -9,16 +10,22 @@ var Napster	= function ($scope) {
 	}
 
 
+	var updateUI	= ui.update;
+	ui.update		= function () {
+		updateUI();
+		$scope.$apply();
+	};
+
 	var fnValueCache	= {};
 	var fnValue			= function (dataLocation, key, cacheKey) {
-		var fn	= function (newData) { dataLocation[key] = newData.val(); $scope.$apply(); };
+		var fn	= function (newData) { dataLocation[key] = newData.val(); ui.update(); };
 		fnValueCache[cacheKey]	= fnValueCache[cacheKey] || fn;
 		return fnValueCache[cacheKey];
 	};
 
 	var fnChildAddedCache	= {};
 	var fnChildAdded		= function (dataLocation, cacheKey) {
-		var fn	= function (newData) { dataLocation[newData.name()] = newData.val(); $scope.$apply(); };
+		var fn	= function (newData) { dataLocation[newData.name()] = newData.val(); ui.update(); };
 		fnChildAddedCache[cacheKey]	= fnChildAddedCache[cacheKey] || fn;
 		return fnChildAddedCache[cacheKey];
 	};
@@ -84,6 +91,6 @@ var Napster	= function ($scope) {
 		});
 
 		datastore.data.user.current	= user;
-		$scope.$apply();
+		ui.update();
 	});
 };
