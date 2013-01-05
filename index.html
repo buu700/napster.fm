@@ -39,6 +39,7 @@
 
 		<div id='player'>
 			<button onclick='stream.play(!stream.isPlaying)' class='play-button' ng-class='ui.playButtonClass'></button>
+			<div class='slider'></div>
 		</div>
 
 		<div hash-location='#home'>
@@ -164,6 +165,8 @@
 			goog.require('goog.net.cookies');
 			goog.require('goog.net.Jsonp');
 			goog.require('goog.object');
+			goog.require('goog.ui.Component');
+			goog.require('goog.ui.Slider');
 			goog.require('goog.ui.TableSorter');
 		</script>
 		

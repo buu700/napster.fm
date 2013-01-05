@@ -138,7 +138,7 @@ self.stream	= function (title, artist, index, callback) {
 			callback: 'callback',
 			alt: 'json-in-script',
 			v: 2,
-			q: '{0} {1} {2}'.assign({0: title, 1: artist, 2: exclude(['parody', 'how to', 'dance'])})
+			q: '{0} {1} {2}'.assign({0: title, 1: artist, 2: exclude([])})
 		},
 		function (response) {
 			if (!goog.object.getValueByKeys(response, 'feed', 'entry')) {

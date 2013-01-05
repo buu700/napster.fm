@@ -17,6 +17,12 @@ var self	= this;
 */
 var playButtonClass;
 
+/**
+* @field
+* @property {goog.ui.Slider}
+*/
+var slider;
+
 
 
 
@@ -61,6 +67,17 @@ self.init	= function () {
 	var tableSorter	= new goog.ui.TableSorter();
 	tableSorter.setDefaultSortFunction(goog.ui.TableSorter.alphaSort);
 	tableSorter.decorate($('#library-table')[0]);
+
+
+	self.slider	= new goog.ui.Slider();
+
+	self.slider.setHandleMouseWheel(true);
+	self.slider.setMoveToPointEnabled(true);
+	self.slider.addEventListener(goog.ui.Component.EventType.CHANGE, function () {
+		stream.time(self.slider.getValue());
+	});
+
+	self.slider.decorate($('#player .slider')[0]);
 };
 
 self.update	= function () {

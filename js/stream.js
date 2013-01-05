@@ -161,6 +161,8 @@ self.loadTrack	= function (trackid, callback, noUpdate) {
 		var val	= o.val();
 		var id	= o.name();
 
+		ui.slider.setMaximum(val.length);
+
 		track.lastPlayed.set(Date.now());
 		track.lastPlayedBy.set(authentication.userid);
 
@@ -188,6 +190,7 @@ self.onFinished	= function (callback) {
 	window.onYouTubeVideoFinished	= function (state) {
 		if (state === 0) {
 			self.play(false);
+			window.clearInterval(ui.slider.playInterval);
 			callback && callback();
 		}
 	};
@@ -200,6 +203,11 @@ self.play	= function (shouldPlay, noUpdate) {
 
 	if (noUpdate != true) {
 		self.updateNowPlaying();
+	}
+
+	window.clearInterval(ui.slider.playInterval);
+	if (self.isPlaying) {
+		ui.slider.playInterval	= window.setInterval(function () { ui.slider.animatedSetValue(self.time()); }, 1000);
 	}
 };
 
@@ -229,9 +237,14 @@ self.sync	= function (userid) {
 
 
 self.time	= function (newTime, noUpdate) {
+	if (newTime && Math.abs(newTime - self.time()) < 5) {
+		return newTime;
+	}
+
 	if (newTime) {
 		self.player.seekTo(newTime, true);
 	}
+	
 	if (newTime && noUpdate != true) {
 		self.updateNowPlaying();
 	}

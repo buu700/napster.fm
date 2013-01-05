@@ -36,6 +36,28 @@ body
 	font-size			: 200%;
 }
 
+#player .slider, #player .slider *
+{
+	position			: absolute;
+	border-radius		: 20px;
+	outline-width		: 0px;
+}
+#player .goog-slider-horizontal
+{
+	background-color	: #a3c6ff;
+	display				: inline-block;
+	height				: 15px;
+	width				: 500px;
+	margin-top			: 4px;
+}
+#player .goog-slider-thumb
+{
+	background-color	: whiteSmoke;
+	height				: 10px;
+	width				: 10px;
+	top					: 3px;
+}
+
 
 /***** Bootstrap navbar adjustments *****/
 
