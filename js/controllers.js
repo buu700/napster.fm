@@ -120,4 +120,8 @@ var Napster	= function ($scope) {
 		datastore.data.user.current	= user;
 		ui.update();
 	});
+	
+	authentication.init();
+	stream.init();
+	ui.init();
 };

@@ -107,27 +107,32 @@ var volume;
 
 
 self.init	= function () {
-	window.onYouTubePlayerReady = function () {
-		stream.player = $('#streamPlayer')[0];
-		self.player.addEventListener('onStateChange', 'window.onYouTubeVideoStarted');
-		self.player.addEventListener('onStateChange', 'window.onYouTubeVideoFinished');
-		self.player.addEventListener('onStateChange', 'ui.update');
-
-		self.onFinished();
-		self.sync();
+	var onYouTubePlayerReady = function () {
+		stream.onFinished();
+		stream.sync();
 	};
 
-	swfobject.embedSWF(
-		'http://www.youtube.com/apiplayer?enablejsapi=1&playerapiid={0}&version=3'.assign({0: authentication.username}),
-		'stream',
-		'600',
-		'600',
-		'8',
-		null,
-		null,
-		{allowScriptAccess: 'always'},
-		{id: 'streamPlayer'}
-	);
+	var onYouTubePlayerStateChange = function () {
+		window.eval('window.onYouTubeVideoStarted ? window.onYouTubeVideoStarted : function () {}').call(undefined, arguments);
+		window.eval('window.onYouTubeVideoFinished ? window.onYouTubeVideoFinished : function () {}').call(undefined, arguments);
+		ui.update();
+	};
+
+	var onYouTubePlayerError = function () {
+
+	};
+
+	window.onYouTubeIframeAPIReady	= function () {
+		self.player	= new YT.Player('stream', {
+			height: '390',
+			width: '640',
+			events: {
+				'onReady': onYouTubePlayerReady,
+				'onStateChange': onYouTubePlayerStateChange,
+				'onError': onYouTubePlayerError
+			}
+		});
+	};
 
 	window.onbeforeunload	= function () {
 		self.play(false);
@@ -249,7 +254,7 @@ self.time	= function (newTime, noUpdate) {
 		self.updateNowPlaying();
 	}
 
-	return self.player.getCurrentTime();
+	return self.player.getCurrentTime() || 0;
 };
 
 
