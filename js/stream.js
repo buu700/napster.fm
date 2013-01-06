@@ -108,13 +108,23 @@ var volume;
 
 self.init	= function () {
 	var onYouTubePlayerReady = function () {
-		stream.onFinished();
-		stream.sync();
+		var wait		= new goog.async.ConditionalDelay(function () { return window.datastoreIsReady; });
+		wait.onSuccess	= function () {
+			self.onFinished();
+		};
+		wait.start();
 	};
 
-	var onYouTubePlayerStateChange = function () {
-		window.eval('window.onYouTubeVideoStarted ? window.onYouTubeVideoStarted : function () {}').call(undefined, arguments);
-		window.eval('window.onYouTubeVideoFinished ? window.onYouTubeVideoFinished : function () {}').call(undefined, arguments);
+	var onYouTubePlayerStateChange = function (state) {
+		var eventListener	=
+			state.data == YT.PlayerState.PLAYING ?
+				'window.onYouTubeVideoStarted' :
+				state.data == YT.PlayerState.ENDED ?
+					'window.onYouTubeVideoFinished' :
+					null
+		;
+
+		(window.eval(eventListener) || function () {})();
 		ui.update();
 	};
 
@@ -123,7 +133,7 @@ self.init	= function () {
 	};
 
 	window.onYouTubeIframeAPIReady	= function () {
-		self.player	= new YT.Player('stream', {
+		self.player	= new YT.Player($('#stream')[0], {
 			height: '390',
 			width: '640',
 			events: {
@@ -153,35 +163,37 @@ self.length	= function () {
 self.loadTrack	= function (trackid, callback, noUpdate) {
 	self.player.stopVideo();
 
-	var track	= datastore.track(trackid);
-
-	window.onYouTubeVideoStarted	= function (state) {
-		if (state === 1) {
-			window.onYouTubeVideoStarted	= null;
-			callback();
-		}
+	window.onYouTubeVideoStarted	= function () {
+		window.onYouTubeVideoStarted	= null;
+		window.setTimeout(callback, 1000);
 	};
 
-	track.once('value', function (o) {
+	datastore.track(trackid).once('value', function (o) {
 		var val	= o.val();
 		var id	= o.name();
 
 		ui.slider.setMaximum(val.length);
 
-		track.lastPlayed.set(Date.now());
-		track.lastPlayedBy.set(authentication.userid);
+		datastore.track(trackid).lastPlayed.set(Date.now());
+		datastore.track(trackid).lastPlayedBy.set(authentication.userid);
 
 		datastore.lastPlayed().push(id);
 
 		self.player.loadVideoById(val.youtubeid);
 		
 		self.currentTrack	= trackid;
-		self.isPlaying		= true;
 		
 		if (noUpdate != true) {
-			track.playCount.set(++val.playCount);
-			self.updateNowPlaying();
+			datastore.track(trackid).playCount.set(++val.playCount);
 		}
+
+		var o	= datastore.data.user.current.library.processed;
+		for (var k in o) {
+			var processedTrack	= o[k];
+			processedTrack.nowPlayingClass	= processedTrack.id == self.currentTrack ? 'now-playing' : '';
+		}
+
+		self.play(true, noUpdate);
 	});
 };
 
@@ -192,12 +204,10 @@ self.mute	= function (shouldMute) {
 
 
 self.onFinished	= function (callback) {
-	window.onYouTubeVideoFinished	= function (state) {
-		if (state === 0) {
-			self.play(false);
-			window.clearInterval(ui.slider.playInterval);
-			callback && callback();
-		}
+	window.onYouTubeVideoFinished	= function () {
+		self.play(false);
+		window.clearInterval(ui.slider.playInterval);
+		callback && callback();
 	};
 };
 
@@ -234,7 +244,7 @@ self.sync	= function (userid) {
 
 			self.loadTrack(nowPlaying.track, function () {
 				self.play(nowPlaying.isPlaying, true);
-				self.time(nowPlaying.time + (nowPlaying.isPlaying ? timeOffset : 0), true);
+				window.setTimeout(function () { self.time(nowPlaying.time + (nowPlaying.isPlaying ? timeOffset : 0), true); }, 1500);
 			}, true);
 		});
 	});
@@ -254,7 +264,7 @@ self.time	= function (newTime, noUpdate) {
 		self.updateNowPlaying();
 	}
 
-	return self.player.getCurrentTime() || 0;
+	return self.player.getCurrentTime() || datastore.data.user.current.nowPlaying.time;
 };
 
 
@@ -266,11 +276,6 @@ self.updateNowPlaying	= function () {
 		track: self.currentTrack
 	});
 
-	var o	= datastore.data.user.current.library.processed;
-	for (var k in o) {
-		var track	= o[k];
-		track.nowPlayingClass	= track.id == self.currentTrack ? 'now-playing' : '';
-	}
 	ui.update();
 };
 

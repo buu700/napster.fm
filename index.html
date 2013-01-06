@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class='no-js' ng-app>
+<html class='no-js' ng-app='Napster'>
 	<head>
 		<meta charset='utf-8'>
 		<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
@@ -15,7 +15,7 @@
 			<script src='//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js'></script>
 		<![endif]-->
 	</head>
-	<body ng-controller='Napster'>
+	<body ng-controller='Controller'>
 
 		<div class='navbar navbar-inverse navbar-fixed-top'>
 			<div class='navbar-inner'>
@@ -156,11 +156,11 @@
 		<!-- Closure Library: JS standard library; https://developers.google.com/closure/library/ -->
 		<script src='js/closure-library/closure/goog/base.js'></script>
 		<script>
+			goog.require('goog.async.ConditionalDelay');
 			goog.require('goog.async.Deferred');
 			goog.require('goog.async.DeferredList');
 			goog.require('goog.crypt.Hmac');
 			goog.require('goog.crypt.Sha256');
-			goog.require('goog.date.Interval');
 			goog.require('goog.dom');
 			goog.require('goog.dom.classes');
 			goog.require('goog.dom.query');
@@ -178,10 +178,14 @@
 		<script src='js/stream.js'></script>
 		<script src='js/datastore.js'></script>
 		<script src='js/authentication.js'></script>
+		<script src='js/controllers.js'></script>
 		<script src='js/services.js'></script>
 		<script src='js/ui.js'></script>
-		
-		<script src='js/controllers.js'></script>
+		<script>
+			authentication.init();
+			ui.init();
+			stream.init();
+		</script>
 
 		<!-- YouTube API: Video-sharing Web site; http://www.youtube.com/ -->
 		<script src='//www.youtube.com/iframe_api'></script>

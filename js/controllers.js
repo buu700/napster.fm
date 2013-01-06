@@ -1,4 +1,19 @@
-var Napster	= function ($scope) {
+angular.module('Napster', []).
+	directive('postRender', ['$timeout', function ($timeout) {
+		var def = {
+			restrict: 'A', 
+			terminal: true,
+			transclude: true,
+			link: function(scope, element, attrs) {
+				$timeout(stream.sync, 0);
+			}
+		};
+		return def;
+	}])
+;
+
+
+var Controller	= function ($scope) {
 	$scope.authentication	= authentication;
 	$scope.datastore		= datastore;
 	$scope.services			= services;
@@ -108,6 +123,8 @@ var Napster	= function ($scope) {
 				processedTrack.id			= trackid;
 				processedTrack.length		= [].add(new Date (0, 0, 0, 0, 0, processedTrack.length).toLocaleTimeString().match('[^0:].*'))[0];
 				processedTrack.lastPlayed	= new Date(processedTrack.lastPlayed).format('{12hr}{tt}, {yyyy}-{MM}-{dd}');
+				
+				processedTrack.nowPlayingClass	= processedTrack.id == stream.currentTrack ? 'now-playing' : '';
 
 				authentication.getUsername(processedTrack.lastPlayedBy, function (username) {
 					processedTrack.lastPlayedBy		= username;
@@ -118,10 +135,7 @@ var Napster	= function ($scope) {
 		});
 
 		datastore.data.user.current	= user;
+		window.datastoreIsReady		= true;
 		ui.update();
 	});
-	
-	authentication.init();
-	stream.init();
-	ui.init();
 };
