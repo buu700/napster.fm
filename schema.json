@@ -101,7 +101,7 @@
 						".validate": "newData.isBoolean()"
 					},
 					"lastChange": {
-						".validate": "newData.isNumber() && (!data.exists() || data.val() < newData.val()) && newData.val() < now"
+						".validate": "newData.isNumber() && newData.val() < now"
 					},
 					"time": {
 						".validate": "newData.isNumber()"

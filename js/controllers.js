@@ -1,19 +1,4 @@
-angular.module('Napster', []).
-	directive('postRender', ['$timeout', function ($timeout) {
-		var def = {
-			restrict: 'A', 
-			terminal: true,
-			transclude: true,
-			link: function(scope, element, attrs) {
-				$timeout(stream.sync, 0);
-			}
-		};
-		return def;
-	}])
-;
-
-
-var Controller	= function ($scope) {
+var Napster	= function ($scope) {
 	$scope.authentication	= authentication;
 	$scope.datastore		= datastore;
 	$scope.services			= services;
@@ -130,6 +115,11 @@ var Controller	= function ($scope) {
 					processedTrack.lastPlayedBy		= username;
 					user.library.processed[trackid]	= processedTrack;
 					ui.update();
+
+					if (!window.libraryIsLoaded) {
+						window.libraryIsLoaded	= true;
+						stream.sync();
+					}
 				});
 			});
 		});

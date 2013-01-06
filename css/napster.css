@@ -57,6 +57,7 @@ body
 	height				: 15px;
 	width				: 500px;
 	margin-top			: 4px;
+	cursor 				: pointer;
 }
 #player .goog-slider-thumb
 {

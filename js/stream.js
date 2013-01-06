@@ -19,6 +19,12 @@ var isPlaying;
 
 /**
 * @field
+* @property {int}
+*/
+var newTime;
+
+/**
+* @field
 * @property {Node}
 */
 var player;
@@ -144,14 +150,13 @@ self.init	= function () {
 		});
 	};
 
-	window.onbeforeunload	= function () {
-		self.play(false);
-	};
+	datastore.user().nowPlayingChild.isPlaying.setOnDisconnect(false);
+	datastore.user().nowPlayingChild.lastChange.setOnDisconnect(0);
 };
 
 
 self.isFinished	= function () {
-	return self.time() == self.length();
+	return self.time() >= self.length();
 };
 
 
@@ -162,6 +167,7 @@ self.length	= function () {
 
 self.loadTrack	= function (trackid, callback, noUpdate) {
 	self.player.stopVideo();
+	self.newTime	= 0;
 
 	window.onYouTubeVideoStarted	= function () {
 		window.onYouTubeVideoStarted	= null;
@@ -243,8 +249,11 @@ self.sync	= function (userid) {
 			var nowPlaying	= o.val();
 
 			self.loadTrack(nowPlaying.track, function () {
-				self.play(nowPlaying.isPlaying, true);
-				window.setTimeout(function () { self.time(nowPlaying.time + (nowPlaying.isPlaying ? timeOffset : 0), true); }, 1500);
+				self.player.pauseVideo();
+				window.setTimeout(function () {
+					self.time(nowPlaying.time + (nowPlaying.isPlaying ? timeOffset : 0), true);
+					self.play(nowPlaying.isPlaying, true);
+				}, 3000);
 			}, true);
 		});
 	});
@@ -257,14 +266,23 @@ self.time	= function (newTime, noUpdate) {
 	}
 
 	if (newTime) {
-		self.player.seekTo(newTime, true);
-	}
-	
-	if (newTime && noUpdate != true) {
-		self.updateNowPlaying();
+		self.newTime	= newTime;
+
+		if (noUpdate != true) {
+			self.updateNowPlaying();
+		}
+		else {
+			self.player.seekTo(newTime, true);
+		}
 	}
 
-	return self.player.getCurrentTime() || datastore.data.user.current.nowPlaying.time;
+	if ((newTime >= self.length() || self.player.getCurrentTime() >= self.length()) && self.isPlaying) {
+		self.isPlaying	= false;
+		self.newTime	= 0;
+		ui.update();
+	}
+
+	return self.player.getCurrentTime() || self.newTime;
 };
 
 
@@ -272,7 +290,7 @@ self.updateNowPlaying	= function () {
 	datastore.user().nowPlaying.set({
 		isPlaying: self.isPlaying,
 		lastChange: Date.now(),
-		time: self.time(),
+		time: self.newTime,
 		track: self.currentTrack
 	});
 
