@@ -228,7 +228,11 @@ self.play	= function (shouldPlay, noUpdate) {
 
 	window.clearInterval(ui.slider.playInterval);
 	if (self.isPlaying) {
-		ui.slider.playInterval	= window.setInterval(function () { ui.slider.animatedSetValue(self.time()); }, 1000);
+		ui.slider.playInterval	= window.setInterval(function () {
+			if (!ui.slider.valueJustChanged) {
+				ui.slider.animatedSetValue(self.time());
+			}
+		}, 1000);
 	}
 };
 

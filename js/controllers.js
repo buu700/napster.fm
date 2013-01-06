@@ -116,7 +116,7 @@ var Napster	= function ($scope) {
 					user.library.processed[trackid]	= processedTrack;
 					ui.update();
 
-					if (!window.libraryIsLoaded) {
+					if (stream.player.stopVideo && !window.libraryIsLoaded) {
 						window.libraryIsLoaded	= true;
 						stream.sync();
 					}

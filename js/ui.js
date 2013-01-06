@@ -76,6 +76,10 @@ self.init	= function () {
 	self.slider.addEventListener(goog.ui.Component.EventType.CHANGE, function () {
 		stream.time(self.slider.getValue());
 	});
+	self.slider.onclick	= function () {
+		self.slider.valueJustChanged	= true;
+		window.setTimeout(function () { self.slider.valueJustChanged = false; }, 5000);
+	};
 
 	self.slider.decorate($('#player .slider')[0]);
 };
