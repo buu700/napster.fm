@@ -29,6 +29,12 @@ var newTime;
 */
 var player;
 
+/**
+* @field
+* @property {2-Tuple (int)}
+*/
+var syncTimeouts;
+
 
 
 
@@ -124,13 +130,13 @@ self.init	= function () {
 	var onYouTubePlayerStateChange = function (state) {
 		var eventListener	=
 			state.data == YT.PlayerState.PLAYING ?
-				'window.onYouTubeVideoStarted' :
+				window.onYouTubeVideoStarted :
 				state.data == YT.PlayerState.ENDED ?
-					'window.onYouTubeVideoFinished' :
+					window.onYouTubeVideoFinished :
 					null
 		;
 
-		(window.eval(eventListener) || function () {})();
+		eventListener && eventListener();
 		ui.update();
 	};
 
@@ -152,6 +158,8 @@ self.init	= function () {
 
 	datastore.user().nowPlayingChild.isPlaying.setOnDisconnect(false);
 	datastore.user().nowPlayingChild.lastChange.setOnDisconnect(0);
+
+	self.syncTimeouts	= [];
 };
 
 
@@ -167,11 +175,16 @@ self.length	= function () {
 
 self.loadTrack	= function (trackid, callback, noUpdate) {
 	self.player.stopVideo();
-	self.newTime	= 0;
+	self.time(0, true);
 
 	window.onYouTubeVideoStarted	= function () {
 		window.onYouTubeVideoStarted	= null;
-		window.setTimeout(callback, 1000);
+		window.setTimeout(function () {
+			stream.volume(0);
+			self.time(0, true);
+			self.play(true, true);
+			callback && callback();
+		}, 2000);
 	};
 
 	datastore.track(trackid).once('value', function (o) {
@@ -191,6 +204,7 @@ self.loadTrack	= function (trackid, callback, noUpdate) {
 		
 		if (noUpdate != true) {
 			datastore.track(trackid).playCount.set(++val.playCount);
+			self.updateNowPlaying();
 		}
 
 		var o	= datastore.data.user.current.library.processed;
@@ -198,8 +212,6 @@ self.loadTrack	= function (trackid, callback, noUpdate) {
 			var processedTrack	= o[k];
 			processedTrack.nowPlayingClass	= processedTrack.id == self.currentTrack ? 'now-playing' : '';
 		}
-
-		self.play(true, noUpdate);
 	});
 };
 
@@ -220,19 +232,25 @@ self.onFinished	= function (callback) {
 
 self.play	= function (shouldPlay, noUpdate) {
 	self.isPlaying	= shouldPlay == false ? false : true;
-	self.isPlaying ? self.player.playVideo() : self.player.pauseVideo();
 
-	if (noUpdate != true) {
-		self.updateNowPlaying();
-	}
+	self.isPlaying ? self.volume(100) : self.volume(0);
 
 	window.clearInterval(ui.slider.playInterval);
 	if (self.isPlaying) {
 		ui.slider.playInterval	= window.setInterval(function () {
-			if (!ui.slider.valueJustChanged) {
+			if (!ui.slider.valueJustChanged && self.isPlaying) {
 				ui.slider.animatedSetValue(self.time());
 			}
 		}, 1000);
+	}
+
+	self.isPlaying ? self.player.playVideo() : self.player.pauseVideo();
+
+	ui.update();
+	self.time();
+
+	if (noUpdate != true) {
+		self.updateNowPlaying();
 	}
 };
 
@@ -252,19 +270,40 @@ self.sync	= function (userid) {
 		user.nowPlaying.once('value', function (o) {
 			var nowPlaying	= o.val();
 
-			self.loadTrack(nowPlaying.track, function () {
-				self.player.pauseVideo();
-				window.setTimeout(function () {
-					self.time(nowPlaying.time + (nowPlaying.isPlaying ? timeOffset : 0), true);
-					self.play(nowPlaying.isPlaying, true);
-				}, 3000);
-			}, true);
+			var newTime		= nowPlaying.time + (nowPlaying.isPlaying ? timeOffset : 0);
+			var updatePlay	= function () { nowPlaying.isPlaying ? self.player.playVideo() : self.player.pauseVideo(); };
+			var updateTime	= function () { self.time(newTime, true); };
+
+			if (nowPlaying.track != self.currentTrack) {
+				self.loadTrack(nowPlaying.track, function () {
+					self.syncTimeouts[0]	= window.setTimeout(function () {
+						if (nowPlaying.track == self.currentTrack) {
+							self.player.pauseVideo();
+						}
+						self.syncTimeouts[1]	= window.setTimeout(function () {
+							if (nowPlaying.track == self.currentTrack) {
+								self.play(nowPlaying.isPlaying, true);
+								updateTime();
+								ui.slider.animatedSetValue(newTime);
+							}
+						}, 3000);
+					}, 3000);
+				}, true);
+			}
+			else {
+				updatePlay();
+				updateTime();
+			}
+
+			ui.update();
 		});
 	});
 };
 
 
 self.time	= function (newTime, noUpdate) {
+	newTime	= newTime === 0 ? 1 : newTime;
+
 	if (newTime && Math.abs(newTime - self.time()) < 5) {
 		return newTime;
 	}
@@ -286,7 +325,8 @@ self.time	= function (newTime, noUpdate) {
 		ui.update();
 	}
 
-	return self.player.getCurrentTime() || self.newTime;
+	self.newTime	= self.player.getCurrentTime() || self.newTime;
+	return self.newTime;
 };
 
 
@@ -303,7 +343,7 @@ self.updateNowPlaying	= function () {
 
 
 self.volume	= function (newVolume) {
-	if (newVolume) {
+	if (!isNaN(newVolume)) {
 		self.player.setVolume(newVolume);
 	}
 
