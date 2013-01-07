@@ -65,11 +65,13 @@ body
 	height				: 10px;
 	width				: 10px;
 	top					: 3px;
+	z-index				: 99;
 }
 
 #player .time
 {
 	margin-left			: 1%;
+	pointer-events		: none;
 }
 #player .track
 {
