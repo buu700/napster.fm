@@ -96,8 +96,7 @@ var Napster	= function ($scope) {
 		/* TODO: Factor this out; the logic will be needed elsewhere */
 		user.library			= user.library || {};
 		user.library.processed	= user.library.processed || {};
-		trackKeys(user.library).forEach(function (key) {
-			var trackid		= user.library[key];
+		trackKeys(user.library).map(function (key) { return user.library[key]; }).add(user.nowPlaying.track).unique().compact().forEach(function (trackid) {
 			var cacheKey	= 'track' + trackid;
 
 			datastore.track(trackid).off('value', fnValue(datastore.data.track, trackid, cacheKey));
@@ -106,13 +105,18 @@ var Napster	= function ($scope) {
 				
 				var processedTrack			= track.val();
 				processedTrack.id			= trackid;
-				processedTrack.length		= [].add(new Date (0, 0, 0, 0, 0, processedTrack.length).toLocaleTimeString().match('[^0:].*'))[0];
+				processedTrack.length		= stream.processTime(processedTrack.length);
 				processedTrack.lastPlayed	= new Date(processedTrack.lastPlayed).format('{12hr}{tt}, {yyyy}-{MM}-{dd}');
-				
-				processedTrack.nowPlayingClass	= processedTrack.id == stream.currentTrack ? 'now-playing' : '';
 
 				authentication.getUsername(processedTrack.lastPlayedBy, function (username) {
 					processedTrack.lastPlayedBy		= username;
+
+					processedTrack.nowPlayingClass	= '';
+					if (processedTrack.id == (stream.currentTrack || user.nowPlaying.track)) {
+						processedTrack.nowPlayingClass	= 'now-playing';
+						user.nowPlayingProcessed		= processedTrack;
+					}
+
 					user.library.processed[trackid]	= processedTrack;
 					ui.update();
 

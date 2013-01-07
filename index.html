@@ -43,6 +43,8 @@
 		<div id='player'>
 			<button onclick='stream.play(!stream.isPlaying)' class='play-button' ng-class='ui.playButtonClass'></button>
 			<div onclick='ui.slider.onclick()' class='slider'></div>
+			<span class='track'>"{{datastore.data.user.current.nowPlayingProcessed.title}}" by {{datastore.data.user.current.nowPlayingProcessed.artist}}</span>
+			<span class='time'>{{stream.newTimeProcessed}} / {{datastore.data.user.current.nowPlayingProcessed.length}}</span>
 		</div>
 
 		<div hash-location='#home'>

@@ -78,7 +78,7 @@ self.init	= function () {
 	});
 	self.slider.onclick	= function () {
 		self.slider.valueJustChanged	= true;
-		window.setTimeout(function () { self.slider.valueJustChanged = false; }, 5000);
+		window.setTimeout(function () { self.slider.valueJustChanged = false; }, 1000);
 	};
 
 	self.slider.decorate($('#player .slider')[0]);

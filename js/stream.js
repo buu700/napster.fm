@@ -25,6 +25,12 @@ var newTime;
 
 /**
 * @field
+* @property {int}
+*/
+var newTimeProcessed;
+
+/**
+* @field
 * @property {Node}
 */
 var player;
@@ -86,6 +92,13 @@ var onFinished;
 * @param {bool} noUpdate
 */
 var play;
+
+/**
+* @function
+* @property {int} Formats time value to human-readable timestamp
+* @param {int} time
+*/
+var processTime;
 
 /**
 * @function
@@ -183,6 +196,7 @@ self.loadTrack	= function (trackid, callback, noUpdate) {
 			stream.volume(0);
 			self.time(0, true);
 			self.play(true, true);
+			datastore.track(self.currentTrack).length.set(self.length());
 			callback && callback();
 		}, 2000);
 	};
@@ -240,8 +254,9 @@ self.play	= function (shouldPlay, noUpdate) {
 		ui.slider.playInterval	= window.setInterval(function () {
 			if (!ui.slider.valueJustChanged && self.isPlaying) {
 				ui.slider.animatedSetValue(self.time());
+				ui.update();
 			}
-		}, 1000);
+		}, 500);
 	}
 
 	self.isPlaying ? self.player.playVideo() : self.player.pauseVideo();
@@ -253,6 +268,11 @@ self.play	= function (shouldPlay, noUpdate) {
 		self.updateNowPlaying();
 	}
 };
+
+
+self.processTime	= function (time) {
+	return (time < 60 ? '0:' : '') + (time < 10 ? '0' : '') + ([].add(new Date (0, 0, 0, 0, 0, time).toLocaleTimeString().match('[^0:].*'))[0] || 0);
+}
 
 
 self.sync	= function (userid) {
@@ -325,7 +345,8 @@ self.time	= function (newTime, noUpdate) {
 		ui.update();
 	}
 
-	self.newTime	= self.player.getCurrentTime() || self.newTime;
+	self.newTime			= self.player.getCurrentTime() || self.newTime;
+	self.newTimeProcessed	= self.processTime(self.newTime);
 	return self.newTime;
 };
 

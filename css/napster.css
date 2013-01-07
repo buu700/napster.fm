@@ -55,7 +55,7 @@ body
 	background-color	: #a3c6ff;
 	display				: inline-block;
 	height				: 15px;
-	width				: 500px;
+	width				: 32%;
 	margin-top			: 4px;
 	cursor 				: pointer;
 }
@@ -65,6 +65,19 @@ body
 	height				: 10px;
 	width				: 10px;
 	top					: 3px;
+}
+
+#player .time
+{
+	margin-left			: 1%;
+}
+#player .track
+{
+	margin-left			: 37%;
+}
+#player .time, #player .track
+{
+	position			: absolute;
 }
 
 
