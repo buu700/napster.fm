@@ -271,6 +271,7 @@ self.play	= function (shouldPlay, noUpdate) {
 
 
 self.processTime	= function (time) {
+	time	= time || 0;
 	return (time < 60 ? '0:' : '') + (time < 10 ? '0' : '') + ([].add(new Date (0, 0, 0, 0, 0, time).toLocaleTimeString().match('[^0:].*'))[0] || 0);
 }
 
@@ -347,6 +348,11 @@ self.time	= function (newTime, noUpdate) {
 
 	self.newTime			= self.player.getCurrentTime() || self.newTime;
 	self.newTimeProcessed	= self.processTime(self.newTime);
+	
+	if (self.newTime) {
+		datastore.user().nowPlayingChild.time.set(self.newTime);
+	}
+
 	return self.newTime;
 };
 
