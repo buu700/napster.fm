@@ -161,6 +161,7 @@ self.init	= function () {
 		self.player	= new YT.Player($('#stream')[0], {
 			height: '390',
 			width: '640',
+			html5: '1',
 			events: {
 				'onReady': onYouTubePlayerReady,
 				'onStateChange': onYouTubePlayerStateChange,
@@ -253,8 +254,7 @@ self.play	= function (shouldPlay, noUpdate) {
 	if (self.isPlaying) {
 		ui.slider.playInterval	= window.setInterval(function () {
 			if (!ui.slider.valueJustChanged && self.isPlaying) {
-				ui.slider.animatedSetValue(self.time());
-				ui.update();
+				self.time();
 			}
 		}, 500);
 	}
@@ -272,7 +272,7 @@ self.play	= function (shouldPlay, noUpdate) {
 
 self.processTime	= function (time) {
 	time	= time || 0;
-	return (time < 60 ? '0:' : '') + (time < 10 ? '0' : '') + ([].add(new Date (0, 0, 0, 0, 0, time).toLocaleTimeString().match('[^0:].*'))[0] || 0);
+	return (time < 60 ? '0:' : '') + (time < 10 ? '0' : '') + ([].add(new Date (0, 0, 0, 0, 0, time).toLocaleTimeString().match(/[^0:].*/))[0] || 0);
 }
 
 
@@ -305,7 +305,6 @@ self.sync	= function (userid) {
 							if (nowPlaying.track == self.currentTrack) {
 								self.play(nowPlaying.isPlaying, true);
 								updateTime();
-								ui.slider.animatedSetValue(newTime);
 							}
 						}, 3000);
 					}, 3000);
@@ -350,8 +349,11 @@ self.time	= function (newTime, noUpdate) {
 	self.newTimeProcessed	= self.processTime(self.newTime);
 	
 	if (self.newTime) {
-		datastore.user().nowPlayingChild.time.set(self.newTime);
+		datastore.user().nowPlayingChild.time.set(self.newTime);		
 	}
+	
+	ui.slider.animatedSetValue(self.newTime);
+	ui.update();
 
 	return self.newTime;
 };
@@ -370,7 +372,7 @@ self.updateNowPlaying	= function () {
 
 
 self.volume	= function (newVolume) {
-	if (!isNaN(newVolume)) {
+	if (!window.isNaN(newVolume)) {
 		self.player.setVolume(newVolume);
 	}
 

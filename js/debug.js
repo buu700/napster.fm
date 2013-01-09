@@ -31,6 +31,13 @@ var logFoo;
 */
 var logVal;
 
+/**
+* @function
+* @property {void} Adds first search result to library
+* @param {string} results
+*/
+var lucky;
+
 
 
 
@@ -44,6 +51,10 @@ self.logFoo	= function () {
 
 self.logVal	= function (message) {
 	console.log(message.val());
+};
+
+self.lucky	= function (results) {
+	datastore.user().library.push(results[0].id);
 };
 
 

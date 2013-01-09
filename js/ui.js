@@ -15,6 +15,12 @@ var self	= this;
 * @field
 * @property {string}
 */
+var pageLoadingClass;
+
+/**
+* @field
+* @property {string}
+*/
 var playButtonClass;
 
 /**
@@ -73,11 +79,9 @@ self.init	= function () {
 
 	self.slider.setHandleMouseWheel(true);
 	self.slider.setMoveToPointEnabled(true);
-	self.slider.addEventListener(goog.ui.Component.EventType.CHANGE, function () {
-		stream.time(self.slider.getValue());
-	});
 	self.slider.onclick	= function () {
 		self.slider.valueJustChanged	= true;
+		stream.time(self.slider.getValue());
 		window.setTimeout(function () { self.slider.valueJustChanged = false; }, 1000);
 	};
 
@@ -85,6 +89,7 @@ self.init	= function () {
 };
 
 self.update	= function () {
+	self.pageLoadingClass	= window.isNaN(stream.newTime) ? 'loading' : '';
 	self.playButtonClass	= stream.isPlaying ? 'playing' : 'paused';
 };
 
