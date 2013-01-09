@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html class='no-js' ng-app>
+	<head>
+		<meta charset='utf-8'>
+		<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+		<title>Napster.fm</title>
+		<meta name='description' content='A throwback to a simpler time'>
+		<meta name='viewport' content='width=device-width'>
+
+		<link rel='stylesheet' href='//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css'>
+		<link rel='stylesheet' href='//netdna.bootstrapcdn.com/bootswatch/2.1.1/cosmo/bootstrap.min.css'>
+		<link rel='stylesheet' href='css/napster.css'>
+
+		<!--[if lt IE 9]>
+			<script src='//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js'></script>
+		<![endif]-->
+	</head>
+	<body ng-controller='Napster'>
+
+		<div class='navbar navbar-inverse navbar-fixed-top'>
+			<div class='navbar-inner'>
+				<div class='container'>
+					<a class='brand' href='#home'>Napster.fm</a>
+					<div class='nav-collapse collapse'>
+						<ul class='nav'>
+							<li class='active'><a href='#home'>Home</a></li>
+							<li><a href='#chat'>Chat</a></li>
+							<li><a href='#library'>Library</a></li>
+							<li><a href='#search'>Search</a></li>
+							<li><a href='#hotlist'>Hot List</a></li>
+							<li><a href='#transfer'>Transfer</a></li>
+							<li><a href='#discovery'>Discovery</a></li>
+							<li><a href='#about'>About</a></li>
+						</ul>
+						<div class='pull-right'>
+							I love you, {{authentication.username}}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div id='player'>
+			<button onclick='stream.play(!stream.isPlaying)' class='play-button' ng-class='ui.playButtonClass'></button>
+			<div onclick='ui.slider.onclick()' class='slider'></div>
+			<span class='track'>"{{datastore.data.user.current.nowPlayingProcessed.title}}" by {{datastore.data.user.current.nowPlayingProcessed.artist}}</span>
+			<span class='time'>{{stream.newTimeProcessed}} / {{datastore.data.user.current.nowPlayingProcessed.length}}</span>
+		</div>
+
+		<div hash-location='#home'>
+			<div class='hero-unit'>
+				<h1>Hello, world!</h1>
+				<h2>{{datastore.data.user.current.isOnline}}</h2>
+				<p>This is a template for a simple marketing or informational website. It includes a large callout called the hero unit and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
+				<p><a class='btn btn-primary btn-large'>Learn more &raquo;</a></p>
+			</div>
+
+			<div class='row'>
+				<div class='span4'>
+					<h2>Heading</h2>
+					<p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+					<p><a class='btn' href='#'>View details &raquo;</a></p>
+				</div>
+				<div class='span4'>
+					<h2>Heading</h2>
+					<p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+					<p><a class='btn' href='#'>View details &raquo;</a></p>
+			   </div>
+				<div class='span4'>
+					<h2>Heading</h2>
+					<p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+					<p><a class='btn' href='#'>View details &raquo;</a></p>
+				</div>
+			</div>
+		</div>
+
+		<div hash-location='#chat'>
+			
+		</div>
+
+		<div hash-location='#library'>
+			<table id='library-table'>
+				<thead>
+					<tr>
+						<th></th>
+						<th>Title</th>
+						<th>Artist</th>
+						<th>Genre</th>
+						<th>Year</th>
+						<th>Length</th>
+						<th>Last Played By</th>
+						<th>Last Played</th>
+						<th>Plays</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat='track in datastore.data.user.current.library.processed' ng-class='track.nowPlayingClass'>
+						<td ng-click='stream.loadTrack(track.id)'></td>
+						<td>{{track.title}}</td>
+						<td>{{track.artist}}</td>
+						<td>{{track.genre}}</td>
+						<td>{{track.year}}</td>
+						<td>{{track.length}}</td>
+						<td>{{track.lastPlayedBy}}</td>
+						<td>{{track.lastPlayed}}</td>
+						<td>{{track.playCount}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<div hash-location='#search'>
+			
+		</div>
+
+		<div hash-location='#hotlist'>
+			
+		</div>
+
+		<div hash-location='#transfer'>
+			
+		</div>
+
+		<div hash-location='#discovery'>
+			
+		</div>
+
+		<div hash-location='#about'>
+			
+		</div>
+
+		<div class='container'>
+			<hr />
+			<footer>
+				<p>
+					&copy; Napster.fm 2012
+						&nbsp;&bull;&nbsp;
+					<a href='mailto:hacker@linux.com' style='color: inherit; text-decoration: none;'>hacker@linux.com</a>
+						&nbsp;&bull;&nbsp;
+					+1(337) 935 0016
+				</p>
+			</footer>
+
+		</div>
+
+		<div id='stream'></div>
+		<div id='page-loading-overlay' ng-class='ui.pageLoadingClass'></div>
+		<div id='page-loading-spinner' ng-class='ui.pageLoadingClass'></div>
+
+		<!-- Firebase: Real-time frontend-driven data store; http://firebase.com/ -->
+		<script src='//cdn.firebase.com/v0/firebase.js'></script>
+		<script src='//cdn.firebase.com/v0/firebase-auth-client.js'></script>
+
+		<!-- Sugar: Extends prototypes with helper functions (cf. Underscore) and adds JS 1.6 support to ancient browsers; http://sugarjs.com/api -->
+		<script src='//cdnjs.cloudflare.com/ajax/libs/sugar/1.3.7/sugar.min.js'></script>
+
+		<!-- AngularJS: Declarative MVC framework; http://angularjs.org/ -->
+		<script src='//ajax.googleapis.com/ajax/libs/angularjs/1.0.3/angular.min.js'></script>
+
+		<!-- Closure Library: JS standard library; https://developers.google.com/closure/library/ -->
+		<script src='js/closure-library/closure/goog/base.js'></script>
+		<script>
+			goog.require('goog.async.ConditionalDelay');
+			goog.require('goog.async.Deferred');
+			goog.require('goog.async.DeferredList');
+			goog.require('goog.crypt.Hmac');
+			goog.require('goog.crypt.Sha256');
+			goog.require('goog.dom');
+			goog.require('goog.dom.classes');
+			goog.require('goog.dom.query');
+			goog.require('goog.net.cookies');
+			goog.require('goog.net.Jsonp');
+			goog.require('goog.object');
+			goog.require('goog.ui.Component');
+			goog.require('goog.ui.Slider');
+			goog.require('goog.ui.TableSorter');
+		</script>
+		
+		<script src='js/closurequery.js'></script>
+
+		<script src='js/debug.js'></script>
+		<script src='js/stream.js'></script>
+		<script src='js/datastore.js'></script>
+		<script src='js/authentication.js'></script>
+		<script src='js/controllers.js'></script>
+		<script src='js/services.js'></script>
+		<script src='js/ui.js'></script>
+		<script>
+			authentication.init();
+			ui.init();
+			stream.init();
+		</script>
+
+		<!-- YouTube API: Video-sharing Web site; http://www.youtube.com/ -->
+		<script src='//www.youtube.com/iframe_api'></script>
+	</body>
+</html>

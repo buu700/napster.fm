@@ -1,0 +1,130 @@
+{
+	"rules": {
+		".read": true,
+		".write": false,
+		"group": {
+			"$group": {
+				".write": "!data.exists()",
+				"members": {
+					"$member": {
+						".write": "!data.exists() || data.val() == auth.id",
+						".validate": "newData.isString() && root.child('user/' + newData.val()).exists()"
+					}
+				},
+				"messages": {
+					"$message": {
+						".write": "!data.exists()",
+						"author": {
+							".validate": "newData.isString() && newData.val() == auth.id && root.child('user/' + newData.val()).exists()"
+						},
+						"created": {
+							".validate": "newData.isNumber() && newData.val() < now"
+						},
+						"text": {
+							".validate": "newData.isString()"
+						}
+					}
+				},
+				"name": {
+					".validate": "newData.isString()"
+				}
+			}
+		},
+		"lastPlayed": {
+			"$track": {
+				".write": "!data.exists()",
+				".validate": "newData.isString() && root.child('track/' + newData.val()).exists()"
+			}
+		},
+		"track": {
+			"$track": {
+				".write": true,
+				"artist": {
+					".validate": "newData.isString()"
+				},
+				"genre": {
+					".validate": "newData.isString()"
+				},
+				"lastPlayed": {
+					".validate": "newData.isNumber() && (!data.exists() || data.val() < newData.val()) && newData.val() < now"
+				},
+				"lastPlayedBy": {
+					".validate": "newData.isString() && newData.val() == auth.id && root.child('user/' + newData.val()).exists()"
+				},
+				"length": {
+					".validate": "newData.isNumber()"
+				},
+				"playCount": {
+					".validate": "newData.isNumber() && ((!data.exists() && newData.val() == 0) || data.val() + 1 == newData.val())"
+				},
+				"title": {
+					".validate": "newData.isString()"
+				},
+				"year": {
+					".validate": "newData.isNumber()"
+				},
+				"youtubeid": {
+					".validate": "newData.isString()"
+				},
+				"youtubeviews": {
+					".validate": "newData.isNumber()"
+				}
+			}
+		},
+		"user": {
+			"$user": {
+				".write": "$user == auth.id",
+				"groups": {
+					"$group": {
+						".write": "!data.exists()",
+						".validate": "newData.isString() && root.child('group/' + newData.val()).exists()"
+					}
+				},
+				"following": {
+					".validate": "newData.isString() && root.child('user/' + newData.val()).exists()"
+				},
+				"hotlist": {
+					"$user": {
+						".validate": "newData.isString() && root.child('user/' + newData.val()).exists()"
+					}
+				},
+				"isOnline": {
+					".validate": "newData.isBoolean()"
+				},
+				"library": {
+					"$track": {
+						".validate": "newData.isString() && root.child('track/' + newData.val()).exists()"
+					}
+				},
+				"nowPlaying": {
+					"isPlaying": {
+						".validate": "newData.isBoolean()"
+					},
+					"lastChange": {
+						".validate": "newData.isNumber() && newData.val() < now"
+					},
+					"time": {
+						".validate": "newData.isNumber()"
+					},
+					"track": {
+						".validate": "newData.isString() && root.child('track/' + newData.val()).exists()"
+					}
+				},
+				"transfers": {
+					"$transfer": {
+						".write": "!data.exists()",
+						"from": {
+							".validate": "newData.isString() && newData.val() == auth.id && root.child('user/' + newData.val()).exists()"
+						},
+						"track": {
+							".validate": "newData.isString() && root.child('track/' + newData.val()).exists()"
+						}
+					}
+				},
+				"username": {
+					".validate": "newData.isString() && newData.val() == auth.email"
+				}
+			}
+		}
+	}
+}
