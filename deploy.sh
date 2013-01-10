@@ -10,14 +10,19 @@ done
 
 
 mkdir build
-cp -rfa * .git build/
+cp -rfa .git build/
 cd build
 git checkout gh-pages
 git pull . gh-pages
 git push
+rm -rf *
+cd ..
+cp -rfa `ls --ignore build` build/
+cd build
 
 
-ls *.html | while read file ; do cat "${file}" | tr '\n' ' ' | sed 's/<!-- COMPILE START -->.*<!-- COMPILE END -->/\<script src="js\/napster.js"\>\<\/script\>/' > "${file}.tmp" ; java -jar htmlcompressor.jar -o "${file}" "${file}.tmp" ; done
+
+ls *.html | while read file ; do cat "${file}" | tr '\n' ' ' | sed 's/<!-- COMPILE START -->.*<!-- COMPILE END -->/\<script src="js\/napster.js"\>\<\/script\>/' > "${file}.tmp" ; java -jar htmlcompressor.jar -o "${file}" "${file}.tmp" ; rm "${file}.tmp" ; done
 
 
 cd css
