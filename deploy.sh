@@ -27,6 +27,7 @@ js/closure-library/closure/bin/build/closurebuilder.py --root=js $namespaceArgs 
 
 
 git checkout --orphan gh-pages
+git pull
 git commit -a -m 'deployment'
 git push origin gh-pages
 
