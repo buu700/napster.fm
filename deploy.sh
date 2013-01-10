@@ -9,6 +9,7 @@ for namespace in "${namespaces[@]}" ; do
 done
 
 
+git pull
 mkdir build
 cp -rfa .git build/
 cd build
@@ -19,7 +20,6 @@ rm -rf *
 cd ..
 cp -rfa `ls --ignore build` build/
 cd build
-
 
 
 ls *.html | while read file ; do cat "${file}" | tr '\n' ' ' | sed 's/<!-- COMPILE START -->.*<!-- COMPILE END -->/\<script src="js\/napster.js"\>\<\/script\>/' > "${file}.tmp" ; java -jar htmlcompressor.jar -o "${file}" "${file}.tmp" ; rm "${file}.tmp" ; done
