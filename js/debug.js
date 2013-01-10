@@ -1,3 +1,6 @@
+goog.provide('debug');
+
+
 var debug	= new function () {
 
 

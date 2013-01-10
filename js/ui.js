@@ -1,3 +1,6 @@
+goog.provide('ui');
+
+
 var ui	= new function () {
 
 

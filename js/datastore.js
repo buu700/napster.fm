@@ -1,3 +1,6 @@
+goog.provide('datastore');
+
+
 var datastore	= new function () {
 
 

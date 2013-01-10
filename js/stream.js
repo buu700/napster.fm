@@ -1,3 +1,6 @@
+goog.provide('stream');
+
+
 var stream	= new function () {
 
 

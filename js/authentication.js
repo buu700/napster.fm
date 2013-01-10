@@ -1,3 +1,6 @@
+goog.provide('authentication');
+
+
 var authentication	= new function () {
 
 
