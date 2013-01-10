@@ -12,6 +12,7 @@ done
 mkdir build
 cp -rfa * .git build/
 cd build
+git push origin master:gh-pages
 
 
 ls *.html | while read file ; do cat "${file}" | tr '\n' ' ' | sed 's/<!-- COMPILE START -->.*<!-- COMPILE END -->/\<script src="js\/napster.js"\>\<\/script\>/' > "${file}.tmp" ; java -jar htmlcompressor.jar -o "${file}" "${file}.tmp" ; done
@@ -27,7 +28,7 @@ js/closure-library/closure/bin/build/closurebuilder.py --root=js $namespaceArgs 
 
 
 git commit -a -m 'deployment'
-git push origin gh-pages
+git push
 
 
 cd ..
