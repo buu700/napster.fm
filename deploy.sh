@@ -26,8 +26,6 @@ cd ..
 js/closure-library/closure/bin/build/closurebuilder.py --root=js $namespaceArgs -n exports -n init --output_mode=compiled --compiler_jar=compiler.jar --compiler_flags="--compilation_level=ADVANCED_OPTIMIZATIONS" --output_file=js/napster.js
 
 
-git checkout --orphan gh-pages
-git pull
 git commit -a -m 'deployment'
 git push origin gh-pages
 
