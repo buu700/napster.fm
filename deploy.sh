@@ -12,7 +12,9 @@ done
 mkdir build
 cp -rfa * .git build/
 cd build
-git push origin master:gh-pages
+git checkout gh-pages
+git pull . gh-pages
+git push
 
 
 ls *.html | while read file ; do cat "${file}" | tr '\n' ' ' | sed 's/<!-- COMPILE START -->.*<!-- COMPILE END -->/\<script src="js\/napster.js"\>\<\/script\>/' > "${file}.tmp" ; java -jar htmlcompressor.jar -o "${file}" "${file}.tmp" ; done
