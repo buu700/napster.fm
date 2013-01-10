@@ -1,6 +1,7 @@
 goog.provide('exports');
 
 
+goog.exportSymbol('Napster', Napster);
 goog.exportSymbol('authentication.cookieAge', authentication.cookieAge);
 goog.exportSymbol('authentication.token', authentication.token);
 goog.exportSymbol('authentication.userid', authentication.userid);
