@@ -1,3 +1,6 @@
+goog.provide('closurequery');
+
+
 /**
 * @function
 * @property {Node} jQuery-like wrapper around goog.dom API (http://closure-library.googlecode.com/svn/docs/closure_goog_dom_dom.js.html)

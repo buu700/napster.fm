@@ -1,3 +1,6 @@
+goog.provide('controllers');
+
+
 var Napster	= function ($scope) {
 	$scope.authentication	= authentication;
 	$scope.datastore		= datastore;
@@ -14,13 +17,13 @@ var Napster	= function ($scope) {
 
 	/* https://coderwall.com/p/ngisma */
 	$scope.safeApply = function(fn) {
-		var phase = this.$root.$$phase;
+		var phase = $scope.$root.$$phase;
 
-		if(phase == '$apply' || phase == '$digest') {
+		if (phase == '$apply' || phase == '$digest') {
 			fn && (typeof(fn) === 'function') && fn();
 		}
 		else {
-			this.$apply(fn);
+			$scope.$apply(fn);
 		}
 	};
 

@@ -1,3 +1,6 @@
+goog.provide('services');
+
+
 var services	= new function () {
 
 
