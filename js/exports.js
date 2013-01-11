@@ -34,6 +34,8 @@ window['debug']['logVal'] = debug.logVal;
 window['debug']['lucky'] = debug.lucky;
 goog.require('init');
 window['init'] = init;
+goog.require('require');
+window['require'] = require;
 goog.require('services');
 window['services'] = services;
 window['services']['metadata'] = services.metadata;
