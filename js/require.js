@@ -1,3 +1,6 @@
+goog.provide('require');
+
+
 goog.require('goog.async.ConditionalDelay');
 goog.require('goog.async.Deferred');
 goog.require('goog.async.DeferredList');
@@ -12,7 +15,6 @@ goog.require('goog.object');
 goog.require('goog.ui.Component');
 goog.require('goog.ui.Slider');
 goog.require('goog.ui.TableSorter');
-
 
 goog.require('authentication');
 goog.require('closurequery');
