@@ -1,6 +1,5 @@
 goog.provide('init');
 
-goog.require('require.goog');
 goog.require('require.napster');
 
 

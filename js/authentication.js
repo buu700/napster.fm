@@ -1,5 +1,7 @@
 goog.provide('authentication');
 
+goog.require('require.goog');
+
 
 var authentication	= new function () {
 
