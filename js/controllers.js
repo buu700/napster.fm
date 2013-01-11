@@ -19,7 +19,7 @@ angular.module('Napster', []).controller('Controller', ['$scope', function ($sco
 
 	/* https://coderwall.com/p/ngisma */
 	$scope.safeApply = function(fn) {
-		var phase = $scope.$root.$$phase;
+		var phase = $scope['$root']['$$phase'];
 
 		if (phase == '$apply' || phase == '$digest') {
 			fn && (typeof(fn) === 'function') && fn();
