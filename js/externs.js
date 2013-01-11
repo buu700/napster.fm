@@ -22,6 +22,9 @@ FirebaseAuthClient.prototype.login;
 window.isNaN    = function () {};
 
 
+Array.prototype.exclude = function () {};
+
+
 
 
 
