@@ -19,6 +19,9 @@ FirebaseAuthClient.prototype.createUser;
 FirebaseAuthClient.prototype.login;
 
 
+window.isNaN    = function () {};
+
+
 
 
 
