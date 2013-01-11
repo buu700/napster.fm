@@ -69,4 +69,3 @@ window['ui']['playButtonClass'] = ui.playButtonClass;
 window['ui']['slider'] = ui.slider;
 window['ui']['init'] = ui.init;
 window['ui']['update'] = ui.update;
-window['Napster'] = Napster;
