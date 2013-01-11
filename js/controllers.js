@@ -1,5 +1,7 @@
 goog.provide('controllers');
 
+goog.require('require.goog');
+
 
 var Napster	= function ($scope) {
 	$scope.authentication	= authentication;

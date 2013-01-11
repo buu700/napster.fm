@@ -1,5 +1,7 @@
 goog.provide('ui');
 
+goog.require('require.goog');
+
 
 var ui	= new function () {
 

@@ -1,5 +1,7 @@
 goog.provide('debug');
 
+goog.require('require.goog');
+
 
 var debug	= new function () {
 

@@ -1,5 +1,7 @@
 goog.provide('datastore');
 
+goog.require('require.goog');
+
 
 var datastore	= new function () {
 
