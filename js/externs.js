@@ -1,5 +1,6 @@
 function Firebase () {}
 
+Firebase.prototype.auth;
 Firebase.prototype.endAt;
 Firebase.prototype.limit;
 Firebase.prototype.off;
