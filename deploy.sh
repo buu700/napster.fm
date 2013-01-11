@@ -30,8 +30,12 @@ ls *.css | while read file ; do java -jar ../yuicompressor.jar --type css -o "${
 cd ..
 
 
+rm js/externs.js
+grep "<script.*src=['\"]//.*['\"]" index.html | xargs -I% echo "%" | sed -E "s/.*\/\/(.*)><.*/http:\/\/\1/" | xargs -I% ./externs.py "%" >> js/externs.js
+
 ./export.sh "${namespaces[@]}"
-js/closure-library/closure/bin/build/closurebuilder.py --root=js $namespaceArgs -n require.goog -n require.napster -n exports -n init --output_mode=compiled --compiler_jar=compiler.jar --compiler_flags="--compilation_level=ADVANCED_OPTIMIZATIONS" --output_file=js/napster.js # .tmp
+
+js/closure-library/closure/bin/build/closurebuilder.py --root=js $namespaceArgs -n require.goog -n require.napster -n exports -n init --externs externs.js --output_mode=compiled --compiler_jar=compiler.jar --compiler_flags="--compilation_level=ADVANCED_OPTIMIZATIONS" --output_file=js/napster.js # .tmp
 # java -jar yuicompressor.jar --type js -o js/napster.js js/napster.js.tmp
 # rm js/napster.js.tmp
 
