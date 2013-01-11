@@ -6,6 +6,7 @@ Firebase.prototype.limit;
 Firebase.prototype.off;
 Firebase.prototype.on;
 Firebase.prototype.once;
+Firebase.prototype.set;
 Firebase.prototype.startAt;
 
 
