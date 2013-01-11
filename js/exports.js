@@ -36,8 +36,6 @@ goog.require('init');
 window['init'] = init;
 goog.require('require.goog');
 window['require.goog'] = require.goog;
-goog.require('require');
-window['require'] = require;
 goog.require('require.napster');
 window['require.napster'] = require.napster;
 goog.require('services');
