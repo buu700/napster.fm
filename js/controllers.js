@@ -3,9 +3,7 @@ goog.provide('controllers');
 goog.require('require.goog');
 
 
-var Napster	= function ($scope) {
-	this['$scope']	= $scope;
-
+angular.module('Napster', []).controller('Controller', ['$scope'], function ($scope) {
 	$scope.authentication	= authentication;
 	$scope.datastore		= datastore;
 	$scope.services			= services;
@@ -139,4 +137,4 @@ var Napster	= function ($scope) {
 		window.datastoreIsReady		= true;
 		ui.update();
 	});
-};
+});
