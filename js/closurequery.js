@@ -24,7 +24,7 @@ var $	= function (selector) {
 	}
 
 	$_domHelpers.forEach(function (key) {
-		for( var i = 0 ; i < elements.length ; ++i ) {
+		for (var i = 0 ; i < elements.length ; ++i) {
 			elements[i][key]	= elements[i][key] || goog.dom[key].fill(elements[i]);
 		}
 
