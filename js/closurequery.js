@@ -11,11 +11,11 @@ goog.require('require.goog');
 * @example $('div.exists').append($('<div class="doesNotYetExist"></div>'))
 */
 var $	= function (selector) {
-	var elements	= goog.dom.query(selector);
+	var elements	= domHelper.query(selector);
 	var isEmpty		= elements.length < 1;
 
 	if (isEmpty && new DOMParser().parseFromString(selector, 'text/xml').getElementsByTagName('parsererror').length < 1) {
-		var tempElem		= goog.dom.createElement('div');
+		var tempElem		= domHelper.createElement('div');
 		tempElem.innerHTML	= selector;
 		elements[0]			= tempElem.firstChild;
 	}
@@ -25,7 +25,7 @@ var $	= function (selector) {
 
 	$_domHelpers.forEach(function (key) {
 		for (var i = 0 ; i < elements.length ; ++i) {
-			elements[i][key]	= elements[i][key] || goog.dom[key].fill(elements[i]);
+			elements[i][key]	= elements[i][key] || domHelper[key].fill(elements[i]);
 		}
 
 		elements[key]	= elements[0] && elements[0][key];
@@ -34,8 +34,10 @@ var $	= function (selector) {
 	return elements;
 };
 
-var $_domHelpers	= goog.object.getKeys(goog.dom).filter(function (key) { return !key.has('_') && typeof goog.dom[key] === 'function'; });
+var domHelper		= goog.dom;
+
+var $_domHelpers	= goog.object.getKeys(domHelper).filter(function (key) { return !key.has('_') && typeof domHelper[key] === 'function'; });
 
 $_domHelpers.forEach(function (key) {
-	$[key]	= goog.dom[key];
+	$[key]	= domHelper[key];
 });
