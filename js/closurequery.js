@@ -23,13 +23,13 @@ var $	= function (selector) {
 		elements[0]	= {};
 	}
 
-	$_domHelpers.forEach(function (key) {
+	for (var key in domHelper) {
 		for (var i = 0 ; i < elements.length ; ++i) {
 			elements[i][key]	= elements[i][key] || domHelper[key].fill(elements[i]);
 		}
 
 		elements[key]	= elements[0] && elements[0][key];
-	});
+	}
 
 	return elements;
 };
@@ -105,4 +105,4 @@ var domHelper		= {
 
 for (var key in domHelper) {
 	$[key]	= domHelper[key];
-};
+}
