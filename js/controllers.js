@@ -4,6 +4,8 @@ goog.require('require.goog');
 
 
 var Napster	= function ($scope) {
+	this['$scope']	= $scope;
+
 	$scope.authentication	= authentication;
 	$scope.datastore		= datastore;
 	$scope.services			= services;
