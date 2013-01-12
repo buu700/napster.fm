@@ -1,6 +1,6 @@
 goog.provide('ui');
 
-goog.require('require.goog');
+/* require */
 
 
 var ui	= new function () {

@@ -1,6 +1,6 @@
 goog.provide('init');
 
-goog.require('require.napster');
+/* require */
 
 
 authentication.init();
