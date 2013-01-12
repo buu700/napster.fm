@@ -114,7 +114,7 @@ self.lastPlayed	= function () {
 self.track	= function (id) {
 	id	= id.toString();
 
-	console.log(id);
+	console.log(JSON.stringify(id));
 
 	var track	= self.root.child('track').child(id);
 
