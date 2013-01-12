@@ -69,3 +69,7 @@ window['ui']['playButtonClass'] = ui.playButtonClass;
 window['ui']['slider'] = ui.slider;
 window['ui']['init'] = ui.init;
 window['ui']['update'] = ui.update;
+window['datastore']['data']['group'] = datastore.data.group;
+window['datastore']['data']['lastPlayed']['processed'] = datastore.data.lastPlayed.processed;
+window['datastore']['data']['track'] = datastore.data.track;
+window['datastore']['data']['user'] = datastore.data.user;
