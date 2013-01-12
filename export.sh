@@ -14,6 +14,8 @@ done
 
 
 echo "window['datastore']['data']['group'] = datastore.data.group;" >> exports.js
+echo "window['datastore']['data']['lastPlayed'] = datastore.data.lastPlayed;" >> exports.js
 echo "window['datastore']['data']['lastPlayed']['processed'] = datastore.data.lastPlayed.processed;" >> exports.js
 echo "window['datastore']['data']['track'] = datastore.data.track;" >> exports.js
 echo "window['datastore']['data']['user'] = datastore.data.user;" >> exports.js
+echo "window['datastore']['data']['user']['current'] = datastore.data.user.current;" >> exports.js
