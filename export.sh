@@ -8,6 +8,7 @@ echo -e "goog.provide('exports');\n\n" > exports.js
 
 for namespace in ${@} ; do
 	echo "goog.require('${namespace}');" >> exports.js
+done
 
 
 for namespace in ${@} ; do
