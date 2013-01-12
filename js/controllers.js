@@ -104,6 +104,8 @@ angular.module('Napster', []).controller('Controller', ['$scope', function ($sco
 		trackKeys(user.library).map(function (key) { return user.library[key]; }).add(user.nowPlaying.track).unique().compact().forEach(function (trackid) {
 			var cacheKey	= 'track' + trackid;
 
+			console.log(JSON.stringify(datastore));
+
 			datastore.track(trackid).off('value', fnValue(datastore.data.track, trackid, cacheKey));
 			datastore.track(trackid).on('value', function (track) {
 				fnValue(datastore.data.track, trackid, cacheKey)(track);
