@@ -61,6 +61,8 @@ angular.module('Napster', []).controller('Controller', ['$scope', function ($sco
 			var trackid		= datastore.data.lastPlayed[key];
 			var cacheKey	= 'track' + trackid;
 
+			console.log(JSON.stringify(trackid));
+
 			datastore.track(trackid).off('value', fnValue(datastore.data.track, trackid, cacheKey));
 			datastore.track(trackid).on('value', function (track) {
 				fnValue(datastore.data.track, trackid, cacheKey)(track);
@@ -103,6 +105,8 @@ angular.module('Napster', []).controller('Controller', ['$scope', function ($sco
 		user.library.processed	= user.library.processed || {};
 		trackKeys(user.library).map(function (key) { return user.library[key]; }).add(user.nowPlaying.track).unique().compact().forEach(function (trackid) {
 			var cacheKey	= 'track' + trackid;
+
+			console.log(JSON.stringify(trackid));
 
 			datastore.track(trackid).off('value', fnValue(datastore.data.track, trackid, cacheKey));
 			datastore.track(trackid).on('value', function (track) {
