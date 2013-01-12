@@ -10,6 +10,7 @@ Firebase.prototype.once;
 Firebase.prototype.set;
 Firebase.prototype.setOnDisconnect;
 Firebase.prototype.startAt;
+Firebase.prototype.unauth;
 
 
 function FirebaseAuthClient () {}
