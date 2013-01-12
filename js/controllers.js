@@ -51,7 +51,7 @@ angular.module('Napster', []).controller('Controller', ['$scope', function ($sco
 		return fnChildAddedCache[cacheKey];
 	};
 
-	var trackKeys	= function (o) { return goog.object.getKeys(o).exclude('processed').filter(function (s) { return typeof(s) == 'string'; }); };
+	var trackKeys	= function (o) { return goog.object.getKeys(o).exclude('processed').filter(function (s) { return typeof(o[s]) == 'string'; }); };
 
 
 	datastore.lastPlayed().limit(500).on('child_added', function (newData) {
@@ -103,8 +103,6 @@ angular.module('Napster', []).controller('Controller', ['$scope', function ($sco
 		user.library.processed	= user.library.processed || {};
 		trackKeys(user.library).map(function (key) { return user.library[key]; }).add(user.nowPlaying.track).unique().compact().forEach(function (trackid) {
 			var cacheKey	= 'track' + trackid;
-
-			console.log(JSON.stringify(trackid));
 
 			datastore.track(trackid).off('value', fnValue(datastore.data.track, trackid, cacheKey));
 			datastore.track(trackid).on('value', function (track) {
