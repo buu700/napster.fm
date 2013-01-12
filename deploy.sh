@@ -33,7 +33,7 @@ cd ..
 ./export.sh "${namespaces[@]}"
 
 for file in `ls js/*.js` ; do
-	sed -i "s/\/\* require \*\//`cat js/require* | grep goog.require`/" "${file}"
+	sed -i "s/\/\* require \*\//`cat js/require* | grep goog.require | tr '\n' ' '`/" "${file}"
 done
 
 js/closure-library/closure/bin/build/closurebuilder.py --root=js $namespaceArgs -n require.goog -n require.napster -n exports -n init --output_mode=compiled --compiler_jar=compiler.jar --compiler_flags="--compilation_level=ADVANCED_OPTIMIZATIONS" --compiler_flags="--externs=js/externs.js" --output_file=js/napster.js # .tmp
