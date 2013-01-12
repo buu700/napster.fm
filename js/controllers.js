@@ -99,12 +99,11 @@ angular.module('Napster', []).controller('Controller', ['$scope', function ($sco
 		}
 
 		/* TODO: Factor this out; the logic will be needed elsewhere */
+		console.log(JSON.stringify(datastore));
 		user.library			= user.library || {};
 		user.library.processed	= user.library.processed || {};
 		trackKeys(user.library).map(function (key) { return user.library[key]; }).add(user.nowPlaying.track).unique().compact().forEach(function (trackid) {
 			var cacheKey	= 'track' + trackid;
-
-			console.log(JSON.stringify(datastore));
 
 			datastore.track(trackid).off('value', fnValue(datastore.data.track, trackid, cacheKey));
 			datastore.track(trackid).on('value', function (track) {
