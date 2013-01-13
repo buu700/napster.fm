@@ -15,12 +15,6 @@ goog.require('goog.ui.Component');
 goog.require('goog.ui.Slider');
 goog.require('goog.ui.TableSorter');
 
-goog.require('authentication');
-goog.require('controllers');
-goog.require('datastore');
-goog.require('debug');
-goog.require('services');
-goog.require('stream');
 goog.require('ui');
 
 
