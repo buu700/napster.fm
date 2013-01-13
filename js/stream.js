@@ -1,6 +1,6 @@
 goog.provide('stream');
 
-goog.require('require')
+/* require */
 
 
 var stream	= new function () {
