@@ -31,21 +31,7 @@ cd ..
 
 
 ./export.sh "${namespaces[@]}"
-
-for file in `ls js/*.js` ; do
-	require="`cat js/require.js | tr '\n' ' '`"
-	text="`cat "${file}"`"
-	parentNamespace="${file:3:${#file}-6}"
-
-	for namespace in "${namespaces[@]}" ; do
-		namespaceRequire="goog.require('${namespace}');"
-		test "${file#*${namespace}}" == "${file}" && test "${text#*${namespace}}" != "${text}" && test `cat js/*.js | grep "${namespaceRequire}" | wc -l` -gt 0 && require+=" ${namespaceRequire}"
-	done
-	sed -i "s/\/\* require \*\//`echo \"${require}\" | sed 's/ /\\\\n/g'`/" "${file}"
-done
-
 echo -e "goog.provide('init');\n\ngoog.require('exports');\n\n`cat js/init.js`" > js/init.js
-
 js/closure-library/closure/bin/build/closurebuilder.py --root=js $namespaceArgs -n exports -n init --output_mode=compiled --compiler_jar=compiler.jar --compiler_flags="--compilation_level=ADVANCED_OPTIMIZATIONS" --compiler_flags="--externs=js/externs.js" --output_file=js/napster.js # .tmp
 # java -jar yuicompressor.jar --type js -o js/napster.js js/napster.js.tmp
 # rm js/napster.js.tmp

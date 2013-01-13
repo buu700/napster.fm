@@ -1,7 +1,5 @@
 goog.provide('closurequery');
 
-/* require */
-
 
 /**
 * @function

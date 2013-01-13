@@ -1,7 +1,5 @@
 goog.provide('controllers');
 
-/* require */
-
 
 angular.module('Napster', []).controller('Controller', ['$scope', function ($scope) {
 	$scope.authentication	= authentication;

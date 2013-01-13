@@ -1,7 +1,5 @@
 goog.provide('stream');
 
-/* require */
-
 
 var stream	= new function () {
 

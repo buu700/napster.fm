@@ -1,7 +1,5 @@
 goog.provide('services');
 
-/* require */
-
 
 var services	= new function () {
 

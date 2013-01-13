@@ -1,7 +1,5 @@
 goog.provide('ui');
 
-/* require */
-
 
 var ui	= new function () {
 
