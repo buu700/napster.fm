@@ -1,3 +1,6 @@
+goog.provide('require')
+
+
 goog.require('goog.async.ConditionalDelay');
 goog.require('goog.async.Deferred');
 goog.require('goog.async.DeferredList');
