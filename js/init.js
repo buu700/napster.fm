@@ -1,5 +1,3 @@
-goog.provide('init');
-
 goog.require('exports')
 
 
