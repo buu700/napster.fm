@@ -1,11 +1,12 @@
 goog.provide('exports');
 
-
+/* @licence HALLO GUIZ */
 goog.require('authentication');
 goog.require('closurequery');
 goog.require('controllers');
 goog.require('datastore');
 goog.require('debug');
+goog.require('init');
 goog.require('require');
 goog.require('services');
 goog.require('stream');
@@ -36,6 +37,7 @@ window['debug']['log'] = debug.log;
 window['debug']['logFoo'] = debug.logFoo;
 window['debug']['logVal'] = debug.logVal;
 window['debug']['lucky'] = debug.lucky;
+window['init'] = init;
 window['require'] = require;
 window['services'] = services;
 window['services']['metadata'] = services.metadata;
