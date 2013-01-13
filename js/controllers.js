@@ -16,7 +16,7 @@ angular.module('Napster', []).controller('Controller', ['$scope', function ($sco
 
 
 	/* https://coderwall.com/p/ngisma */
-	$scope.safeApply = function(fn) {
+	ui.postUpdate = function(fn) {
 		var phase = $scope['$root']['$$phase'];
 
 		if (phase == '$apply' || phase == '$digest') {
@@ -25,12 +25,6 @@ angular.module('Napster', []).controller('Controller', ['$scope', function ($sco
 		else {
 			$scope.$apply(fn);
 		}
-	};
-
-	var updateUI	= ui.update;
-	ui.update		= function (fn) {
-		updateUI();
-		$scope.safeApply(fn);
 	};
 
 
