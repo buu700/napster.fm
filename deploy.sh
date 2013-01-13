@@ -39,7 +39,7 @@ for file in `ls js/*.js` ; do
 
 	for namespace in "${namespaces[@]}" ; do
 		namespaceRequire="goog.require('${namespace}');"
-		test "${file#*${namespace}}" == "${file}" && test "${text#*${namespace}}" != "${text}" && test "`cat js/*.js | grep "${namespaceRequire}" | head-n1`" != "${namespaceRequire}" && require+=" ${namespaceRequire}"
+		test "${file#*${namespace}}" == "${file}" && test "${text#*${namespace}}" != "${text}" && test "`cat js/*.js | grep "${namespaceRequire}" | head -n1`" != "${namespaceRequire}" && require+=" ${namespaceRequire}"
 	done
 	sed -i "s/\/\* require \*\//`echo \"${require}\" | sed 's/ /\\\\n/g'`/" "${file}"
 done
