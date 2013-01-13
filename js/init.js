@@ -1,6 +1,6 @@
 goog.provide('init');
 
-/* require */
+goog.require('exports')
 
 
 authentication.init();

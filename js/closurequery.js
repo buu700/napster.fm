@@ -1,6 +1,6 @@
 goog.provide('closurequery');
 
-/* require */
+goog.require('require')
 
 
 /**

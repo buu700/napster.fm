@@ -1,6 +1,6 @@
 goog.provide('services');
 
-/* require */
+goog.require('require')
 
 
 var services	= new function () {

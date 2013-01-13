@@ -1,4 +1,4 @@
-goog.provide('require.goog');
+goog.provide('require');
 
 
 goog.require('goog.async.ConditionalDelay');

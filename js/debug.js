@@ -1,6 +1,6 @@
 goog.provide('debug');
 
-/* require */
+goog.require('require')
 
 
 var debug	= new function () {

@@ -1,6 +1,6 @@
 goog.provide('datastore');
 
-/* require */
+goog.require('require')
 
 
 var datastore	= new function () {
