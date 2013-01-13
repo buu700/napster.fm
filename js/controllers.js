@@ -1,6 +1,6 @@
 goog.provide('controllers');
 
-goog.require('require')
+/* require */
 
 
 angular.module('Napster', []).controller('Controller', ['$scope', function ($scope) {
