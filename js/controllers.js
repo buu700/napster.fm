@@ -15,6 +15,11 @@ goog.require('goog.ui.Component');
 goog.require('goog.ui.Slider');
 goog.require('goog.ui.TableSorter');
 
+goog.require('authentication');
+goog.require('datastore');
+goog.require('services');
+goog.require('stream');
+goog.require('ui');
 
 
 angular.module('Napster', []).controller('Controller', ['$scope', function ($scope) {

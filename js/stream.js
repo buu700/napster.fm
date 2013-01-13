@@ -15,6 +15,9 @@ goog.require('goog.ui.Component');
 goog.require('goog.ui.Slider');
 goog.require('goog.ui.TableSorter');
 
+goog.require('authentication');
+goog.require('datastore');
+goog.require('ui');
 
 
 var stream	= new function () {
