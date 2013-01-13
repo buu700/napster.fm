@@ -15,8 +15,6 @@ goog.require('goog.ui.Component');
 goog.require('goog.ui.Slider');
 goog.require('goog.ui.TableSorter');
 
-goog.require('authentication');
-goog.require('ui');
 
 
 var datastore	= new function () {
