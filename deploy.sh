@@ -34,7 +34,6 @@ cd ..
 
 for file in `ls js/*.js` ; do
 	require="`cat js/require.js | tr '\n' ' '`"
-	for namespace in "${namespaces[@]}" ; do test "${file#*${namespace}}" == "${file}" && require+=" goog.require('${namespace}');" ; done
 	sed -i "s/\/\* require \*\/`echo \"${require}\" | sed 's/ /\\\\n/g'`/" "${file}"
 done
 
