@@ -43,6 +43,12 @@ var init;
 
 /**
 * @function
+* @property {void} Runs after update
+*/
+var postUpdate;
+
+/**
+* @function
 * @property {void} Updates UI
 */
 var update;
@@ -94,6 +100,8 @@ self.init	= function () {
 self.update	= function () {
 	self.pageLoadingClass	= window.isNaN(stream.newTime) ? 'loading' : '';
 	self.playButtonClass	= stream.isPlaying ? 'playing' : 'paused';
+
+	self.postUpdate && self.postUpdate();
 };
 
 

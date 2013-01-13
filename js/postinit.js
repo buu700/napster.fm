@@ -65,6 +65,7 @@ console.log(ui.pageLoadingClass);
 console.log(ui.playButtonClass);
 console.log(ui.slider);
 console.log(ui.init);
+console.log(ui.postUpdate);
 console.log(ui.update);
 console.log(datastore.data.group);
 console.log(datastore.data.lastPlayed);

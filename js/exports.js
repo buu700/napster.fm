@@ -64,6 +64,7 @@ window['ui']['pageLoadingClass'] = ui.pageLoadingClass;
 window['ui']['playButtonClass'] = ui.playButtonClass;
 window['ui']['slider'] = ui.slider;
 window['ui']['init'] = ui.init;
+window['ui']['postUpdate'] = ui.postUpdate;
 window['ui']['update'] = ui.update;
 window['datastore']['data']['group'] = datastore.data.group;
 window['datastore']['data']['lastPlayed'] = datastore.data.lastPlayed;
