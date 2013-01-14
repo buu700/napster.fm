@@ -5,7 +5,7 @@ cd js
 
 echo -e "goog.provide('exports');" > exports.js
 
-echo -e '/** @preserve EXPORT START */' >> exports.js
+echo -e '/** @preserve EXPORT */' >> exports.js
 
 
 echo -e "goog.require('require');" >> exports.js
@@ -26,6 +26,3 @@ done
 
 
 echo -e '"END": "END" };' >> exports.js
-
-
-echo -e '/** @preserve EXPORT END */' >> exports.js

@@ -1,5 +1,5 @@
 goog.provide('exports');
-/** @preserve EXPORT START */
+/** @preserve EXPORT */
 goog.require('require');
 goog.require('authentication');
 goog.require('closurequery');
@@ -26,4 +26,3 @@ window["exports"] = {
 "ui.pageLoadingClass": ui.pageLoadingClass,
 "ui.pageLoadingClass": ui.pageLoadingClass,
 "END": "END" };
-/** @preserve EXPORT END */
