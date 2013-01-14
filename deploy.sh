@@ -30,10 +30,9 @@ ls *.css | while read file ; do java -jar ../yuicompressor.jar --type css -o "${
 cd ..
 
 
-echo -e "goog.provide('init');\n\n`cat js/init.js`" > js/init.js
-# echo -e "goog.provide('init');\n\ngoog.require('exports');\n\n`cat js/init.js`" > js/init.js
+echo -e "goog.provide('init');\n\ngoog.require('exports');\n\n`cat js/init.js`" > js/init.js
 ./export.sh "${namespaces[@]}"
-js/closure-library/closure/bin/build/closurebuilder.py --root=js $namespaceArgs -n init --output_mode=compiled --compiler_jar=compiler.jar --compiler_flags="--compilation_level=WHITESPACE_ONLY" --compiler_flags="--externs=js/externs.js" --output_file=js/napster.js # -n exports
+js/closure-library/closure/bin/build/closurebuilder.py --root=js $namespaceArgs -n exports -n init --output_mode=compiled --compiler_jar=compiler.jar --compiler_flags="--compilation_level=WHITESPACE_ONLY" --compiler_flags="--externs=js/externs.js" --output_file=js/napster.js
 
 # Inject minified member names into html
 # function jsonify { json="`echo "${1}" | sed 's/ //g' | sed 's/\":/":"/g' | sed 's/,"/","/g' | sed 's/""/"/g'`" && echo "${json:0:${#json}-1}}" | python -mjson.tool; }
