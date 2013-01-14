@@ -1,6 +1,6 @@
 goog.provide('exports');
 
-/* @licence HALLO GUIZ */
+/** @licence HALLO GUIZ */
 goog.require('authentication');
 goog.require('closurequery');
 goog.require('controllers');
