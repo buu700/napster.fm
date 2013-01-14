@@ -47,6 +47,8 @@ keys=(`jsonkeys "${exports}"`)
 for key in "${keys[@]}" ; do
 	value="`jsonval "${exports}" "${key}"`"
 	for file in "`ls *.html`" ; do
+		splitValue="${value#*\[0\]}"
+		test "${splitValue}" != "${value}" && value="`echo "${key}" | tr '.' ' ' | awk '{print $1}'`.${splitValue}"
 		sed -i "s/${key}/${value}/g" "${file}"
 	done
 done
