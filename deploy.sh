@@ -43,6 +43,8 @@ exports="`cat js/napster.js | sed -E 's/.*EXPORT .*=(.*});.*/\1/'`"
 cat js/napster.js | sed -E 's/\/\*.*EXPORT.*};//' > js/napster.js.tmp
 mv js/napster.js.tmp js/napster.js
 
+echo "${exports}"
+
 for key in "`jsonkeys "${exports}"`" ; do
 	value="`jsonval "${exports}" "${key}"`"
 	for file in "`ls *.html`" ; do

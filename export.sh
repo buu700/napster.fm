@@ -25,4 +25,4 @@ for namespace in ${@} ; do
 done
 
 
-echo -e '"END": "END" };' >> exports.js
+echo -e '"EXPORT.END": "EXPORT.END" };' >> exports.js
