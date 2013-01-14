@@ -40,14 +40,11 @@ function jsonval { jsonify "${1}" | grep "${2}" | head -n1 | sed -E 's/.*".*": "
 function jsonkeys { jsonify "${1}" | grep ':' | sed -E 's/.*"(.*)":.*/\1/g' | tr '\n' ' '; }
 
 exports="`cat js/napster.js | tr '\n' ' ' | sed -E 's/.*EXPORT .*=(.*});.*/\1/'`"
+keys=(`jsonkeys "${exports}"`)
 cat js/napster.js | tr '\n' ' ' | sed -E 's/\/\*.*EXPORT.*};//' > js/napster.js.tmp
 mv js/napster.js.tmp js/napster.js
 
-jsonify "${exports}"
-jsonkeys "${exports}"
-jsonval "${exports}" "authentication.username"
-
-for key in "`jsonkeys "${exports}"`" ; do
+for key in "${keys[@]}" ; do
 	value="`jsonval "${exports}" "${key}"`"
 	for file in "`ls *.html`" ; do
 		sed -i "s/${key}/${value}/g" "${file}"
