@@ -10,7 +10,7 @@ goog.require('require');
 goog.require('services');
 goog.require('stream');
 goog.require('ui');
-{
+var exports = {
 "authentication": authentication,
 "authentication.cookieAge": authentication.cookieAge,
 "authentication.token": authentication.token,
