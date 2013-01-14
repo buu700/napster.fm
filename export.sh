@@ -3,7 +3,7 @@
 
 cd js
 
-echo -e "goog.provide('exports');\n\n/** @licence HALLO GUIZ */" > exports.js
+echo -e "goog.provide('exports');\n\n/** @license HALLO GUIZ */" > exports.js
 
 
 for namespace in ${@} ; do
