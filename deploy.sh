@@ -39,8 +39,8 @@ function jsonify { json="`echo "${1}" | sed 's/ //g' | sed 's/\":/":"/g' | sed '
 function jsonval { jsonify "${1}" | grep "${2}" | head -n1 | sed -E 's/.*".*": "(.*)".*/\1/'; }
 function jsonkeys { jsonify "${1}" | grep ':' | sed -E 's/.*"(.*)":.*/\1/g' | tr '\n' ' '; }
 
-exports="`cat js/napster.js | sed -E 's/.*EXPORT .*=(.*});.*/\1/'`"
-cat js/napster.js | sed -E 's/\/\*.*EXPORT.*};//' > js/napster.js.tmp
+exports="`cat js/napster.js | tr '\n' ' ' | sed -E 's/.*EXPORT .*=(.*});.*/\1/'`"
+cat js/napster.js | tr '\n' ' ' | sed -E 's/\/\*.*EXPORT.*};//' > js/napster.js.tmp
 mv js/napster.js.tmp js/napster.js
 
 echo "${exports}"
