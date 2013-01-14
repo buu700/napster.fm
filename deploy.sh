@@ -40,7 +40,8 @@ function jsonval { jsonify "${1}" | grep "${2}" | head -n1 | sed -E 's/.*".*": "
 function jsonkeys { jsonify "${1}" | grep ':' | sed -E 's/.*"(.*)":.*/\1/g' | tr '\n' ' '; }
 
 exports="`cat js/napster.js | sed -E 's/.*EXPORT START .*=(.*)\/\* EXPORT END.*/\1/'`"
-cat js/napster.js | sed -E 's/EXPORT START.*EXPORT END//' > js/napster.js
+cat js/napster.js | sed -E 's/EXPORT START.*EXPORT END//' > js/napster.js.tmp
+mv js/napster.js.tmp js/napster.js
 
 for key in "`jsonkeys "${exports}"`" ; do
 	value="`jsonval "${exports}" "${key}"`"
