@@ -43,7 +43,9 @@ exports="`cat js/napster.js | tr '\n' ' ' | sed -E 's/.*EXPORT .*=(.*});.*/\1/'`
 cat js/napster.js | tr '\n' ' ' | sed -E 's/\/\*.*EXPORT.*};//' > js/napster.js.tmp
 mv js/napster.js.tmp js/napster.js
 
-echo "${exports}"
+jsonify "${exports}"
+jsonkeys "${exports}"
+jsonval "${exports}" "authentication.username"
 
 for key in "`jsonkeys "${exports}"`" ; do
 	value="`jsonval "${exports}" "${key}"`"
