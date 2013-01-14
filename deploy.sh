@@ -41,7 +41,7 @@ function jsonkeys { jsonify "${1}" | grep ':' | sed -E 's/.*"(.*)":.*/\1/g' | tr
 
 exports="`cat js/napster.js | tr '\n' ' ' | sed -E 's/.*EXPORT .*=(.*});.*/\1/'`"
 keys=(`jsonkeys "${exports}"`)
-cat js/napster.js | tr '\n' ' ' | sed -E 's/\/\*.*EXPORT.*};//' > js/napster.js.tmp
+cat js/napster.js | tr '\n' ' ' | sed -E 's/\/\*.*EXPORT.*?};//' > js/napster.js.tmp
 mv js/napster.js.tmp js/napster.js
 
 for key in "${keys[@]}" ; do
@@ -56,6 +56,7 @@ done
 
 
 git add .
+chmod 777 -R .
 git commit -a -m 'deployment'
 git push
 
