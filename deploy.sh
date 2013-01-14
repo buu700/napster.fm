@@ -53,8 +53,8 @@ js/closure-library/closure/bin/build/closurebuilder.py --root=js $namespaceArgs 
 # 	done
 # done
 
-java -jar yuicompressor.jar --nomunge --type js -o js/napster.js.tmp js/napster.js
-mv js/napster.js.tmp js/napster.js
+# java -jar yuicompressor.jar --nomunge --type js -o js/napster.js.tmp js/napster.js
+# mv js/napster.js.tmp js/napster.js
 
 
 git add .
