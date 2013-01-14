@@ -6,8 +6,6 @@ goog.require('closurequery');
 goog.require('controllers');
 goog.require('datastore');
 goog.require('debug');
-goog.require('exports');
-goog.require('init');
 goog.require('require');
 goog.require('services');
 goog.require('stream');
