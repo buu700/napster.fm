@@ -25,4 +25,4 @@ window["exports"] = {
 "ui.slider.onclick": ui.slider.onclick,
 "ui.pageLoadingClass": ui.pageLoadingClass,
 "ui.pageLoadingClass": ui.pageLoadingClass,
-"END": "END" };
+"EXPORT.END": "EXPORT.END" };
