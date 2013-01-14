@@ -1,5 +1,5 @@
 goog.provide('exports');
-/** @license EXPORT START */
+/** @preserve EXPORT START */
 goog.require('require');
 goog.require('authentication');
 goog.require('closurequery');
@@ -74,4 +74,4 @@ window["exports"] = {
 "datastore.data.user": datastore.data.user,
 "datastore.data.user.current": datastore.data.user.current
 };
-/** @license EXPORT END */
+/** @preserve EXPORT END */
