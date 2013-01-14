@@ -5,7 +5,7 @@ cd js
 
 echo -e "goog.provide('exports');" > exports.js
 
-echo -e '/** @license EXPORT START */' >> exports.js
+echo -e '/** @preserve EXPORT START */' >> exports.js
 
 
 echo -e "goog.require('require');" >> exports.js
@@ -34,4 +34,4 @@ echo "\"datastore.data.user.current\": datastore.data.user.current" >> exports.j
 echo -e '};' >> exports.js
 
 
-echo -e '/** @license EXPORT END */' >> exports.js
+echo -e '/** @preserve EXPORT END */' >> exports.js
