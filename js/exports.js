@@ -73,5 +73,5 @@ goog.require('ui');
 "datastore.data.track": datastore.data.track,
 "datastore.data.user": datastore.data.user,
 "datastore.data.user.current": datastore.data.user.current
-}
+};
 /** @license EXPORT END */

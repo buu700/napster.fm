@@ -31,7 +31,7 @@ echo "\"datastore.data.user\": datastore.data.user," >> exports.js
 echo "\"datastore.data.user.current\": datastore.data.user.current" >> exports.js
 
 
-echo -e '}' >> exports.js
+echo -e '};' >> exports.js
 
 
 echo -e '/** @license EXPORT END */' >> exports.js
