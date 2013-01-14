@@ -1,76 +1,77 @@
 goog.provide('exports');
-
-/** @license HALLO GUIZ */
+/** @license EXPORT START */
+goog.require('require');
 goog.require('authentication');
 goog.require('closurequery');
 goog.require('controllers');
 goog.require('datastore');
 goog.require('debug');
-goog.require('init');
 goog.require('require');
 goog.require('services');
 goog.require('stream');
 goog.require('ui');
-window['authentication'] = authentication;
-window['authentication']['cookieAge'] = authentication.cookieAge;
-window['authentication']['token'] = authentication.token;
-window['authentication']['userid'] = authentication.userid;
-window['authentication']['username'] = authentication.username;
-window['authentication']['init'] = authentication.init;
-window['authentication']['getUsername'] = authentication.getUsername;
-window['authentication']['hash'] = authentication.hash;
-window['authentication']['login'] = authentication.login;
-window['authentication']['logout'] = authentication.logout;
-window['authentication']['createUser'] = authentication.createUser;
-window['authentication']['changePassword'] = authentication.changePassword;
-window['closurequery'] = closurequery;
-window['controllers'] = controllers;
-window['datastore'] = datastore;
-window['datastore']['data'] = datastore.data;
-window['datastore']['root'] = datastore.root;
-window['datastore']['group'] = datastore.group;
-window['datastore']['lastPlayed'] = datastore.lastPlayed;
-window['datastore']['track'] = datastore.track;
-window['datastore']['user'] = datastore.user;
-window['debug'] = debug;
-window['debug']['log'] = debug.log;
-window['debug']['logFoo'] = debug.logFoo;
-window['debug']['logVal'] = debug.logVal;
-window['debug']['lucky'] = debug.lucky;
-window['init'] = init;
-window['require'] = require;
-window['services'] = services;
-window['services']['metadata'] = services.metadata;
-window['services']['search'] = services.search;
-window['services']['stream'] = services.stream;
-window['stream'] = stream;
-window['stream']['isPlaying'] = stream.isPlaying;
-window['stream']['newTime'] = stream.newTime;
-window['stream']['newTimeProcessed'] = stream.newTimeProcessed;
-window['stream']['player'] = stream.player;
-window['stream']['syncTimeouts'] = stream.syncTimeouts;
-window['stream']['init'] = stream.init;
-window['stream']['isFinished'] = stream.isFinished;
-window['stream']['length'] = stream.length;
-window['stream']['loadTrack'] = stream.loadTrack;
-window['stream']['mute'] = stream.mute;
-window['stream']['onFinished'] = stream.onFinished;
-window['stream']['play'] = stream.play;
-window['stream']['processTime'] = stream.processTime;
-window['stream']['sync'] = stream.sync;
-window['stream']['time'] = stream.time;
-window['stream']['updateNowPlaying'] = stream.updateNowPlaying;
-window['stream']['volume'] = stream.volume;
-window['ui'] = ui;
-window['ui']['pageLoadingClass'] = ui.pageLoadingClass;
-window['ui']['playButtonClass'] = ui.playButtonClass;
-window['ui']['slider'] = ui.slider;
-window['ui']['init'] = ui.init;
-window['ui']['postUpdate'] = ui.postUpdate;
-window['ui']['update'] = ui.update;
-window['datastore']['data']['group'] = datastore.data.group;
-window['datastore']['data']['lastPlayed'] = datastore.data.lastPlayed;
-window['datastore']['data']['lastPlayed']['processed'] = datastore.data.lastPlayed.processed;
-window['datastore']['data']['track'] = datastore.data.track;
-window['datastore']['data']['user'] = datastore.data.user;
-window['datastore']['data']['user']['current'] = datastore.data.user.current;
+{
+"authentication": authentication,
+"authentication.cookieAge": authentication.cookieAge,
+"authentication.token": authentication.token,
+"authentication.userid": authentication.userid,
+"authentication.username": authentication.username,
+"authentication.init": authentication.init,
+"authentication.getUsername": authentication.getUsername,
+"authentication.hash": authentication.hash,
+"authentication.login": authentication.login,
+"authentication.logout": authentication.logout,
+"authentication.createUser": authentication.createUser,
+"authentication.changePassword": authentication.changePassword,
+"closurequery": closurequery,
+"controllers": controllers,
+"datastore": datastore,
+"datastore.data": datastore.data,
+"datastore.root": datastore.root,
+"datastore.group": datastore.group,
+"datastore.lastPlayed": datastore.lastPlayed,
+"datastore.track": datastore.track,
+"datastore.user": datastore.user,
+"debug": debug,
+"debug.log": debug.log,
+"debug.logFoo": debug.logFoo,
+"debug.logVal": debug.logVal,
+"debug.lucky": debug.lucky,
+"require": require,
+"services": services,
+"services.metadata": services.metadata,
+"services.search": services.search,
+"services.stream": services.stream,
+"stream": stream,
+"stream.isPlaying": stream.isPlaying,
+"stream.newTime": stream.newTime,
+"stream.newTimeProcessed": stream.newTimeProcessed,
+"stream.player": stream.player,
+"stream.syncTimeouts": stream.syncTimeouts,
+"stream.init": stream.init,
+"stream.isFinished": stream.isFinished,
+"stream.length": stream.length,
+"stream.loadTrack": stream.loadTrack,
+"stream.mute": stream.mute,
+"stream.onFinished": stream.onFinished,
+"stream.play": stream.play,
+"stream.processTime": stream.processTime,
+"stream.sync": stream.sync,
+"stream.time": stream.time,
+"stream.updateNowPlaying": stream.updateNowPlaying,
+"stream.volume": stream.volume,
+"ui": ui,
+"ui.pageLoadingClass": ui.pageLoadingClass,
+"ui.playButtonClass": ui.playButtonClass,
+"ui.slider": ui.slider,
+"ui.init": ui.init,
+"ui.postUpdate": ui.postUpdate,
+"ui.update": ui.update,
+"datastore.data.group": datastore.data.group,
+"datastore.data.lastPlayed": datastore.data.lastPlayed,
+"datastore.data.lastPlayed.processed": datastore.data.lastPlayed.processed,
+"datastore.data.track": datastore.data.track,
+"datastore.data.user": datastore.data.user,
+"datastore.data.user.current": datastore.data.user.current
+}
+/** @license EXPORT END */

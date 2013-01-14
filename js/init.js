@@ -1,7 +1,6 @@
-goog.provide('init')
+goog.provide('init');
 
-goog.require('require')
-
+goog.require('exports');
 
 authentication.init();
 ui.init();
