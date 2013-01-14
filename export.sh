@@ -14,7 +14,7 @@ for namespace in ${@} ; do
 done
 
 
-echo -e 'var exports = {' >> exports.js
+echo -e 'window["exports"] = {' >> exports.js
 
 
 for namespace in ${@} ; do
