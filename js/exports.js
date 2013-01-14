@@ -22,9 +22,6 @@ window["exports"] = {
 "stream.loadTrack(track.id)": stream.loadTrack(track.id),
 "ui.playButtonClass": ui.playButtonClass,
 "ui.slider.onclick()": ui.slider.onclick(),
-"ui. </p> <p><a class=": ui. </p> <p><a class=,
-"ui. </p> <p><a class=": ui. </p> <p><a class=,
-"ui. Cras justo odio": ui. Cras justo odio,
 "ui.pageLoadingClass": ui.pageLoadingClass,
 "ui.pageLoadingClass": ui.pageLoadingClass,
 "END": "END" };
