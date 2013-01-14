@@ -18,7 +18,7 @@ echo -e 'window["exports"] = {' >> exports.js
 
 
 for namespace in ${@} ; do
-	cat ../*.html | grep -oP "${namespace}\.[^ ].*?[('\",};]" | while read member ; do
+	cat ../*.html | grep -oP "${namespace}\.[^ ].*?[()'\",};]" | while read member ; do
 		member="${member:0:${#member}-1}"
 		echo "\"${member}\": ${member}," >> exports.js
 	done

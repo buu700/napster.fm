@@ -18,7 +18,7 @@ window["exports"] = {
 "datastore.data.user.current.isOnline": datastore.data.user.current.isOnline,
 "datastore.data.user.current.library.processed": datastore.data.user.current.library.processed,
 "stream.play": stream.play,
-"stream.isPlaying)": stream.isPlaying),
+"stream.isPlaying": stream.isPlaying,
 "stream.newTimeProcessed": stream.newTimeProcessed,
 "stream.loadTrack": stream.loadTrack,
 "ui.playButtonClass": ui.playButtonClass,
