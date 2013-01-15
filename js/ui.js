@@ -56,7 +56,7 @@ var update;
 
 
 
-self['init']	= function () {
+self.init	= function () {
 	window.onhashchange	= function () {
 		var setActive	= function (selector, attribute, target) {
 			var $elements	= $(selector);
@@ -84,24 +84,24 @@ self['init']	= function () {
 	tableSorter.decorate($('#library-table')[0]);
 
 
-	self['slider']	= new goog.ui.Slider();
+	self.slider	= new goog.ui.Slider();
 
-	self['slider.setHandleMouseWheel'](true);
-	self['slider.setMoveToPointEnabled'](true);
-	self['slider.onclick']	= function () {
-		self['slider.valueJustChanged']	= true;
-		stream['time'](self['slider.getValue']());
-		window.setTimeout(function () { self['slider.valueJustChanged'] = false; }, 1000);
+	self.slider.setHandleMouseWheel(true);
+	self.slider.setMoveToPointEnabled(true);
+	self.slider.onclick	= function () {
+		self.slider.valueJustChanged	= true;
+		stream.time(self.slider.getValue());
+		window.setTimeout(function () { self.slider.valueJustChanged = false; }, 1000);
 	};
 
-	self['slider.decorate']($('#player .slider')[0]);
+	self.slider.decorate($('#player .slider')[0]);
 };
 
-self['update']	= function () {
-	self['pageLoadingClass']	= window.isNaN(stream['newTime']) ? 'loading' : '';
-	self['playButtonClass']	= stream['isPlaying'] ? 'playing' : 'paused';
+self.update	= function () {
+	self.pageLoadingClass	= window.isNaN(stream.newTime) ? 'loading' : '';
+	self.playButtonClass	= stream.isPlaying ? 'playing' : 'paused';
 
-	self['postUpdate'] && self['postUpdate']();
+	self.postUpdate && self.postUpdate();
 };
 
 

@@ -44,20 +44,20 @@ var lucky;
 
 
 
-self['log']	= function (message) {
+self.log	= function (message) {
 	console.log(message);
 };
 
-self['logFoo']	= function () {
+self.logFoo	= function () {
 	console.log('foo');
 };
 
-self['logVal']	= function (message) {
+self.logVal	= function (message) {
 	console.log(message.val());
 };
 
-self['lucky']	= function (results) {
-	datastore['user']().library.push(results[0].id);
+self.lucky	= function (results) {
+	datastore.user().library.push(results[0].id);
 };
 
 

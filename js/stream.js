@@ -120,7 +120,7 @@ var time;
 
 /**
 * @function
-* @property {void} Updates datastore['data.user.current.nowPlaying'] with current state of player
+* @property {void} Updates datastore.data.user.current.nowPlaying with current state of player
 */
 var updateNowPlaying;
 
@@ -134,11 +134,11 @@ var volume;
 
 
 
-self['init']	= function () {
+self.init	= function () {
 	var onYouTubePlayerReady = function () {
 		var wait		= new goog.async.ConditionalDelay(function () { return window.datastoreIsReady; });
 		wait.onSuccess	= function () {
-			self['onFinished']();
+			self.onFinished();
 		};
 		wait.start();
 	};
@@ -153,7 +153,7 @@ self['init']	= function () {
 		;
 
 		eventListener && eventListener();
-		ui['update']();
+		ui.update();
 	};
 
 	var onYouTubePlayerError = function () {
@@ -161,7 +161,7 @@ self['init']	= function () {
 	};
 
 	window.onYouTubeIframeAPIReady	= function () {
-		self['player']	= new YT.Player($('#stream')[0], {
+		self.player	= new YT.Player($('#stream')[0], {
 			height: '390',
 			width: '640',
 			html5: '1',
@@ -173,119 +173,119 @@ self['init']	= function () {
 		});
 	};
 
-	datastore['user']().nowPlayingChild.isPlaying.setOnDisconnect(false);
-	datastore['user']().nowPlayingChild.lastChange.setOnDisconnect(0);
+	datastore.user().nowPlayingChild.isPlaying.setOnDisconnect(false);
+	datastore.user().nowPlayingChild.lastChange.setOnDisconnect(0);
 
-	self['syncTimeouts']	= [];
+	self.syncTimeouts	= [];
 };
 
 
-self['isFinished']	= function () {
-	return self['time']() >= self['length']();
+self.isFinished	= function () {
+	return self.time() >= self.length();
 };
 
 
-self['length']	= function () {
-	return self['player.getDuration']();
+self.length	= function () {
+	return self.player.getDuration();
 };
 
 
-self['loadTrack']	= function (trackid, callback, noUpdate) {
-	self['player.stopVideo']();
-	self['time'](0, true);
+self.loadTrack	= function (trackid, callback, noUpdate) {
+	self.player.stopVideo();
+	self.time(0, true);
 
 	window.onYouTubeVideoStarted	= function () {
 		window.onYouTubeVideoStarted	= null;
 		window.setTimeout(function () {
-			stream['volume'](0);
-			self['time'](0, true);
-			self['play'](true, true);
-			datastore['track'](self['currentTrack']).length.set(self['length']());
+			stream.volume(0);
+			self.time(0, true);
+			self.play(true, true);
+			datastore.track(self.currentTrack).length.set(self.length());
 			callback && callback();
 		}, 2000);
 	};
 
-	datastore['track'](trackid).once('value', function (o) {
+	datastore.track(trackid).once('value', function (o) {
 		var val	= o.val();
 		var id	= o.name();
 
-		ui['slider.setMaximum'](val.length);
+		ui.slider.setMaximum(val.length);
 
-		datastore['track'](trackid).lastPlayed.set(Date.now());
-		datastore['track'](trackid).lastPlayedBy.set(authentication['userid']);
+		datastore.track(trackid).lastPlayed.set(Date.now());
+		datastore.track(trackid).lastPlayedBy.set(authentication.userid);
 
-		datastore['lastPlayed']().push(id);
+		datastore.lastPlayed().push(id);
 
-		self['player.loadVideoById'](val.youtubeid);
+		self.player.loadVideoById(val.youtubeid);
 		
-		self['currentTrack']	= trackid;
+		self.currentTrack	= trackid;
 		
 		if (noUpdate != true) {
-			datastore['track'](trackid).playCount.set(++val.playCount);
-			self['updateNowPlaying']();
+			datastore.track(trackid).playCount.set(++val.playCount);
+			self.updateNowPlaying();
 		}
 
-		var o	= datastore['data.user.current.library.processed'];
+		var o	= datastore.data.user.current.library.processed;
 		for (var k in o) {
 			var processedTrack	= o[k];
-			processedTrack.nowPlayingClass	= processedTrack.id == self['currentTrack'] ? 'now-playing' : '';
+			processedTrack.nowPlayingClass	= processedTrack.id == self.currentTrack ? 'now-playing' : '';
 		}
 	});
 };
 
 
-self['mute']	= function (shouldMute) {
-	shouldMute != false ? self['player.mute']() : self['player.unMute']();
+self.mute	= function (shouldMute) {
+	shouldMute != false ? self.player.mute() : self.player.unMute();
 };
 
 
-self['onFinished']	= function (callback) {
+self.onFinished	= function (callback) {
 	window.onYouTubeVideoFinished	= function () {
-		self['play'](false);
-		window.clearInterval(ui['slider.playInterval']);
+		self.play(false);
+		window.clearInterval(ui.slider.playInterval);
 		callback && callback();
 	};
 };
 
 
-self['play']	= function (shouldPlay, noUpdate) {
-	self['isPlaying']	= shouldPlay == false ? false : true;
+self.play	= function (shouldPlay, noUpdate) {
+	self.isPlaying	= shouldPlay == false ? false : true;
 
-	self['isPlaying'] ? self['volume'](100) : self['volume'](0);
+	self.isPlaying ? self.volume(100) : self.volume(0);
 
-	window.clearInterval(ui['slider.playInterval']);
-	if (self['isPlaying']) {
-		ui['slider.playInterval']	= window.setInterval(function () {
-			if (!ui['slider.valueJustChanged'] && self['isPlaying']) {
-				self['time']();
+	window.clearInterval(ui.slider.playInterval);
+	if (self.isPlaying) {
+		ui.slider.playInterval	= window.setInterval(function () {
+			if (!ui.slider.valueJustChanged && self.isPlaying) {
+				self.time();
 			}
 		}, 500);
 	}
 
-	self['isPlaying'] ? self['player.playVideo']() : self['player.pauseVideo']();
+	self.isPlaying ? self.player.playVideo() : self.player.pauseVideo();
 
-	ui['update']();
-	self['time']();
+	ui.update();
+	self.time();
 
 	if (noUpdate != true) {
-		self['updateNowPlaying']();
+		self.updateNowPlaying();
 	}
 };
 
 
-self['processTime']	= function (time) {
+self.processTime	= function (time) {
 	time	= time || 0;
 	return (time < 60 ? '0:' : '') + (time < 10 ? '0' : '') + ([].add(new Date (0, 0, 0, 0, 0, time).toLocaleTimeString().match(/[^0:].*/))[0] || 0);
 }
 
 
-self['sync']	= function (userid) {
-	userid		= userid || authentication['userid'];
-	var user	= datastore['user'](userid);
+self.sync	= function (userid) {
+	userid		= userid || authentication.userid;
+	var user	= datastore.user(userid);
 
-	datastore['user'](datastore['data.user.current.following']).nowPlayingChild.lastChange.off();
+	datastore.user(datastore.data.user.current.following).nowPlayingChild.lastChange.off();
 	
-	datastore['user']().following.set(userid);
+	datastore.user().following.set(userid);
 
 	user.nowPlayingChild.lastChange.on('value', function (o) {
 		var lastChange	= o.val();
@@ -295,18 +295,18 @@ self['sync']	= function (userid) {
 			var nowPlaying	= o.val();
 
 			var newTime		= nowPlaying.time + (nowPlaying.isPlaying ? timeOffset : 0);
-			var updatePlay	= function () { nowPlaying.isPlaying ? self['player.playVideo']() : self['player.pauseVideo'](); };
-			var updateTime	= function () { self['time'](newTime, true); };
+			var updatePlay	= function () { nowPlaying.isPlaying ? self.player.playVideo() : self.player.pauseVideo(); };
+			var updateTime	= function () { self.time(newTime, true); };
 
-			if (nowPlaying.track != self['currentTrack']) {
-				self['loadTrack'](nowPlaying.track, function () {
-					self['syncTimeouts'][0]	= window.setTimeout(function () {
-						if (nowPlaying.track == self['currentTrack']) {
-							self['player.pauseVideo']();
+			if (nowPlaying.track != self.currentTrack) {
+				self.loadTrack(nowPlaying.track, function () {
+					self.syncTimeouts[0]	= window.setTimeout(function () {
+						if (nowPlaying.track == self.currentTrack) {
+							self.player.pauseVideo();
 						}
-						self['syncTimeouts'][1]	= window.setTimeout(function () {
-							if (nowPlaying.track == self['currentTrack']) {
-								self['play'](nowPlaying.isPlaying, true);
+						self.syncTimeouts[1]	= window.setTimeout(function () {
+							if (nowPlaying.track == self.currentTrack) {
+								self.play(nowPlaying.isPlaying, true);
 								updateTime();
 							}
 						}, 3000);
@@ -318,68 +318,68 @@ self['sync']	= function (userid) {
 				updateTime();
 			}
 
-			ui['update']();
+			ui.update();
 		});
 	});
 };
 
 
-self['time']	= function (newTime, noUpdate) {
+self.time	= function (newTime, noUpdate) {
 	newTime	= newTime === 0 ? 1 : newTime;
 
-	if (newTime && Math.abs(newTime - self['time']()) < 5) {
+	if (newTime && Math.abs(newTime - self.time()) < 5) {
 		return newTime;
 	}
 
 	if (newTime) {
-		self['newTime']	= newTime;
+		self.newTime	= newTime;
 
 		if (noUpdate != true) {
-			self['updateNowPlaying']();
+			self.updateNowPlaying();
 		}
 		else {
-			self['player.seekTo'](newTime, true);
+			self.player.seekTo(newTime, true);
 		}
 	}
 
-	if ((newTime >= self['length']() || self['player.getCurrentTime']() >= self['length']()) && self['isPlaying']) {
-		self['isPlaying']	= false;
-		self['newTime']	= 0;
-		ui['update']();
+	if ((newTime >= self.length() || self.player.getCurrentTime() >= self.length()) && self.isPlaying) {
+		self.isPlaying	= false;
+		self.newTime	= 0;
+		ui.update();
 	}
 
-	self['newTime']			= self['player.getCurrentTime']() || self['newTime'];
-	self['newTimeProcessed']	= self['processTime'](self['newTime']);
+	self.newTime			= self.player.getCurrentTime() || self.newTime;
+	self.newTimeProcessed	= self.processTime(self.newTime);
 	
-	if (self['newTime']) {
-		datastore['user']().nowPlayingChild.time.set(self['newTime']);		
+	if (self.newTime) {
+		datastore.user().nowPlayingChild.time.set(self.newTime);		
 	}
 	
-	ui['slider.animatedSetValue'](self['newTime']);
-	ui['update']();
+	ui.slider.animatedSetValue(self.newTime);
+	ui.update();
 
-	return self['newTime'];
+	return self.newTime;
 };
 
 
-self['updateNowPlaying']	= function () {
-	datastore['user']().nowPlaying.set({
-		isPlaying: self['isPlaying'],
+self.updateNowPlaying	= function () {
+	datastore.user().nowPlaying.set({
+		isPlaying: self.isPlaying,
 		lastChange: Date.now(),
-		time: self['newTime'],
-		track: self['currentTrack']
+		time: self.newTime,
+		track: self.currentTrack
 	});
 
-	ui['update']();
+	ui.update();
 };
 
 
-self['volume']	= function (newVolume) {
+self.volume	= function (newVolume) {
 	if (!window.isNaN(newVolume)) {
-		self['player.setVolume'](newVolume);
+		self.player.setVolume(newVolume);
 	}
 
-	return self['player.getVolume']();
+	return self.player.getVolume();
 };
 
 

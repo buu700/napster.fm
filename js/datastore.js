@@ -59,7 +59,7 @@ var user;
 
 
 
-self['data']	= {
+self.data	= {
 	group: {},
 	lastPlayed: {
 		processed: {}
@@ -69,15 +69,15 @@ self['data']	= {
 };
 
 
-self['root']	= new Firebase('https://napsterfm.firebaseio.com/');
+self.root	= new Firebase('https://napsterfm.firebaseio.com/');
 
 
 
 
-self['group']	= function (id) {
+self.group	= function (id) {
 	id	= (id || 0).toString();
 
-	var group	= self['root.child']('group').child(id);
+	var group	= self.root.child('group').child(id);
 
 	group.members	= group.child('members');
 	group.member	= function (id) {
@@ -104,15 +104,15 @@ self['group']	= function (id) {
 };
 
 
-self['lastPlayed']	= function () {
-	return self['root.child']('lastPlayed');
+self.lastPlayed	= function () {
+	return self.root.child('lastPlayed');
 };
 
 
-self['track']	= function (id) {
+self.track	= function (id) {
 	id	= id.toString();
 
-	var track	= self['root.child']('track').child(id);
+	var track	= self.root.child('track').child(id);
 
 	track.artist		= track.child('artist');
 	track.genre			= track.child('genre');
@@ -129,10 +129,10 @@ self['track']	= function (id) {
 };
 
 
-self['user']	= function (id) {
-	id	= (id || authentication['userid']).toString();
+self.user	= function (id) {
+	id	= (id || authentication.userid).toString();
 
-	var user	= self['root.child']('user').child(id);
+	var user	= self.root.child('user').child(id);
 
 	user.groups	= user.child('groups');
 	user.group	= function (id) {

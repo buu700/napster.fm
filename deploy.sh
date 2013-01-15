@@ -35,7 +35,7 @@ echo -e "goog.provide('init');\n\ngoog.require('exports');\n\n${initText}" > js/
 
 ./export.sh "${namespaces[@]}"
 
-js/closure-library/closure/bin/build/closurebuilder.py --root=js $namespaceArgs -n exports -n init --output_mode=compiled --compiler_jar=compiler.jar --compiler_flags="--compilation_level=WHITESPACE_ONLY" --compiler_flags="--externs=js/externs.js" --output_file=js/napster.js
+js/closure-library/closure/bin/build/closurebuilder.py --root=js $namespaceArgs -n exports -n init --output_mode=compiled --compiler_jar=compiler.jar --compiler_flags="--compilation_level=ADVANCED_OPTIMIZATIONS" --compiler_flags="--externs=js/externs.js" --output_file=js/napster.js
 
 # java -jar yuicompressor.jar --nomunge --type js -o js/napster.js.tmp js/napster.js
 # mv js/napster.js.tmp js/napster.js

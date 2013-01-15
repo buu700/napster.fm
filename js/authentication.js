@@ -104,41 +104,41 @@ var _usernameToEmail	= function (username) { return '{0}@firebase.com'.assign({0
 
 
 
-self['init']	= function () {
-	self['cookieAge']	= 5000000;
-	self['token']		= goog.net.cookies.get(_tokenKey);
-	self['userid']		= goog.net.cookies.get(_useridKey);
-	self['username']	= goog.net.cookies.get(_usernameKey);
+self.init	= function () {
+	self.cookieAge	= 5000000;
+	self.token		= goog.net.cookies.get(_tokenKey);
+	self.userid		= goog.net.cookies.get(_useridKey);
+	self.username	= goog.net.cookies.get(_usernameKey);
 
 	/* Authenticate on startup when possible */
-	if (self['token']) {
-		datastore['root']['auth'](self['token']);
-		datastore['user']().isOnline.set(true);
-		datastore['user']().isOnline.setOnDisconnect(false);
+	if (self.token) {
+		datastore.root.auth(self.token);
+		datastore.user().isOnline.set(true);
+		datastore.user().isOnline.setOnDisconnect(false);
 	}
 };
 
 
-self['getUsername']	= function (userid, callback) {
-	datastore['user'](userid).username.once('value', function (o) {
+self.getUsername	= function (userid, callback) {
+	datastore.user(userid).username.once('value', function (o) {
 		callback(o.val().replace('@firebase.com', ''));
 	});
 };
 
 
-self['hash']	= function (text) {
+self.hash	= function (text) {
 	return new goog.crypt.Hmac(new goog.crypt.Sha256(), 'napster').getHmac(text).map(function (n) { return n.toString(36); }).join('');
 };
 
 
-self['login']	= function (username, password) {
+self.login	= function (username, password) {
 	var status	= new goog.async.Deferred();
 
-	new FirebaseAuthClient(datastore['root']).login('password', _usernameToEmail(username), password, function (error, token, user) {
+	new FirebaseAuthClient(datastore.root).login('password', _usernameToEmail(username), password, function (error, token, user) {
 		if (!error) {
-			goog.net.cookies.set(_tokenKey, token, self['cookieAge']);
-			goog.net.cookies.set(_useridKey, user.id, self['cookieAge']);
-			goog.net.cookies.set(_usernameKey, username, self['cookieAge']);
+			goog.net.cookies.set(_tokenKey, token, self.cookieAge);
+			goog.net.cookies.set(_useridKey, user.id, self.cookieAge);
+			goog.net.cookies.set(_usernameKey, username, self.cookieAge);
 
 			document.location.reload(true);
 		}
@@ -152,8 +152,8 @@ self['login']	= function (username, password) {
 };
 
 
-self['logout']	= function () {
-	datastore['root']['unauth']();
+self.logout	= function () {
+	datastore.root.unauth();
 
 	goog.net.cookies.remove(_tokenKey);
 	goog.net.cookies.remove(_useridKey);
@@ -163,10 +163,10 @@ self['logout']	= function () {
 };
 
 
-self['createUser']	= function (username, password) {
+self.createUser	= function (username, password) {
 	var status	= new goog.async.Deferred();
 
-	new FirebaseAuthClient(datastore['root']).createUser(_usernameToEmail(username), password, function (error, user) {
+	new FirebaseAuthClient(datastore.root).createUser(_usernameToEmail(username), password, function (error, user) {
 		if (!error) {
 			/* TODO: Do something here */
 		}
@@ -180,10 +180,10 @@ self['createUser']	= function (username, password) {
 };
 
 
-self['changePassword']	= function (username, oldPassword, newPassword) {
+self.changePassword	= function (username, oldPassword, newPassword) {
 	var status	= new goog.async.Deferred();
 
-	new FirebaseAuthClient(datastore['root']).changePassword(_usernameToEmail(username), oldPassword, newPassword, function (error, success) {
+	new FirebaseAuthClient(datastore.root).changePassword(_usernameToEmail(username), oldPassword, newPassword, function (error, success) {
 		if (!error) {
 			/* TODO: Do something here */
 		}

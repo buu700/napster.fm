@@ -45,7 +45,7 @@ var stream;
 
 
 
-self['metadata']	= function (title, artist, callback) {
+self.metadata	= function (title, artist, callback) {
 	var request	= {
 		callback: 'callback',
 		type: 'master',
@@ -67,7 +67,7 @@ self['metadata']	= function (title, artist, callback) {
 			var genre		= (result.genre || [])[0];
 			var year		= result.year;
 
-			var id			= authentication['hash'](title + artist + year);
+			var id			= authentication.hash(title + artist + year);
 
 			results.add({title: title, artist: artist, genre: genre, year: year, id: id});
 			defers.add(new goog.async.Deferred());
@@ -78,14 +78,14 @@ self['metadata']	= function (title, artist, callback) {
 };
 
 
-self['search']	= function (title, artist, callback) {
-	self['metadata'](title, artist, function (metadataResults, metadataDefers) {
+self.search	= function (title, artist, callback) {
+	self.metadata(title, artist, function (metadataResults, metadataDefers) {
 		var defer	= goog.async.DeferredList.gatherResults(metadataDefers);
 
 		for (var i = 0 ; i < metadataResults.length ; ++i) {
 			var metadataResult	= metadataResults[i];
 
-			self['stream'](metadataResult.title, metadataResult.artist, i, function (streamResult, i) {
+			self.stream(metadataResult.title, metadataResult.artist, i, function (streamResult, i) {
 				metadataDefers[i].callback(streamResult, i);
 			});
 		}
@@ -105,7 +105,7 @@ self['search']	= function (title, artist, callback) {
 			var finalResults	= metadataResults.findAll(fnYoutubeid).unique(fnYoutubeid).sortBy(fnYoutubeviews, true);
 
 			finalResults.forEach(function (o) {
-				var track	= datastore['track'](o.id);
+				var track	= datastore.track(o.id);
 
 				track.update(
 					{
@@ -127,7 +127,7 @@ self['search']	= function (title, artist, callback) {
 };
 
 
-self['stream']	= function (title, artist, index, callback) {
+self.stream	= function (title, artist, index, callback) {
 	artist	= artist.replace('Various', 'Song');
 
 	var exclude	= function (array) {
