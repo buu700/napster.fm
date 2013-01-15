@@ -22,7 +22,7 @@ function exportMembers {
 	# Just making the modification an arbitrarily high number of levels deep for now because I don't care enough to find a more elegant solution
 	for i in {0..100} ; do
 		levels="`yes "${level}" | head -n${i} | tr '\n' ' ' | sed 's/ //g'`" # $level * $i
-		for file in "`ls *.js`" ; do
+		for file in `ls *.js` ; do
 			regexInPlace "s/(${namespace}${levels})\.(.*?)([^A-Za-z0-9$_])/\1\['\2'\]\3/g" "${file}"
 		done
 	done
