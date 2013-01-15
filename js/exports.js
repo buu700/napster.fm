@@ -2,28 +2,28 @@ goog.provide('exports');
 goog.require('require');
 goog.require('authentication');
 /** @expose */
-authentication = authentication;
+authentication;
 goog.require('closurequery');
 /** @expose */
-closurequery = closurequery;
+closurequery;
 goog.require('controllers');
 /** @expose */
-controllers = controllers;
+controllers;
 goog.require('datastore');
 /** @expose */
-datastore = datastore;
+datastore;
 goog.require('debug');
 /** @expose */
-debug = debug;
+debug;
 goog.require('require');
 /** @expose */
-require = require;
+require;
 goog.require('services');
 /** @expose */
-services = services;
+services;
 goog.require('stream');
 /** @expose */
-stream = stream;
+stream;
 goog.require('ui');
 /** @expose */
-ui = ui;
+ui;
