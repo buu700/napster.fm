@@ -5,33 +5,22 @@ cd js
 
 echo -e "goog.provide('exports');" > exports.js
 
-echo -e '/** @preserve EXPORT */' >> exports.js
-
-
 echo -e "goog.require('require');" >> exports.js
-for namespace in ${@} ; do
+
+
+for namespace in "${@}" ; do
 	echo "goog.require('${namespace}');" >> exports.js
+	echo "window['${namespace}'] = ${namespace};" >> exports.js
 done
 
 
-# echo -e 'window["exports"] = {' >> exports.js
+function regexInPlace { cat "${2}" | perl -pe "${1}" > ".${2}.tmp" && mv ".${2}.tmp" "${2}"; }
+level="\['.*'\]"
 
-# for namespace in ${@} ; do
-# 	cat ../*.html | grep -oP "${namespace}\.[^ ].*?[()'\",};]" | while read member ; do
-# 		member="${member:0:${#member}-1}"
-# 		echo "\"${member}\": ${member}," >> exports.js
-# 
-# 		cat ../*.html | grep -oP "[\"'].*? in ${member}" | while read repeat ; do
-# 			repeat="${repeat:1}"
-# 			var="`echo "${repeat}" | awk '{print $1}'`"
-# 
-# 			cat ../*.html | grep -oP "${var}\.[^ ].*?[()'\",};]" | while read repeatMember ; do
-# 				suffix="${repeatMember:${#var}}"
-# 				newMember="${member}[0]${suffix}"
-# 				echo "\"${repeatMember}\": ${newMember}," >> exports.js
-# 			done
-# 		done
-# 	done
-# done
-
-# echo -e '"EXPORT.END": "EXPORT.END" };' >> exports.js
+for namespace in "self ${@}" ; do
+	# Just making the modification an arbitrarily high number of levels deep for now because I don't care enough to find a more elegant solution
+	for i in {0..100} ; do
+		levels="`yes "${level}" | head -n${i} | tr '\n' ' ' | sed 's/ //g'`" # $level * $i
+		regexInPlace "s/(${namespace}${levels})\.(.*?)([^A-Za-z0-9$_])/\1\['\2'\]\3/g" *.js
+	done
+done
