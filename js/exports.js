@@ -1,12 +1,20 @@
 goog.provide('exports');
-/** @preserve EXPORT */
 goog.require('require');
 goog.require('authentication');
+window['authentication'] = authentication;
 goog.require('closurequery');
+window['closurequery'] = closurequery;
 goog.require('controllers');
+window['controllers'] = controllers;
 goog.require('datastore');
+window['datastore'] = datastore;
 goog.require('debug');
+window['debug'] = debug;
 goog.require('require');
+window['require'] = require;
 goog.require('services');
+window['services'] = services;
 goog.require('stream');
+window['stream'] = stream;
 goog.require('ui');
+window['ui'] = ui;
