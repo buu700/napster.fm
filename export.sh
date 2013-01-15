@@ -14,7 +14,7 @@ for namespace in "${@}" ; do
 done
 
 
-function regexInPlace { cat "${2}" | perl -pe "${1}" > ".${2}.tmp" && mv ".${2}.tmp" "${2}" && cat "${2}"; }
+function regexInPlace { cat "${2}" | perl -pe "${1}" > ".${2}.tmp" && mv ".${2}.tmp" "${2}" && echo "${2}"; }
 level="\['.*'\]"
 
 function exportMembers {
