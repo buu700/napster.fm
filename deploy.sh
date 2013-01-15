@@ -48,4 +48,4 @@ git push
 
 
 cd ..
-#rm -rf build
+rm -rf build
