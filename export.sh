@@ -23,7 +23,7 @@ function exportMembers {
 	for i in {0..100} ; do
 		levels="`yes "${level}" | head -n${i} | tr '\n' ' ' | sed 's/ //g'`" # $level * $i
 		for file in `ls *.js` ; do
-			regexInPlace "s/(${namespace}${levels})\.(.*?)([^A-Za-z0-9$_])/\1\['\2'\]\3/g" "${file}"
+			regexInPlace "s/(?<"'!'"[\.\"'])(${namespace}${levels})\.(.*?)([^A-Za-z0-9$_])/\1\['\2'\]\3/g" "${file}"
 		done
 	done
 }

@@ -28,7 +28,7 @@ var playButtonClass;
 
 /**
 * @field
-* @property {goog.ui['Slider']}
+* @property {goog.ui.Slider}
 */
 var slider;
 
@@ -79,12 +79,12 @@ self['init']	= function () {
 
 
 	/*** Library ***/
-	var tableSorter	= new goog.ui['TableSorter']();
-	tableSorter.setDefaultSortFunction(goog.ui['TableSorter.alphaSort']);
+	var tableSorter	= new goog.ui.TableSorter();
+	tableSorter.setDefaultSortFunction(goog.ui.TableSorter.alphaSort);
 	tableSorter.decorate($('#library-table')[0]);
 
 
-	self['slider']	= new goog.ui['Slider']();
+	self['slider']	= new goog.ui.Slider();
 
 	self['slider.setHandleMouseWheel'](true);
 	self['slider.setMoveToPointEnabled'](true);
