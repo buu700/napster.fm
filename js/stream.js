@@ -164,7 +164,6 @@ self.init	= function () {
 		self.player	= new YT.Player($('#stream')[0], {
 			height: '390',
 			width: '640',
-			html5: '1',
 			events: {
 				'onReady': onYouTubePlayerReady,
 				'onStateChange': onYouTubePlayerStateChange,
