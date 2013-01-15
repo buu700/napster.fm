@@ -1,20 +1,29 @@
 goog.provide('exports');
 goog.require('require');
 goog.require('authentication');
-/** @expose */\nauthentication = authentication;
+/** @expose */
+authentication = authentication;
 goog.require('closurequery');
-/** @expose */\nclosurequery = closurequery;
+/** @expose */
+closurequery = closurequery;
 goog.require('controllers');
-/** @expose */\ncontrollers = controllers;
+/** @expose */
+controllers = controllers;
 goog.require('datastore');
-/** @expose */\ndatastore = datastore;
+/** @expose */
+datastore = datastore;
 goog.require('debug');
-/** @expose */\ndebug = debug;
+/** @expose */
+debug = debug;
 goog.require('require');
-/** @expose */\nrequire = require;
+/** @expose */
+require = require;
 goog.require('services');
-/** @expose */\nservices = services;
+/** @expose */
+services = services;
 goog.require('stream');
-/** @expose */\nstream = stream;
+/** @expose */
+stream = stream;
 goog.require('ui');
-/** @expose */\nui = ui;
+/** @expose */
+ui = ui;
