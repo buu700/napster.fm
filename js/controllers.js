@@ -9,10 +9,12 @@ angular.module('Napster', []).controller('Controller', ['$scope', function ($sco
 	$scope.ui				= ui;
 
 
+	var user	= datastore.data.user.current;
+
+
 	if (!authentication.token) {
 		return;
 	}
-
 
 
 	/* https://coderwall.com/p/ngisma */
@@ -28,105 +30,73 @@ angular.module('Napster', []).controller('Controller', ['$scope', function ($sco
 	};
 
 
-
-	var fnValueCache	= {};
-	var fnValue			= function (dataLocation, key, cacheKey) {
-		var fn	= function (newData) { dataLocation[key] = newData.val(); ui.update(); };
-		fnValueCache[cacheKey]	= fnValueCache[cacheKey] || fn;
-		return fnValueCache[cacheKey];
-	};
-
-	var fnChildAddedCache	= {};
-	var fnChildAdded		= function (dataLocation, cacheKey) {
-		var fn	= function (newData) { dataLocation[newData.name()] = newData.val(); ui.update(); };
-		fnChildAddedCache[cacheKey]	= fnChildAddedCache[cacheKey] || fn;
-		return fnChildAddedCache[cacheKey];
-	};
-
-	var trackKeys	= function (o) { return goog.object.getKeys(o).exclude('processed').filter(function (s) { return typeof(o[s]) == 'string'; }); };
-
-
 	datastore.lastPlayed().limit(500).on('child_added', function (newData) {
-		fnChildAdded(datastore.data.lastPlayed)(newData);
+		var trackid	= newData.val();
+		datahelpers.syncTrack(trackid);
+		/* Using newData.name() for key because lastPlayed is ordered data */
+		datastore.lastPlayed[newData.name()]	= datastore.data.track[trackid];
+	});
 
-		trackKeys(datastore.data.lastPlayed).forEach(function (key) {
-			var trackid		= datastore.data.lastPlayed[key];
-			var cacheKey	= 'track' + trackid;
-
-			datastore.track(trackid).off('value', fnValue(datastore.data.track, trackid, cacheKey));
-			datastore.track(trackid).on('value', function (track) {
-				fnValue(datastore.data.track, trackid, cacheKey)(track);
-				datastore.data.lastPlayed.processed[trackid]	= track.val();
-			});
+	datastore.user().following.on('value', function (newData) {
+		var userid	= newData.val();
+		authentication.getUsername(userid, function (username) {
+			user.following	= [userid, username];
 		});
 	});
 
-	datastore.user().on('value', function (newData) {
-		fnValue(datastore.data.user, authentication.userid)(newData);
+	datastore.user().groups.on('child_added', function (newData) {
+		var groupid	= newData.val();
+		datahelpers.syncGroup(groupid);
+		user.groups[groupid]	= datastore.data.group[groupid];
+	});
+	datastore.user().groups.on('child_removed', function (newData) {
+		datahelpers.onChildRemoved(user.groups)(newData);
+		datahelpers.syncGroup(newData.val(), true);
+	});
 
-		var user	= datastore.data.user[authentication.userid];
-
-		if (user.isOnline == false) {
-			datastore.user().isOnline.set(true);
-			return;
-		}
-		
-		for (var key in user.groups) {
-			var group		= user.groups[key];
-			var cacheKey	= 'group' + group;
-			var cacheKeys	= {members: cacheKey + 'members', messages: cacheKey + 'messages', name: cacheKey + 'name'};
-
-			var members		= datastore.group(group).members().limit(500);
-			var messages	= datastore.group(group).messages().limit(500);
-			var name		= datastore.group(group).name;
-
-			datastore.data.group[key]	= datastore.data.group[key] || {members: {}, messages: {}, name: ''};
-
-			members.off('child_added', fnChildAdded(datastore.data.group[group].members, cacheKeys.members));
-			members.on('child_added', fnChildAdded(datastore.data.group[group].members, cacheKeys.members));
-			messages.off('child_added', fnChildAdded(datastore.data.group[group].messages, cacheKeys.messages));
-			messages.on('child_added', fnChildAdded(datastore.data.group[group].messages, cacheKeys.messages));
-			name.off('value', fnValue(datastore.data.group[group], 'name', cacheKeys.name));
-			name.on('value', fnValue(datastore.data.group[group], 'name', cacheKeys.name));
-		}
-
-		/* TODO: Factor this out; the logic will be needed elsewhere */
-		user.library			= user.library || {};
-		user.library.processed	= user.library.processed || {};
-		trackKeys(user.library).map(function (key) { return user.library[key]; }).add(user.nowPlaying.track).unique().compact().forEach(function (trackid) {
-			var cacheKey	= 'track' + trackid;
-
-			datastore.track(trackid).off('value', fnValue(datastore.data.track, trackid, cacheKey));
-			datastore.track(trackid).on('value', function (track) {
-				fnValue(datastore.data.track, trackid, cacheKey)(track);
-				
-				var processedTrack			= track.val();
-				processedTrack.id			= trackid;
-				processedTrack.length		= stream.processTime(processedTrack.length);
-				processedTrack.lastPlayed	= new Date(processedTrack.lastPlayed).format('{12hr}{tt}, {yyyy}-{MM}-{dd}');
-
-				authentication.getUsername(processedTrack.lastPlayedBy, function (username) {
-					processedTrack.lastPlayedBy		= username;
-
-					processedTrack.nowPlayingClass	= '';
-					if (processedTrack.id == (stream.currentTrack || user.nowPlaying.track)) {
-						processedTrack.nowPlayingClass	= 'now-playing';
-						user.nowPlayingProcessed		= processedTrack;
-					}
-
-					user.library.processed[trackid]	= processedTrack;
-					ui.update();
-
-					if (stream.player.stopVideo && !window.libraryIsLoaded) {
-						window.libraryIsLoaded	= true;
-						stream.sync();
-					}
-				});
-			});
+	datastore.user().hotlist.on('child_added', function (newData) {
+		var userid	= newData.val();
+		authentication.getUsername(userid, function (username) {
+			user.hotlist[userid]	= username;
+			ui.update();
 		});
+	});
+	datastore.user().hotlist.on('child_removed', datahelpers.onChildRemoved(user.hotlist));
+	
+	datastore.user().isOnline.on('value', function (newData) {
+		if (newData.val() == false) {
+			datastore.user().isOnline.set(true);
+			ui.update();
+		}
+	});
 
-		datastore.data.user.current	= user;
-		window.datastoreIsReady		= true;
-		ui.update();
+	datastore.user().library.on('child_added', function (newData) {
+		var trackid	= newData.val();
+		datahelpers.syncTrack(trackid);
+		user.library[trackid]	= datastore.data.track[trackid];
+	});
+	datastore.user().library.on('child_removed', function (newData) {
+		datahelpers.onChildRemoved(user.library)(newData);
+		/* Not stopping track sync in case lastPlayed and library have overlap */
+	});
+
+	datastore.user().nowPlaying.on('value', function (newData) {
+		var trackid	= newData.val().track;
+		datahelpers.onValue(user, 'nowPlaying')(newData);
+		datahelpers.syncTrack(trackid);
+		user.nowPlaying.track	= datastore.data.track[trackid];
+	});
+
+	datastore.user().transfers.on('child_added', function (newData) {
+		var key			= newData.name();
+		var transfer	= newData.val();
+		var trackid		= transfer.track;
+		var userid		= transfer.from;
+		datahelpers.onChildAdded(user, 'transfers')(newData);
+		datahelpers.syncTrack(trackid);
+		user.transfers[key].track	= datastore.data.track[trackid];
+		authentication.getUsername(userid, function (username) {
+			user.transfers[key].from	= [userid, username];
+		});
 	});
 }]);

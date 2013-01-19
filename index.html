@@ -43,8 +43,8 @@
 		<div id='player'>
 			<button onclick='stream.play(!stream.isPlaying)' class='play-button' ng-class='ui.playButtonClass'></button>
 			<div onclick='ui.slider.onclick()' class='slider'></div>
-			<span class='track'>"{{datastore.data.user.current.nowPlayingProcessed.title}}" by {{datastore.data.user.current.nowPlayingProcessed.artist}}</span>
-			<span class='time'>{{stream.newTimeProcessed}} / {{datastore.data.user.current.nowPlayingProcessed.length}}</span>
+			<span class='track'>"{{datastore.data.user.current.nowPlaying.track.title}}" by {{datastore.data.user.current.nowPlaying.track.artist}}</span>
+			<span class='time'>{{stream.newTimeProcessed}} / {{datastore.data.user.current.nowPlaying.track.length}}</span>
 		</div>
 
 		<div hash-location='#home'>
@@ -94,7 +94,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-repeat='track in datastore.data.user.current.library.processed' ng-class='track.nowPlayingClass'>
+					<tr ng-repeat='track in datastore.data.user.current.library' ng-class='track.nowPlayingClass'>
 						<td ng-click='stream.loadTrack(track.id)'></td>
 						<td>{{track.title}}</td>
 						<td>{{track.artist}}</td>
@@ -167,12 +167,13 @@
 		<script src='js/closurequery.js'></script>
 
 		<script src='js/authentication.js'></script>
-		<script src='js/controllers.js'></script>
 		<script src='js/datastore.js'></script>
+		<script src='js/datahelpers.js'></script>
 		<script src='js/debug.js'></script>
 		<script src='js/services.js'></script>
 		<script src='js/stream.js'></script>
 		<script src='js/ui.js'></script>
+		<script src='js/controllers.js'></script>
 		
 		<script src='js/init.js'></script>
 

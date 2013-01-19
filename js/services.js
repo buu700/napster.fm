@@ -133,7 +133,7 @@ self.stream	= function (title, artist, index, callback) {
 	var exclude	= function (array) {
 		return array.reduce(function (a, b) {
 			var s	= b.toLowerCase();
-			return a + (!title.toLowerCase().has(s) && !artist.toLowerCase().has(s) ? ' -"{0}"'.assign({0: s}) : '');
+			return a + (!title.toLowerCase().has(s) && !artist.toLowerCase().has(s) ? ' -title:"{0}"'.assign({0: s}) : '');
 		}, '');
 	};
 
@@ -141,7 +141,7 @@ self.stream	= function (title, artist, index, callback) {
 			callback: 'callback',
 			alt: 'json-in-script',
 			v: 2,
-			q: '{0} {1} {2}'.assign({0: title, 1: artist, 2: exclude([])})
+			q: '{0} {1} {2}'.assign({0: title, 1: artist, 2: exclude(['parody', 'karaoke', 'dance', 'how to'])})
 		},
 		function (response) {
 			if (!goog.object.getValueByKeys(response, 'feed', 'entry')) {
@@ -163,7 +163,7 @@ self.stream	= function (title, artist, index, callback) {
 			var fnEmbeddable	= function (o) { return o.isEmbeddable; };
 			var fnYoutubeviews	= function (o) { return o.youtubeviews; };
 
-			var finalResults	= results.findAll(fnEmbeddable).slice(0, 5).sortBy(fnYoutubeviews, true);
+			var finalResults	= results.findAll(fnEmbeddable).slice(0, 3).sortBy(fnYoutubeviews, true);
 
 			callback(finalResults[0] || {}, index);
 		}
