@@ -16,6 +16,12 @@ var self	= this;
 
 /**
 * @field
+* @property {string}
+*/
+var currentTrack;
+
+/**
+* @field
 * @property {bool}
 */
 var isPlaying;
@@ -136,9 +142,10 @@ var volume;
 
 self.init	= function () {
 	var onYouTubePlayerReady = function () {
-		var wait		= new goog.async.ConditionalDelay(function () { return window.datastoreIsReady; });
+		var wait		= new goog.async.ConditionalDelay(function () { return !!datastore.data.user.current.nowPlaying.track; });
 		wait.onSuccess	= function () {
 			self.onFinished();
+			self.sync();
 		};
 		wait.start();
 	};
@@ -224,11 +231,9 @@ self.loadTrack	= function (trackid, callback, noUpdate) {
 			self.updateNowPlaying();
 		}
 
-		var o	= datastore.data.user.current.library.processed;
-		for (var k in o) {
-			var processedTrack	= o[k];
-			processedTrack.nowPlayingClass	= processedTrack.id == self.currentTrack ? 'now-playing' : '';
-		}
+		goog.object.forEach(datastore.data.user.current.library, function (track) {
+			track.nowPlayingClass	= track.id == self.currentTrack ? 'now-playing' : '';
+		});
 	});
 };
 
@@ -282,7 +287,7 @@ self.sync	= function (userid) {
 	userid		= userid || authentication.userid;
 	var user	= datastore.user(userid);
 
-	datastore.user(datastore.data.user.current.following).nowPlayingChild.lastChange.off();
+	datastore.user(datastore.data.user.current.following[0]).nowPlayingChild.lastChange.off();
 	
 	datastore.user().following.set(userid);
 

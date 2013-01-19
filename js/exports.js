@@ -9,6 +9,9 @@ closurequery;
 goog.require('controllers');
 /** @expose */
 controllers;
+goog.require('datahelpers');
+/** @expose */
+datahelpers;
 goog.require('datastore');
 /** @expose */
 datastore;

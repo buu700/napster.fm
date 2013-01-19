@@ -61,12 +61,23 @@ var user;
 
 self.data	= {
 	group: {},
-	lastPlayed: {
-		processed: {}
-	},
+	lastPlayed: {},
 	track: {},
 	user: {}
 };
+
+self.data.user[authentication.userid]	= {
+	following: [],
+	groups: {},
+	hotlist: {},
+	isOnline: true,
+	library: {},
+	nowPlaying: {},
+	transfers: {},
+	username: authentication.username
+};
+
+self.data.user.current	= self.data.user[authentication.userid];
 
 
 self.root	= new Firebase('https://napsterfm.firebaseio.com/');
