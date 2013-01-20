@@ -18,12 +18,6 @@ var self	= this;
 * @field
 * @property {string}
 */
-var pageLoadingClass;
-
-/**
-* @field
-* @property {string}
-*/
 var playButtonClass;
 
 /**
@@ -98,8 +92,11 @@ self.init	= function () {
 };
 
 self.update	= function () {
-	self.pageLoadingClass	= window.isNaN(stream.newTime) ? null : 'ready';
 	self.playButtonClass	= stream.isPlaying ? 'playing' : 'paused';
+
+	if (!window.isNaN(stream.newTime)) {
+		$('.loading').each(function ($elem) { $elem.removeNode(); });
+	}
 
 	self.postUpdate && self.postUpdate();
 };
