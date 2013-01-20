@@ -90,7 +90,9 @@ self.onValue	= function (dataLocation, key) {
 self.processTrack	= function (track, callback) {
 	var processedTrack			= track;
 	processedTrack.length		= stream.processTime(processedTrack.length);
-	processedTrack.lastPlayed	= new Date(processedTrack.lastPlayed || 30000000).format('{12hr}{tt}, {yyyy}-{MM}-{dd}');
+
+	/* Will equal epoch if not yet played */
+	processedTrack.lastPlayed	= new Date(processedTrack.lastPlayed || 0).format('{12hr}{tt}, {yyyy}-{MM}-{dd}');
 
 	authentication.getUsername(processedTrack.lastPlayedBy, function (username) {
 		processedTrack.lastPlayedBy		= username;

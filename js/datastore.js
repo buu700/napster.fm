@@ -72,7 +72,13 @@ self.data.user[authentication.userid]	= {
 	hotlist: {},
 	isOnline: true,
 	library: {},
-	nowPlaying: {},
+	nowPlaying: {
+		/* Defaults to rickroll if user is new or otherwise has no value set here */
+		isPlaying: false,
+		lastChange: 0,
+		time: 0,
+		track: '6s3m5w303h62573j214g5y84h3b42692364435w5e1q2p534ba9n7150s1b'
+	},
 	transfers: {},
 	username: authentication.username
 };
