@@ -16,6 +16,28 @@ var self	= this;
 
 /**
 * @function
+* @property {function} Returns generic handler for Firebase child_added event
+* @param {object} dataLocation
+*/
+var onChildAdded;
+
+/**
+* @function
+* @property {function} Returns generic handler for Firebase child_removed event
+* @param {object} dataLocation
+*/
+var onChildRemoved;
+
+/**
+* @function
+* @property {function} Returns generic handler for Firebase value event
+* @param {object} dataLocation
+* @param {string} key
+*/
+var onValue;
+
+/**
+* @function
 * @property {void} Processes track
 * @param {string} trackid
 * @param {function} callback
@@ -28,6 +50,13 @@ var processTrack;
 * @param {string} groupid
 */
 var syncGroup;
+
+/**
+* @function
+* @property {void} Syncs local data for specified track
+* @param {string} trackid
+*/
+var syncTrack;
 
 
 
