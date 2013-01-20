@@ -142,12 +142,12 @@ var volume;
 
 self.init	= function () {
 	var onYouTubePlayerReady = function () {
-		var wait		= new goog.async.ConditionalDelay(function () { return !!datastore.data.user.current.nowPlaying.track; });
+		var wait		= new goog.async.ConditionalDelay(function () { return datastore.data.user.current.nowPlaying.track; });
 		wait.onSuccess	= function () {
 			self.onFinished();
 			self.sync();
 		};
-		wait.start();
+		wait.start(1000, 60000);
 	};
 
 	var onYouTubePlayerStateChange = function (state) {
