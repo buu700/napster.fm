@@ -44,12 +44,6 @@ var newTimeProcessed;
 */
 var player;
 
-/**
-* @field
-* @property {2-Tuple (int)}
-*/
-var syncTimeouts;
-
 
 
 
@@ -145,6 +139,7 @@ self.init	= function () {
 		var wait		= new goog.async.ConditionalDelay(function () { return datastore.data.user.current.nowPlaying.track; });
 		wait.onSuccess	= function () {
 			self.onFinished();
+			self.volume(100);
 			self.sync();
 		};
 		wait.start(1000, 60000);
@@ -181,8 +176,6 @@ self.init	= function () {
 
 	datastore.user().nowPlayingChild.isPlaying.setOnDisconnect(false);
 	datastore.user().nowPlayingChild.lastChange.setOnDisconnect(0);
-
-	self.syncTimeouts	= [];
 };
 
 
@@ -197,71 +190,79 @@ self.length	= function () {
 
 
 self.loadTrack	= function (trackid, callback, noUpdate) {
-	self.player.stopVideo();
+	self.mute(true);
 	self.time(0, true);
+	self.player.stopVideo();
+	self.currentTrack	= trackid;
 
-	window.onYouTubeVideoStarted	= function () {
+	window.onYouTubeVideoStarted	= window.onYouTubeVideoStarted || function () {
 		window.onYouTubeVideoStarted	= null;
-		window.setTimeout(function () {
-			stream.volume(0);
-			self.time(0, true);
-			self.play(true, true);
-			datastore.track(self.currentTrack).length.set(self.length());
-			callback && callback();
-		}, 2000);
+		self.play(!noUpdate, true);
+
+		if (!noUpdate) {
+			var length	= self.length();
+			datastore.track(self.currentTrack).length.set(length);
+			ui.slider.setMaximum(length);
+		}
+
+		callback && callback();
 	};
 
-	datastore.track(trackid).once('value', function (o) {
-		var val	= o.val();
-		var id	= o.name();
+	var load	= function () {
+		var track	= datastore.data.track[trackid];
 
-		ui.slider.setMaximum(val.length);
+		goog.object.forEach(datastore.data.user.current.library, function (o) {
+			o.nowPlayingClass	= o.id == trackid && 'now-playing';
+		});
+
+		self.player.loadVideoById(track.youtubeid);
+		ui.slider.setMaximum(track.length);
 
 		datastore.track(trackid).lastPlayed.set(Date.now());
 		datastore.track(trackid).lastPlayedBy.set(authentication.userid);
-
-		datastore.lastPlayed().push(id);
-
-		self.player.loadVideoById(val.youtubeid);
-		
-		self.currentTrack	= trackid;
+		datastore.lastPlayed().push(trackid);
 		
 		if (noUpdate != true) {
-			datastore.track(trackid).playCount.set(++val.playCount);
+			datastore.track(trackid).playCount.set(++track.playCount);
 			self.updateNowPlaying();
 		}
+	};
 
-		goog.object.forEach(datastore.data.user.current.library, function (track) {
-			track.nowPlayingClass	= track.id == self.currentTrack ? 'now-playing' : '';
+	var wait		= new goog.async.ConditionalDelay(function () { return datastore.data.track[trackid]; });
+	wait.onSuccess	= load;
+	wait.onFailure	= function () {
+		datastore.track(trackid).once('value', function (o) {
+			datastore.data.track[trackid]	= o.val();
+			load();
 		});
-	});
+	};
+	wait.start(100, 1000);
 };
 
 
 self.mute	= function (shouldMute) {
-	shouldMute != false ? self.player.mute() : self.player.unMute();
+	shouldMute === false ? self.player.unMute() : self.player.mute();
 };
 
 
 self.onFinished	= function (callback) {
 	window.onYouTubeVideoFinished	= function () {
 		self.play(false);
-		window.clearInterval(ui.slider.playInterval);
 		callback && callback();
 	};
 };
 
 
 self.play	= function (shouldPlay, noUpdate) {
-	self.isPlaying	= shouldPlay == false ? false : true;
+	self.isPlaying	= shouldPlay === false ? false : true;
 
-	self.isPlaying ? self.volume(100) : self.volume(0);
+	self.mute(!self.isPlaying);
 
 	window.clearInterval(ui.slider.playInterval);
 	if (self.isPlaying) {
 		ui.slider.playInterval	= window.setInterval(function () {
 			if (!ui.slider.valueJustChanged && self.isPlaying) {
-				self.time();
+				self.time(undefined, true);
 			}
 		}, 500);
 	}
@@ -269,7 +270,7 @@ self.play	= function (shouldPlay, noUpdate) {
 	self.isPlaying ? self.player.playVideo() : self.player.pauseVideo();
 
 	ui.update();
-	self.time();
+	self.time(undefined, true);
 
 	if (noUpdate != true) {
 		self.updateNowPlaying();
@@ -291,38 +292,25 @@ self.sync	= function (userid) {
 	
 	datastore.user().following.set(userid);
 
-	user.nowPlayingChild.lastChange.on('value', function (o) {
+	user.nowPlayingChild.lastChange.once('value', function (o) {
 		var lastChange	= o.val();
 		var timeOffset	= (Date.now() - lastChange) / 1000;
 
 		user.nowPlaying.once('value', function (o) {
 			var nowPlaying	= o.val();
 
-			var newTime		= nowPlaying.time + (nowPlaying.isPlaying ? timeOffset : 0);
-			var updatePlay	= function () { nowPlaying.isPlaying ? self.player.playVideo() : self.player.pauseVideo(); };
-			var updateTime	= function () { self.time(newTime, true); };
+			var newTime	= nowPlaying.time + (nowPlaying.isPlaying ? timeOffset : 0);
+			var update	= function () {
+				self.play(nowPlaying.isPlaying, true);
+				self.time(newTime, true);
+			};
 
 			if (nowPlaying.track != self.currentTrack) {
-				self.loadTrack(nowPlaying.track, function () {
-					self.syncTimeouts[0]	= window.setTimeout(function () {
-						if (nowPlaying.track == self.currentTrack) {
-							self.player.pauseVideo();
-						}
-						self.syncTimeouts[1]	= window.setTimeout(function () {
-							if (nowPlaying.track == self.currentTrack) {
-								self.play(nowPlaying.isPlaying, true);
-								updateTime();
-							}
-						}, 3000);
-					}, 3000);
-				}, true);
+				self.loadTrack(nowPlaying.track, update, true);
 			}
 			else {
-				updatePlay();
-				updateTime();
+				update();
 			}
-
-			ui.update();
 		});
 	});
 };
@@ -359,7 +347,10 @@ self.time	= function (newTime, noUpdate) {
 		datastore.user().nowPlayingChild.time.set(self.newTime);		
 	}
 	
-	ui.slider.animatedSetValue(self.newTime);
+	if (Math.abs(self.newTime - ui.slider.getValue()) >= 1) {
+		ui.slider.animatedSetValue(self.newTime);
+	}
+
 	ui.update();
 
 	return self.newTime;
