@@ -98,7 +98,7 @@ self.init	= function () {
 };
 
 self.update	= function () {
-	self.pageLoadingClass	= window.isNaN(stream.newTime) ? 'loading' : '';
+	self.pageLoadingClass	= window.isNaN(stream.newTime) ? null : 'ready';
 	self.playButtonClass	= stream.isPlaying ? 'playing' : 'paused';
 
 	self.postUpdate && self.postUpdate();
