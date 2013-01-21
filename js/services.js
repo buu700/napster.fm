@@ -118,7 +118,9 @@ self.search	= function (title, artist, callback) {
 						youtubeviews: (o.youtubeviews || 0).toNumber()
 					}
 				);
-				datastore.data.track[o.id].playCount || track.update({playCount: 0});
+
+				var trackData	= datastore.data.track[o.id];
+				(trackData && trackData.playCount) || track.update({playCount: 0});
 			});
 
 			callback(finalResults);

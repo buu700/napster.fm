@@ -250,10 +250,13 @@ self.play	= function (shouldPlay) {
 	self.mute(!self.isPlaying);
 
 	if (self.isPlaying && self.time() == self.length()) {
+		self.player.playVideo();
 		self.time(0);
+		self.player.playVideo();
 	}
-
-	self.isPlaying ? self.player.playVideo() : self.player.pauseVideo();
+	else {
+		self.isPlaying ? self.player.playVideo() : self.player.pauseVideo();
+	}
 
 	self.time();
 };
