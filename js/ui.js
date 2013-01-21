@@ -88,11 +88,21 @@ self.init	= function () {
 		window.setTimeout(function () { self.slider.valueJustChanged = false; }, 1000);
 	};
 
+	window.setInterval(function () {
+		if (!self.slider.valueJustChanged && stream.isPlaying) {
+			stream.time();
+		}
+	}, 500);
+
 	self.slider.decorate($('#player .slider')[0]);
 };
 
 self.update	= function () {
 	self.playButtonClass	= stream.isPlaying ? 'playing' : 'paused';
+
+	goog.object.forEach(datastore.data.user.current.library, function (o) {
+		o.nowPlayingClass	= o.id == stream.currentTrack && 'now-playing';
+	});
 
 	if (!window.isNaN(stream.newTime)) {
 		$('.loading').each(function ($elem) { $elem.removeNode(); });

@@ -44,6 +44,12 @@ var newTimeProcessed;
 */
 var player;
 
+/**
+* @field
+* @property {int}
+*/
+var playerUpdated;
+
 
 
 
@@ -70,7 +76,6 @@ var length;
 * @property {void} Loads track in player
 * @param {string} trackid
 * @param {function} callback
-* @param {bool} noUpdate
 */
 var loadTrack;
 
@@ -92,7 +97,6 @@ var onFinished;
 * @function
 * @property {void} Plays or pauses current track
 * @param {bool} shouldPlay
-* @param {bool} noUpdate
 */
 var play;
 
@@ -114,7 +118,6 @@ var sync;
 * @function
 * @property {int} Gets or sets time in current track
 * @param {int} newTime
-* @param {bool} noUpdate
 */
 var time;
 
@@ -122,7 +125,7 @@ var time;
 * @function
 * @property {void} Updates datastore.data.user.current.nowPlaying with current state of player
 */
-var updateNowPlaying;
+var updatePlayer;
 
 /**
 * @function
@@ -155,7 +158,7 @@ self.init	= function () {
 		;
 
 		eventListener && eventListener();
-		ui.update();
+		self.updatePlayer();
 	};
 
 	var onYouTubePlayerError = function () {
@@ -189,54 +192,43 @@ self.length	= function () {
 };
 
 
-self.loadTrack	= function (trackid, callback, noUpdate) {
+self.loadTrack	= function (trackid, callback) {
 	self.mute(true);
-	self.time(0, true);
 	self.player.stopVideo();
 	self.currentTrack	= trackid;
 
-	window.onYouTubeVideoStarted	= window.onYouTubeVideoStarted || function () {
+	oldOnYouTubeVideoStarted		= window.onYouTubeVideoStarted;
+	window.onYouTubeVideoStarted	= function () {
 		window.onYouTubeVideoStarted	= null;
-		self.play(!noUpdate, true);
+		oldOnYouTubeVideoStarted && oldOnYouTubeVideoStarted != arguments.callee && oldOnYouTubeVideoStarted();
 
-		if (!noUpdate) {
-			var length	= self.length();
-			datastore.track(self.currentTrack).length.set(length);
-			ui.slider.setMaximum(length);
-		}
+		self.play(self.isPlaying === true);
 
-		callback && callback();
+		window.setTimeout(callback, 1000);
 	};
 
 	var load	= function () {
 		var track	= datastore.data.track[trackid];
 
-		goog.object.forEach(datastore.data.user.current.library, function (o) {
-			o.nowPlayingClass	= o.id == trackid && 'now-playing';
-		});
-
-		self.player.loadVideoById(track.youtubeid);
-		ui.slider.setMaximum(track.length);
-
 		datastore.track(trackid).lastPlayed.set(Date.now());
 		datastore.track(trackid).lastPlayedBy.set(authentication.userid);
 		datastore.lastPlayed().push(trackid);
-		
-		if (noUpdate != true) {
-			datastore.track(trackid).playCount.set(++track.playCount);
-			self.updateNowPlaying();
-		}
+		datastore.track(trackid).playCount.set(++track.playCount);
+
+		self.player.loadVideoById(track.youtubeid);
 	};
 
-	var wait		= new goog.async.ConditionalDelay(function () { return datastore.data.track[trackid]; });
-	wait.onSuccess	= load;
-	wait.onFailure	= function () {
+	window.setTimeout(function () {
 		datastore.track(trackid).once('value', function (o) {
-			datastore.data.track[trackid]	= o.val();
-			load();
+			datahelpers.processTrack(o.val(), function (track) {
+				for (var key in track) {
+					datastore.data.track[trackid][key]	= track[key];
+				}
+
+				load();
+			});
 		});
-	};
-	wait.start(100, 1000);
+	}, 1000);
 };
 
 
@@ -248,33 +240,22 @@ self.mute	= function (shouldMute) {
 self.onFinished	= function (callback) {
 	window.onYouTubeVideoFinished	= function () {
 		self.play(false);
-		callback && callback();
+		window.setTimeout(callback, 1000);
 	};
 };
 
 
-self.play	= function (shouldPlay, noUpdate) {
+self.play	= function (shouldPlay) {
 	self.isPlaying	= shouldPlay === false ? false : true;
-
 	self.mute(!self.isPlaying);
 
-	window.clearInterval(ui.slider.playInterval);
-	if (self.isPlaying) {
-		ui.slider.playInterval	= window.setInterval(function () {
-			if (!ui.slider.valueJustChanged && self.isPlaying) {
-				self.time(undefined, true);
-			}
-		}, 500);
+	if (self.isPlaying && self.time() == self.length()) {
+		self.time(0);
 	}
 
 	self.isPlaying ? self.player.playVideo() : self.player.pauseVideo();
 
-	ui.update();
-	self.time(undefined, true);
-
-	if (noUpdate != true) {
-		self.updateNowPlaying();
-	}
+	self.time();
 };
 
 
@@ -289,20 +270,32 @@ self.sync	= function (userid) {
 	var user	= datastore.user(userid);
 
 	datastore.user(datastore.data.user.current.following[0]).nowPlayingChild.lastChange.off();
-	
 	datastore.user().following.set(userid);
 
-	user.nowPlayingChild.lastChange.once('value', function (o) {
+	user.nowPlayingChild.lastChange.on('value', function (o) {
 		var lastChange	= o.val();
 		var timeOffset	= (Date.now() - lastChange) / 1000;
 
-		user.nowPlaying.once('value', function (o) {
+		user.nowPlaying.on('value', function (o) {
+			switch (self.playerUpdated) {
+				case 2:
+					return;
+
+				case 1:
+					--self.playerUpdated;
+
+					if (self.currentTrack) {
+						return;
+					}
+			}
+
+
 			var nowPlaying	= o.val();
 
 			var newTime	= nowPlaying.time + (nowPlaying.isPlaying ? timeOffset : 0);
 			var update	= function () {
-				self.play(nowPlaying.isPlaying, true);
-				self.time(newTime, true);
+				self.play(nowPlaying.isPlaying);
+				self.time(newTime);
 			};
 
 			if (nowPlaying.track != self.currentTrack) {
@@ -316,7 +309,7 @@ self.sync	= function (userid) {
 };
 
 
-self.time	= function (newTime, noUpdate) {
+self.time	= function (newTime) {
 	newTime	= newTime === 0 ? 1 : newTime;
 
 	if (newTime && Math.abs(newTime - self.time()) < 5) {
@@ -324,48 +317,43 @@ self.time	= function (newTime, noUpdate) {
 	}
 
 	if (newTime) {
-		self.newTime	= newTime;
-
-		if (noUpdate != true) {
-			self.updateNowPlaying();
-		}
-		else {
-			self.player.seekTo(newTime, true);
-		}
+		self.mute(true);
+		self.player.seekTo(newTime, true);
 	}
 
-	if ((newTime >= self.length() || self.player.getCurrentTime() >= self.length()) && self.isPlaying) {
-		self.isPlaying	= false;
-		self.newTime	= 0;
-		ui.update();
-	}
-
-	self.newTime			= self.player.getCurrentTime() || self.newTime;
+	self.newTime			= newTime || self.player.getCurrentTime() || self.newTime;
 	self.newTimeProcessed	= self.processTime(self.newTime);
-	
-	if (self.newTime) {
-		datastore.user().nowPlayingChild.time.set(self.newTime);		
-	}
-	
-	if (Math.abs(self.newTime - ui.slider.getValue()) >= 1) {
-		ui.slider.animatedSetValue(self.newTime);
-	}
 
-	ui.update();
+	self.updatePlayer();
+	self.mute(false);
 
 	return self.newTime;
 };
 
 
-self.updateNowPlaying	= function () {
-	datastore.user().nowPlaying.set({
-		isPlaying: self.isPlaying,
-		lastChange: Date.now(),
-		time: self.newTime,
-		track: self.currentTrack
-	});
+self.updatePlayer	= function () {
+	self.playerUpdated	= 2;
+
+
+	datastore.user().nowPlayingChild.isPlaying.set(!!self.isPlaying);
+	datastore.user().nowPlayingChild.lastChange.set(Date.now());
+	self.newTime && datastore.user().nowPlayingChild.time.set(self.newTime);
+	self.currentTrack && datastore.user().nowPlayingChild.track.set(self.currentTrack);
+
+	var oldTime	= ui.slider.getValue();
+	if (Math.abs(self.newTime - oldTime) >= 2 || self.newTime > oldTime) {
+		ui.slider.animatedSetValue(self.newTime);
+	}
+
+	var length	= self.length();
+	var track	= datastore.data.track[self.currentTrack];
+	self.currentTrack && track && length && track.length != length && datastore.track(self.currentTrack).length.set(length);
+	ui.slider.setMaximum(length);
 
 	ui.update();
+
+
+	--self.playerUpdated;
 };
 
 

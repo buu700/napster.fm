@@ -88,16 +88,14 @@ self.onValue	= function (dataLocation, key) {
 };
 
 self.processTrack	= function (track, callback) {
-	var processedTrack			= track;
-	processedTrack.length		= stream.processTime(processedTrack.length);
+	track.length	= stream.processTime(track.length);
 
 	/* Will equal epoch if not yet played */
-	processedTrack.lastPlayed	= new Date(processedTrack.lastPlayed || 0).format('{12hr}{tt}, {yyyy}-{MM}-{dd}');
+	track.lastPlayed	= new Date(track.lastPlayed || 0).format('{12hr}{tt}, {yyyy}-{MM}-{dd}');
 
-	authentication.getUsername(processedTrack.lastPlayedBy, function (username) {
-		processedTrack.lastPlayedBy		= username;
-		
-		callback(processedTrack);
+	authentication.getUsername(track.lastPlayedBy, function (username) {
+		track.lastPlayedBy	= username;
+		callback(track);
 	});
 };
 
