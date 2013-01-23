@@ -366,7 +366,7 @@ self.updatePlayer	= function (manualSet) {
 
 	var length	= self.length();
 	var track	= datastore.data.track[self.currentTrack];
-	self.currentTrack && track && length && track.length != length && datastore.track(self.currentTrack).length.set(length);
+	self.currentTrack && track && length && Math.ceil(track.length) != Math.ceil(length) && datastore.track(self.currentTrack).length.set(length);
 	ui.slider.setMaximum(length);
 
 
