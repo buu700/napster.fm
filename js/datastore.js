@@ -76,6 +76,7 @@ self.data.user[authentication.userid]	= {
 		/* Defaults to rickroll if user is new or otherwise has no value set here */
 		isPlaying: false,
 		lastChange: 0,
+		manualSet: true,
 		time: 0,
 		track: '6s3m5w303h62573j214g5y84h3b42692364435w5e1q2p534ba9n7150s1b'
 	},
@@ -171,6 +172,7 @@ self.user	= function (id) {
 	user.nowPlayingChild	= {
 		isPlaying: user.nowPlaying.child('isPlaying'),
 		lastChange: user.nowPlaying.child('lastChange'),
+		manualSet: user.nowPlaying.child('manualSet'),
 		time: user.nowPlaying.child('time'),
 		track: user.nowPlaying.child('track')
 	};

@@ -41,8 +41,8 @@
 		</div>
 
 		<div id='player'>
-			<button onclick='stream.play(!stream.isPlaying)' class='play-button' ng-class='ui.playButtonClass'></button>
-			<div onclick='ui.slider.onclick()' class='slider'></div>
+			<button onclick='stream.play(!stream.isPlaying, true)' class='play-button' ng-class='ui.playButtonClass'></button>
+			<div class='slider'></div>
 			<span class='track'>"{{datastore.data.user.current.nowPlaying.track.title}}" by {{datastore.data.user.current.nowPlaying.track.artist}}</span>
 			<span class='time'>{{stream.newTimeProcessed}} / {{datastore.data.user.current.nowPlaying.track.length}}</span>
 		</div>
@@ -95,7 +95,7 @@
 				</thead>
 				<tbody>
 					<tr ng-repeat='track in datastore.data.user.current.library' ng-class='track.nowPlayingClass'>
-						<td ng-click='stream.loadTrack(track.id)'></td>
+						<td ng-click='stream.loadTrack(track.id, undefined, true)'></td>
 						<td>{{track.title}}</td>
 						<td>{{track.artist}}</td>
 						<td>{{track.genre}}</td>

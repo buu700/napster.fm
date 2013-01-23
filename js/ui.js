@@ -82,14 +82,12 @@ self.init	= function () {
 
 	self.slider.setHandleMouseWheel(true);
 	self.slider.setMoveToPointEnabled(true);
-	self.slider.onclick	= function () {
-		self.slider.valueJustChanged	= true;
-		stream.time(self.slider.getValue());
-		window.setTimeout(function () { self.slider.valueJustChanged = false; }, 1000);
+	self.slider.onchange	= function () {
+		stream.time(self.slider.getValue(), true);
 	};
 
 	window.setInterval(function () {
-		if (!self.slider.valueJustChanged && stream.isPlaying) {
+		if (!self.slider.valueJustChanged && !stream.autoSetLock && stream.isPlaying) {
 			stream.time();
 		}
 	}, 500);
