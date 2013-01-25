@@ -81,7 +81,16 @@ angular.module('Napster', []).controller('Controller', ['$scope', function ($sco
 	});
 
 	datastore.user().nowPlaying.on('value', function (newData) {
-		var trackid	= newData.val().track;
+		var newVal	= newData.val();
+
+		/* Necessary for handling new users */
+		if (!newVal || !newVal.track) {
+			datastore.data.user.current.nowPlaying.track && datastore.user().nowPlaying.set(datastore.data.user.current.nowPlaying);
+			return;
+		}
+
+		var trackid	= newVal.track;
+
 		datahelpers.onValue(user, 'nowPlaying')(newData);
 		datahelpers.syncTrack(trackid);
 		user.nowPlaying.track	= datastore.data.track[trackid];
