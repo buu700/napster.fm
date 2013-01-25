@@ -103,7 +103,7 @@ self.init	= function () {
 
 self.update	= function () {
 	self.playButtonClass	= stream.isPlaying ? 'playing' : 'paused';
-	self.tempUserClass		= self.tempUserClass || authentication.username.startsWith('temporary-account-') ? 'temp-user' : '';
+	self.tempUserClass		= self.tempUserClass || (authentication.username && authentication.username.startsWith('temporary-account-') ? 'temp-user' : '');
 
 	goog.object.forEach(datastore.data.user.current.library, function (o) {
 		o.nowPlayingClass	= o.id == stream.currentTrack && 'now-playing';
