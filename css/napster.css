@@ -7,7 +7,57 @@ body
 
 
 
-#page-loading-overlay.loading
+#user-greeting.temp-user
+{
+	display				: none;
+}
+#login-greeting:not(.temp-user)
+{
+	display				: none;
+}
+.navbar a
+{
+	color				: whiteSmoke;
+}
+
+[hash-location='#login'].active
+{
+	position			: fixed;
+	z-index				: 9999;
+	top					: 7.5%;
+	left				: 20%;
+	height				: 75%;
+	width				: 60%;
+	border-radius		: 5px;
+	opacity				: 0.95;
+
+	text-align			: center;
+	padding-top			: 2.5%;
+}
+
+[hash-location='#login'].active a[href='#home']
+{
+	position			: absolute;
+	top					: 10px;
+	right				: 10px;
+	font-size			: 20px;
+	font-weight			: bold;
+	text-decoration		: none !important;
+	opacity				: 0.8;
+	color				: #272727;
+}
+[hash-location='#login'].active a[href='#home']:hover
+{
+	opacity				: 1.0;
+}
+[hash-location='#login'].active a[href='#home']:active
+{
+	opacity				: 0.6;
+}
+
+
+
+#page-loading-overlay.loading, [hash-location='#login'].active ~ #page-loading-overlay
 {
 	background-color	: rgba(145, 180, 235, 0.80);
 	position			: fixed;
@@ -28,9 +78,7 @@ body
 	height				: 57px;
 	content				: ' ';
 	z-index				: 200;
-}
-#page-loading-spinner.loading
-{
+
 	-webkit-animation-name				: rotate;
 	-webkit-animation-duration			: 2s;
 	-webkit-animation-iteration-count	: infinite;

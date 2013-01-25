@@ -126,6 +126,10 @@ self.init	= function () {
 		datastore.user().isOnline.setOnDisconnect(false);
 		datastore.user().username.set(self.username + '@firebase.com');
 	}
+	else
+	{
+		self.createTempUser();
+	}
 };
 
 

@@ -32,8 +32,11 @@
 							<li><a href='#discovery'>Discovery</a></li>
 							<li><a href='#about'>About</a></li>
 						</ul>
-						<div class='pull-right'>
+						<div id='user-greeting' class='pull-right' ng-class='ui.tempUserClass'>
 							I love you, {{authentication.username}}
+						</div>
+						<div id='login-greeting' class='pull-right' ng-class='ui.tempUserClass'>
+							<a href='#login'>Login or Register</a>
 						</div>
 					</div>
 				</div>
@@ -127,6 +130,22 @@
 
 		<div hash-location='#about'>
 			
+		</div>
+
+		<div hash-location='#login'>
+			<a href='#home'>&#10007;</a>
+			<h3>Login</h3>
+			<div class='row'>
+				<span class='span4'>
+					<a class='btn pull-right'>Login</a>
+				</span>
+				<span class='span1'>
+					- or -
+				</span>
+				<span class='span4'>
+					<a class='btn pull-left'>Create a new account</a>
+				</span>
+			</div>
 		</div>
 
 		<div class='container'>
