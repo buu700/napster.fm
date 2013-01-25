@@ -43,6 +43,18 @@ var init;
 
 /**
 * @function
+* @property {string} Returns password typed into login page
+*/
+var loginPassword;
+
+/**
+* @function
+* @property {string} Returns username typed into login page
+*/
+var loginUsername;
+
+/**
+* @function
 * @property {void} Runs after update
 */
 var postUpdate;
@@ -99,6 +111,14 @@ self.init	= function () {
 	}, 500);
 
 	self.slider.decorate($('#player .slider')[0]);
+};
+
+self.loginPassword	= function () {
+	return $('#login-password')[0].value;
+};
+
+self.loginUsername	= function () {
+	return $('#login-username')[0].value;
 };
 
 self.update	= function () {
