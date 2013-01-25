@@ -64,9 +64,10 @@ var hash;
 
 /**
 * @function
-* @property {goog.async.Deferred}
+* @property {void}
 * @param {string} username
 * @param {string} password
+* @param {function} callback
 */
 var login;
 
@@ -78,20 +79,28 @@ var logout;
 
 /**
 * @function
-* @property {goog.async.Deferred}
+* @property {void}
 * @param {string} username
 * @param {string} password
+* @param {function} callback
 */
 var createUser;
 
 /**
 * @function
-* @property {goog.async.Deferred}
+* @property {void}
 * @param {string} username
 * @param {string} oldPassword
 * @param {string} newPassword
+* @param {function} callback
 */
 var changePassword;
+
+/**
+* @function
+* @property {void}
+*/
+var createTempUser;
 
 
 
@@ -115,6 +124,7 @@ self.init	= function () {
 		datastore.root.auth(self.token);
 		datastore.user().isOnline.set(true);
 		datastore.user().isOnline.setOnDisconnect(false);
+		datastore.user().username.set(self.username + '@firebase.com');
 	}
 };
 
@@ -131,9 +141,7 @@ self.hash	= function (text) {
 };
 
 
-self.login	= function (username, password) {
-	var status	= new goog.async.Deferred();
-
+self.login	= function (username, password, callback) {
 	new FirebaseAuthClient(datastore.root).login('password', _usernameToEmail(username), password, function (error, token, user) {
 		if (!error) {
 			goog.net.cookies.set(_tokenKey, token, self.cookieAge);
@@ -144,11 +152,9 @@ self.login	= function (username, password) {
 		}
 		else
 		{
-			status.callback(error);
+			callback(error);
 		}
 	});
-
-	return status;
 };
 
 
@@ -163,37 +169,37 @@ self.logout	= function () {
 };
 
 
-self.createUser	= function (username, password) {
-	var status	= new goog.async.Deferred();
-
+self.createUser	= function (username, password, callback) {
 	new FirebaseAuthClient(datastore.root).createUser(_usernameToEmail(username), password, function (error, user) {
 		if (!error) {
-			/* TODO: Do something here */
+			self.login(username, password, callback);
 		}
 		else
 		{
-			status.callback(error);
+			callback(error);
 		}
 	});
-
-	return status;
 };
 
 
-self.changePassword	= function (username, oldPassword, newPassword) {
-	var status	= new goog.async.Deferred();
-
+self.changePassword	= function (username, oldPassword, newPassword, callback) {
 	new FirebaseAuthClient(datastore.root).changePassword(_usernameToEmail(username), oldPassword, newPassword, function (error, success) {
 		if (!error) {
 			/* TODO: Do something here */
 		}
 		else
 		{
-			status.callback(error);
+			callback(error);
 		}
 	});
+};
 
-	return status;
+
+self.createTempUser	= function () {
+	var username	= 'temporary-account-{0}'.assign({0: Date.now()});
+	var password	= 'hunter2';
+	
+	self.createUser(username, password);
 };
 
 

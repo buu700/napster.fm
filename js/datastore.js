@@ -77,7 +77,7 @@ self.data.user[authentication.userid]	= {
 		isPlaying: false,
 		lastChange: 0,
 		manualSet: true,
-		time: 0,
+		time: 10,
 		track: '6s3m5w303h62573j214g5y84h3b42692364435w5e1q2p534ba9n7150s1b'
 	},
 	transfers: {},
