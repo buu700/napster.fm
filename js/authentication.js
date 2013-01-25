@@ -146,13 +146,16 @@ self.hash	= function (text) {
 
 
 self.login	= function (username, password, callback) {
+	username	= username || ui.loginUsername();
+	password	= password || ui.loginPassword();
+
 	new FirebaseAuthClient(datastore.root).login('password', _usernameToEmail(username), password, function (error, token, user) {
 		if (!error) {
 			goog.net.cookies.set(_tokenKey, token, self.cookieAge);
 			goog.net.cookies.set(_useridKey, user.id, self.cookieAge);
 			goog.net.cookies.set(_usernameKey, username, self.cookieAge);
 
-			document.location.reload(true);
+			document.location.href	= '/';
 		}
 		else
 		{
@@ -174,6 +177,9 @@ self.logout	= function () {
 
 
 self.createUser	= function (username, password, callback) {
+	username	= username || ui.loginUsername();
+	password	= password || ui.loginPassword();
+	
 	new FirebaseAuthClient(datastore.root).createUser(_usernameToEmail(username), password, function (error, user) {
 		if (!error) {
 			self.login(username, password, callback);

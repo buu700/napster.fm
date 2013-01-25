@@ -54,6 +54,10 @@ body
 {
 	opacity				: 0.6;
 }
+[hash-location='#login'].active .btn
+{
+	color				: #333;
+}
 
 
 
