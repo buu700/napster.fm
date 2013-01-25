@@ -12,11 +12,6 @@ angular.module('Napster', []).controller('Controller', ['$scope', function ($sco
 	var user	= datastore.data.user.current;
 
 
-	if (!authentication.token) {
-		return;
-	}
-
-
 	/* https://coderwall.com/p/ngisma */
 	ui.postUpdate = function(fn) {
 		var phase = $scope['$root']['$$phase'];

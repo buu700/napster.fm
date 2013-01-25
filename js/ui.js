@@ -22,6 +22,12 @@ var playButtonClass;
 
 /**
 * @field
+* @property {string}
+*/
+var tempUserClass;
+
+/**
+* @field
 * @property {goog.ui.Slider}
 */
 var slider;
@@ -97,13 +103,14 @@ self.init	= function () {
 
 self.update	= function () {
 	self.playButtonClass	= stream.isPlaying ? 'playing' : 'paused';
+	self.tempUserClass		= self.tempUserClass || authentication.username.startsWith('temporary-account-') ? 'temp-user' : '';
 
 	goog.object.forEach(datastore.data.user.current.library, function (o) {
 		o.nowPlayingClass	= o.id == stream.currentTrack && 'now-playing';
 	});
 
 	if (!window.isNaN(stream.newTime)) {
-		$('.loading').each(function ($elem) { $elem.removeNode(); });
+		$('.loading').each(function ($elem) { goog.dom.classes.remove($elem, 'loading'); });
 	}
 
 	self.postUpdate && self.postUpdate();
