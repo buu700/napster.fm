@@ -102,13 +102,19 @@ var changePassword;
 */
 var createTempUser;
 
+/**
+* @function
+* @property {string}
+* @param {string} username
+*/
+var usernameToEmail;
+
 
 
 
 var _tokenKey			= 'napsterfm-token';
 var _useridKey			= 'napsterfm-userid';
 var _usernameKey		= 'napsterfm-username';
-var _usernameToEmail	= function (username) { return '{0}@firebase.com'.assign({0: username}); };
 
 
 
@@ -149,7 +155,7 @@ self.login	= function (username, password, callback) {
 	username	= username || ui.loginUsername();
 	password	= password || ui.loginPassword();
 
-	new FirebaseAuthClient(datastore.root).login('password', _usernameToEmail(username), password, function (error, token, user) {
+	new FirebaseAuthClient(datastore.root).login('password', usernameToEmail(username), password, function (error, token, user) {
 		if (!error) {
 			goog.net.cookies.set(_tokenKey, token, self.cookieAge);
 			goog.net.cookies.set(_useridKey, user.id, self.cookieAge);
@@ -180,7 +186,7 @@ self.createUser	= function (username, password, callback) {
 	username	= username || ui.loginUsername();
 	password	= password || ui.loginPassword();
 	
-	new FirebaseAuthClient(datastore.root).createUser(_usernameToEmail(username), password, function (error, user) {
+	new FirebaseAuthClient(datastore.root).createUser(usernameToEmail(username), password, function (error, user) {
 		if (!error) {
 			self.login(username, password, callback);
 		}
@@ -193,7 +199,7 @@ self.createUser	= function (username, password, callback) {
 
 
 self.changePassword	= function (username, oldPassword, newPassword, callback) {
-	new FirebaseAuthClient(datastore.root).changePassword(_usernameToEmail(username), oldPassword, newPassword, function (error, success) {
+	new FirebaseAuthClient(datastore.root).changePassword(usernameToEmail(username), oldPassword, newPassword, function (error, success) {
 		if (!error) {
 			/* TODO: Do something here */
 		}
@@ -210,6 +216,11 @@ self.createTempUser	= function () {
 	var password	= 'hunter2';
 	
 	self.createUser(username, password);
+};
+
+
+self.usernameToEmail	= function (username) {
+	return '{0}@firebase.com'.assign({0: username});
 };
 
 
