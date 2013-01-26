@@ -114,6 +114,9 @@ var _usernameToEmail	= function (username) { return '{0}@firebase.com'.assign({0
 
 
 self.init	= function () {
+	console.log('yo');
+	console.log(JSON.stringify(authentication));
+
 	self.cookieAge	= 5000000;
 	self.token		= goog.net.cookies.get(_tokenKey);
 	self.userid		= goog.net.cookies.get(_useridKey);
