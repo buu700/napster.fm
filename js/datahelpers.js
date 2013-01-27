@@ -93,8 +93,8 @@ self.processTrack	= function (track, callback) {
 	/* Will equal epoch if not yet played */
 	track.lastPlayed	= new Date(track.lastPlayed || 0).format('{12hr}{tt}, {yyyy}-{MM}-{dd}');
 
-	authentication.getUsername(track.lastPlayedBy, function (username) {
-		track.lastPlayedBy	= username;
+	datastore.user(track.lastPlayedBy).username.once('value', function (username) {
+		track.lastPlayedBy	= username.val();
 		callback(track);
 	});
 };
