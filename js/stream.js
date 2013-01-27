@@ -282,11 +282,11 @@ self.play	= function (shouldPlay, manualSet) {
 self.processTime	= function (time) {
 	time	= time || 0;
 	return (time < 60 ? '0:' : '') + (time < 10 ? '0' : '') + ([].add(new Date (0, 0, 0, 0, 0, time).toLocaleTimeString().match(/[^0:].*/))[0] || 0);
-}
+};
 
 
 self.sync	= function (userid) {
-	userid		= userid || authentication.userid;
+	userid		= userid || datastore.data.user.current.following[0] || authentication.userid;
 	var user	= datastore.user(userid);
 
 	datastore.user(datastore.data.user.current.following[0]).nowPlayingChild.lastChange.off();
@@ -317,6 +317,13 @@ self.sync	= function (userid) {
 		else {
 			update();
 		}
+	});
+};
+
+
+self.syncByUsername	= function (username) {
+	datastore.username(username).once('value', function (userid) {
+		self.sync(userid.val());
 	});
 };
 

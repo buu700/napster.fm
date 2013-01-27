@@ -96,6 +96,7 @@ self.init	= function () {
 	tableSorter.decorate($('#library-table')[0]);
 
 
+	/*** Player ***/
 	self.slider	= new goog.ui.Slider();
 
 	self.slider.setHandleMouseWheel(true);
@@ -111,6 +112,14 @@ self.init	= function () {
 	}, 500);
 
 	self.slider.decorate($('#player .slider')[0]);
+
+
+	/*** Following ***/
+	goog.events.listen($('#following')[0], goog.events.KeyHandler.EventType.KEY, function(e) {
+		if (e.keyCode == goog.events.KeyCodes.ENTER) {
+			goog.events.dispatchEvent(this, goog.events.EventType.CHANGE);
+		}
+	});
 };
 
 self.loginPassword	= function () {
