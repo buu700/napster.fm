@@ -34,8 +34,8 @@ angular.module('Napster', []).controller('Controller', ['$scope', function ($sco
 
 	datastore.user().following.on('value', function (newData) {
 		var userid	= newData.val();
-		authentication.getUsername(userid, function (username) {
-			user.following	= [userid, username];
+		datastore.user(userid).username.once('value', function (username) {
+			user.following	= [userid, username.val()];
 		});
 	});
 
@@ -51,8 +51,8 @@ angular.module('Napster', []).controller('Controller', ['$scope', function ($sco
 
 	datastore.user().hotlist.on('child_added', function (newData) {
 		var userid	= newData.val();
-		authentication.getUsername(userid, function (username) {
-			user.hotlist[userid]	= username;
+		datastore.user(userid).username.once('value', function (username) {
+			user.hotlist[userid]	= username.val();
 			ui.update();
 		});
 	});
@@ -99,8 +99,8 @@ angular.module('Napster', []).controller('Controller', ['$scope', function ($sco
 		datahelpers.onChildAdded(user, 'transfers')(newData);
 		datahelpers.syncTrack(trackid);
 		user.transfers[key].track	= datastore.data.track[trackid];
-		authentication.getUsername(userid, function (username) {
-			user.transfers[key].from	= [userid, username];
+		datastore.user(userid).username.once('value', function (username) {
+			user.transfers[key].from	= [userid, username.val()];
 		});
 	});
 }]);

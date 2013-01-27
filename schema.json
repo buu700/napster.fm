@@ -125,8 +125,14 @@
 					}
 				},
 				"username": {
-					".validate": "newData.isString() && newData.val() == auth.email"
+					".validate": "newData.isString() && (newData.val() + '@firebase.com') == auth.email"
 				}
+			}
+		},
+		"username": {
+			"$username": {
+				".write": "($username + '@firebase.com') == auth.email",
+				".validate": "newData.isString() && newData.val() == auth.id"
 			}
 		}
 	}

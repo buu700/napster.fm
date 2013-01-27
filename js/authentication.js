@@ -130,19 +130,13 @@ self.init	= function () {
 		datastore.root.auth(self.token);
 		datastore.user().isOnline.set(true);
 		datastore.user().isOnline.setOnDisconnect(false);
-		datastore.user().username.set(self.username + '@firebase.com');
+		datastore.user().username.set(self.username);
+		datastore.username().set(self.userid);
 	}
 	else
 	{
 		self.createTempUser();
 	}
-};
-
-
-self.getUsername	= function (userid, callback) {
-	datastore.user(userid).username.once('value', function (o) {
-		callback(o.val().replace('@firebase.com', ''));
-	});
 };
 
 

@@ -63,7 +63,8 @@ self.data	= {
 	group: {},
 	lastPlayed: {},
 	track: {},
-	user: {}
+	user: {},
+	username: {}
 };
 
 self.data.user[authentication.userid]	= {
@@ -198,6 +199,13 @@ self.user	= function (id) {
 	user.username		= user.child('username');
 
 	return user;
+};
+
+
+self.username	= function (name) {
+	name			= (name || authentication.username).toString();
+	var username	= self.root.child('username').child(name);
+	return username;
 };
 
 
