@@ -299,7 +299,7 @@ self.sync	= function (userid) {
 			return;
 		}
 
-		var timeOffset	= (Date.now() - nowPlaying.lastChange) / 1000;
+		var timeOffset	= ((Date.now() - nowPlaying.lastChange) / 1000) + 2;
 		var newTime	= nowPlaying.time + (nowPlaying.isPlaying ? timeOffset : 0);
 		var update	= function () {
 			self.play(nowPlaying.isPlaying);
