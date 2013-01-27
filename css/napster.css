@@ -147,7 +147,7 @@ body
 	height				: 50px;
 	top					: 50px;
 }
-#player::after {
+#player:after {
 	top					: 0px;
 	left				: 0px;
 	height				: 75px;
@@ -171,6 +171,53 @@ body
 {
 	content				: '\2023';
 	font-size			: 200%;
+}
+
+#player .repeat-button, #player .shuffle-button
+{
+	margin-top			: -2px;
+	font-size			: 160%;
+	font-weight			: bold;
+	padding				: 3px 1px;
+	border-radius		: 7.5px;
+	border				: 1px solid #C7C7C7;
+	background			: none;
+}
+#player .repeat-button.active, #player .shuffle-button.active
+{
+	background-color	: rgba(0, 40, 110, 0.80);
+	color				: rgba(255, 255, 255, 0.80);
+}
+
+#player .repeat-button:before
+{
+	content				: '\2938';
+	display				: inline-block;
+	-webkit-transform	: rotate(180deg);
+	-moz-transform		: rotate(180deg);
+	-o-transform		: rotate(180deg);
+	-ms-transform		: rotate(180deg);
+	transform			: rotate(180deg);
+}
+#player .repeat-button:after
+{
+	content				: '\2938';
+	margin-left			: -10px;
+}
+
+#player .shuffle-button
+{
+	padding				: 3px 6px;
+}
+#player .shuffle-button:before
+{
+	content				: '\21CC';
+	display				: inline-block;
+	-webkit-transform	: translateY(-1px);
+	-moz-transform		: translateY(-1px);
+	-o-transform		: translateY(-1px);
+	-ms-transform		: translateY(-1px);
+	transform			: translateY(-1px);
 }
 
 #player .slider, #player .slider *
@@ -204,9 +251,17 @@ body
 }
 #player .track
 {
-	margin-left			: 37%;
+	margin-left			: 41%;
 }
-#player .time, #player .track
+#player .repeat-button
+{
+	margin-left			: 33.5%;
+}
+#player .shuffle-button
+{
+	margin-left			: 36.5%;
+}
+#player .time, #player .track, #player .repeat-button, #player .shuffle-button
 {
 	position			: absolute;
 }
