@@ -33,9 +33,15 @@ angular.module('Napster', []).controller('Controller', ['$scope', function ($sco
 	});
 
 	datastore.user().following.on('value', function (newData) {
+		var alreadySynced	= user.following[0];
 		var userid	= newData.val();
 		datastore.user(userid).username.once('value', function (username) {
 			user.following	= [userid, username.val()];
+
+			if (alreadySynced && alreadySynced != userid)
+			{
+				stream.sync(userid);
+			}
 		});
 	});
 

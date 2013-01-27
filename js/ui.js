@@ -142,6 +142,8 @@ self.update	= function () {
 		$('.loading').each(function ($elem) { goog.dom.classes.remove($elem, 'loading'); });
 	}
 
+	$('#following')[0].value	= datastore.data.user.current.following[1] || '';
+
 	self.postUpdate && self.postUpdate();
 };
 
