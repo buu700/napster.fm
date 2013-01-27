@@ -24,6 +24,18 @@ var playButtonClass;
 * @field
 * @property {string}
 */
+var repeatButtonClass;
+
+/**
+* @field
+* @property {string}
+*/
+var shuffleButtonClass;
+
+/**
+* @field
+* @property {string}
+*/
 var tempUserClass;
 
 /**
@@ -132,6 +144,8 @@ self.loginUsername	= function () {
 
 self.update	= function () {
 	self.playButtonClass	= stream.isPlaying ? 'playing' : 'paused';
+	self.repeatButtonClass	= stream.isRepeating ? 'active' : '';
+	self.shuffleButtonClass	= stream.isShuffling ? 'active' : '';
 	self.tempUserClass		= self.tempUserClass || (authentication.username && authentication.username.startsWith('temporary-account-') ? 'temp-user' : '');
 
 	goog.object.forEach(datastore.data.user.current.library, function (o) {

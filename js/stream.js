@@ -34,6 +34,18 @@ var isPlaying;
 
 /**
 * @field
+* @property {bool}
+*/
+var isRepeating;
+
+/**
+* @field
+* @property {bool}
+*/
+var isShuffling;
+
+/**
+* @field
 * @property {int}
 */
 var newTime;
@@ -112,6 +124,18 @@ var play;
 * @param {int} time
 */
 var processTime;
+
+/**
+* @function
+* @property {void} Toggles player repeat
+*/
+var repeat;
+
+/**
+* @function
+* @property {void} Toggles player shuffle
+*/
+var shuffle;
 
 /**
 * @function
@@ -213,7 +237,8 @@ self.loadTrack	= function (trackid, callback, manualSet) {
 		window.onYouTubeVideoStarted	= null;
 		oldOnYouTubeVideoStarted && oldOnYouTubeVideoStarted != arguments.callee && oldOnYouTubeVideoStarted();
 
-		self.play(self.isPlaying === true, manualSet);
+		self.play(manualSet || self.isPlaying === true, manualSet);
+		self.time(0, manualSet);
 
 		window.setTimeout(callback, 1000);
 	};
@@ -282,6 +307,30 @@ self.play	= function (shouldPlay, manualSet) {
 self.processTime	= function (time) {
 	time	= time || 0;
 	return (time < 60 ? '0:' : '') + (time < 10 ? '0' : '') + ([].add(new Date (0, 0, 0, 0, 0, time).toLocaleTimeString().match(/[^0:].*/))[0] || 0);
+};
+
+
+self.repeat	= function () {
+	self.isShuffling	= false;
+	self.isRepeating	= !self.isRepeating;
+
+	ui.update();
+
+	self.onFinished(self.isRepeating && function () {
+		self.play(true);
+	});
+};
+
+
+self.shuffle	= function () {
+	self.isRepeating	= false;
+	self.isShuffling	= !self.isShuffling;
+
+	ui.update();
+
+	self.onFinished(self.isShuffling && function () {
+		self.loadTrack(goog.object.getKeys(datastore.data.user.current.library).randomize()[0], undefined, true);
+	});
 };
 
 
