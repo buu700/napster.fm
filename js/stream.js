@@ -286,7 +286,7 @@ self.processTime	= function (time) {
 
 
 self.sync	= function (userid) {
-	userid		= *userid || datastore.data.user.current.following[0] || authentication.userid).toString();
+	userid		= (userid || datastore.data.user.current.following[0] || authentication.userid).toString();
 	var user	= datastore.user(userid);
 
 	datastore.user(datastore.data.user.current.following[0]).nowPlayingChild.lastChange.off();
