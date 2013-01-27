@@ -203,6 +203,12 @@ body
 {
 	content				: '\2938';
 	margin-left			: -10px;
+	display				: inline-block;
+	-webkit-transform	: translateY(-1px);
+	-moz-transform		: translateY(-1px);
+	-o-transform		: translateY(-1px);
+	-ms-transform		: translateY(-1px);
+	transform			: translateY(-1px);
 }
 
 #player .shuffle-button
