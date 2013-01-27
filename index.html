@@ -48,7 +48,7 @@
 			<div class='slider'></div>
 			<span class='track'>"{{datastore.data.user.current.nowPlaying.track.title}}" by {{datastore.data.user.current.nowPlaying.track.artist}}</span>
 			<span class='time'>{{stream.newTimeProcessed}} / {{datastore.data.user.current.nowPlaying.track.length}}</span>
-			<input onchange='stream.syncByUsername(this.value)' id='following' class='pull-right' value='{{datastore.data.user.current.following[1]}}' type='text' />
+			<input onchange='stream.syncByUsername(this.value)' id='following' class='pull-right' type='text' />
 			<label for='following' class='pull-right'>Following:</label>
 		</div>
 
