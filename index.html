@@ -171,7 +171,34 @@
 		</div>
 
 		<div hash-location='#discovery'>
-			
+			<table class='track-table' id='discovery-table'>
+				<thead>
+					<tr>
+						<th></th>
+						<th>Title</th>
+						<th>Artist</th>
+						<th>Genre</th>
+						<th>Year</th>
+						<th>Length</th>
+						<th>Last Played By</th>
+						<th>Last Played</th>
+						<th>Plays</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat='track in datastore.data.lastPlayed.array' ng-class='track.nowPlayingClass'>
+						<td ng-click='datastore.user().library.push(track.id)' onclick='document.location.hash = "#library"'></td>
+						<td>{{track.title}}</td>
+						<td>{{track.artist}}</td>
+						<td>{{track.genre}}</td>
+						<td>{{track.year}}</td>
+						<td>{{track.length}}</td>
+						<td>{{track.lastPlayedBy}}</td>
+						<td>{{track.lastPlayed}}</td>
+						<td>{{track.playCount}}</td>
+					</tr>
+				</tbody>
+			</table>
 		</div>
 
 		<div hash-location='#about'>

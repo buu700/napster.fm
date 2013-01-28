@@ -61,7 +61,9 @@ var user;
 
 self.data	= {
 	group: {},
-	lastPlayed: {},
+	lastPlayed: {
+		array: []
+	},
 	track: {},
 	user: {},
 	username: {}
