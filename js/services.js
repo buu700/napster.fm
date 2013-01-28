@@ -102,6 +102,18 @@ self.processedSearch	= function (title, artist) {
 
 	self.searchResults	= [];
 
+	var endSearch	= function () {
+		self.isSearchInProgress	= false;
+		ui.update();
+	};
+
+
+	if (!title && !artist) {
+		endSearch();
+		return;
+	}
+
+
 	self.search(title, artist, function (results) {
 		results.forEach(function (result, i) {
 			var trackid	= result.id;
@@ -109,8 +121,7 @@ self.processedSearch	= function (title, artist) {
 			self.searchResults[i]	= datastore.data.track[trackid];
 		});
 
-		self.isSearchInProgress	= false;
-		ui.update();
+		endSearch();
 	});
 };
 
