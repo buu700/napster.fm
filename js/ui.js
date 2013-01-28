@@ -24,7 +24,19 @@ var playButtonClass;
 * @field
 * @property {string}
 */
+var readyClass;
+
+/**
+* @field
+* @property {string}
+*/
 var repeatButtonClass;
+
+/**
+* @field
+* @property {string}
+*/
+var searchNoResultsClass;
 
 /**
 * @field
@@ -102,10 +114,12 @@ self.init	= function () {
 	}
 
 
-	/*** Library ***/
-	var tableSorter	= new goog.ui.TableSorter();
-	tableSorter.setDefaultSortFunction(goog.ui.TableSorter.alphaSort);
-	tableSorter.decorate($('#library-table')[0]);
+	/*** Library + Search ***/
+	$('.track-table').each(function ($elem) {
+		var tableSorter	= new goog.ui.TableSorter();
+		tableSorter.setDefaultSortFunction(goog.ui.TableSorter.alphaSort);
+		tableSorter.decorate($elem);
+	});
 
 
 	/*** Player ***/
@@ -126,11 +140,13 @@ self.init	= function () {
 	self.slider.decorate($('#player .slider')[0]);
 
 
-	/*** Following ***/
-	goog.events.listen($('#following')[0], goog.events.KeyHandler.EventType.KEY, function(e) {
-		if (e.keyCode == goog.events.KeyCodes.ENTER) {
-			goog.events.dispatchEvent(this, goog.events.EventType.CHANGE);
-		}
+	/*** Trigger change when enter is pressed on inputs ***/
+	$('input[type="text"]').each(function ($elem) {
+		goog.events.listen($elem, goog.events.KeyHandler.EventType.KEY, function(e) {
+			if (e.keyCode == goog.events.KeyCodes.ENTER) {
+				goog.events.dispatchEvent(this, goog.events.EventType.CHANGE);
+			}
+		});
 	});
 };
 
@@ -143,18 +159,16 @@ self.loginUsername	= function () {
 };
 
 self.update	= function () {
-	self.playButtonClass	= stream.isPlaying ? 'playing' : 'paused';
-	self.repeatButtonClass	= stream.isRepeating ? 'active' : '';
-	self.shuffleButtonClass	= stream.isShuffling ? 'active' : '';
-	self.tempUserClass		= self.tempUserClass || (authentication.username && authentication.username.startsWith('temporary-account-') ? 'temp-user' : '');
+	self.playButtonClass		= stream.isPlaying ? 'playing' : 'paused';
+	self.readyClass				= !window.isNaN(stream.newTime) && !services.isSearchInProgress ? 'ready' : '';
+	self.repeatButtonClass		= stream.isRepeating ? 'active' : '';
+	self.searchNoResultsClass	= services.searchResults && services.searchResults.length ? '' : 'active';
+	self.shuffleButtonClass		= stream.isShuffling ? 'active' : '';
+	self.tempUserClass			= self.tempUserClass || (authentication.username && authentication.username.startsWith('temporary-account-') ? 'temp-user' : '');
 
 	goog.object.forEach(datastore.data.user.current.library, function (o) {
 		o.nowPlayingClass	= o.id == stream.currentTrack && 'now-playing';
 	});
-
-	if (!window.isNaN(stream.newTime)) {
-		$('.loading').each(function ($elem) { goog.dom.classes.remove($elem, 'loading'); });
-	}
 
 	var following	= datastore.data.user.current.following[1];
 	$('#following')[0].value	= (!following || following == authentication.username) ? '' : following;
