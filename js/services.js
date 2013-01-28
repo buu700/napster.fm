@@ -15,6 +15,21 @@ var self	= this;
 
 
 /**
+* @field
+* @property {bool}
+*/
+var isSearchInProgress;
+
+/**
+* @field
+* @property {array (object)}
+*/
+var searchResults;
+
+
+
+
+/**
 * @function
 * @property {void} Searches music metadata
 * @param {string} title
@@ -78,6 +93,28 @@ self.metadata	= function (title, artist, callback) {
 };
 
 
+self.processedSearch	= function (title, artist) {
+	self.isSearchInProgress	= true;
+	ui.update();
+
+	title	= title || $('#search-title')[0].value || '';
+	artist	= (artist || $('#search-artist')[0].value || '').trim() || undefined;
+
+	self.searchResults	= [];
+
+	self.search(title, artist, function (results) {
+		results.forEach(function (result, i) {
+			var trackid	= result.id;
+			datahelpers.syncTrack(trackid);
+			self.searchResults[i]	= datastore.data.track[trackid];
+		});
+
+		self.isSearchInProgress	= false;
+		ui.update();
+	});
+};
+
+
 self.search	= function (title, artist, callback) {
 	self.metadata(title, artist, function (metadataResults, metadataDefers) {
 		var defer	= goog.async.DeferredList.gatherResults(metadataDefers);
@@ -107,17 +144,15 @@ self.search	= function (title, artist, callback) {
 			finalResults.forEach(function (o) {
 				var track	= datastore.track(o.id);
 
-				track.update(
-					{
-						artist: o.artist,
-						genre: o.genre,
-						length: (o.length || 0).toNumber(),
-						title: o.title,
-						year: (o.year || 42).toNumber(),
-						youtubeid: o.youtubeid,
-						youtubeviews: (o.youtubeviews || 0).toNumber()
-					}
-				);
+				track.update({
+					artist: o.artist,
+					genre: o.genre,
+					length: (o.length || 0).toNumber(),
+					title: o.title,
+					year: (o.year || 42).toNumber(),
+					youtubeid: o.youtubeid,
+					youtubeviews: (o.youtubeviews || 0).toNumber()
+				});
 
 				var trackData	= datastore.data.track[o.id];
 				(trackData && trackData.playCount) || track.update({playCount: 0});

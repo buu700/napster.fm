@@ -86,7 +86,7 @@
 		</div>
 
 		<div hash-location='#library'>
-			<table id='library-table'>
+			<table class='track-table' id='library-table'>
 				<thead>
 					<tr>
 						<th></th>
@@ -117,7 +117,49 @@
 		</div>
 
 		<div hash-location='#search'>
-			
+			<div class='row-fluid'>
+				<span class='span4'>
+					<input id='search-title' class='pull-right' onchange='services.processedSearch()' type='text' />
+					<label for='search-title'>Title:</label>
+				</span>
+				<span class='span4'>
+					<input id='search-artist' class='pull-right' onchange='services.processedSearch()' type='text' />
+					<label for='search-artist'>Artist:</label>
+				</span>
+			</div>
+
+			<table class='track-table' id='search-table'>
+				<thead>
+					<tr>
+						<th></th>
+						<th>Title</th>
+						<th>Artist</th>
+						<th>Genre</th>
+						<th>Year</th>
+						<th>Length</th>
+						<th>Last Played By</th>
+						<th>Last Played</th>
+						<th>Plays</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat='track in services.searchResults' ng-class='track.nowPlayingClass'>
+						<td ng-click='datastore.user().library.push(track.id)' onclick='document.location.hash = "#library"'></td>
+						<td>{{track.title}}</td>
+						<td>{{track.artist}}</td>
+						<td>{{track.genre}}</td>
+						<td>{{track.year}}</td>
+						<td>{{track.length}}</td>
+						<td>{{track.lastPlayedBy}}</td>
+						<td>{{track.lastPlayed}}</td>
+						<td>{{track.playCount}}</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<div id='search-noresults' ng-class='ui.searchNoResultsClass'>
+				Sorry mate, no results
+			</div>
 		</div>
 
 		<div hash-location='#hotlist'>
@@ -185,8 +227,8 @@
 		</div>
 
 		<div id='stream'></div>
-		<div id='page-loading-overlay' class='loading'></div>
-		<div id='page-loading-spinner' class='loading'></div>
+		<div id='page-loading-overlay' ng-class='ui.readyClass'></div>
+		<div id='page-loading-spinner' ng-class='ui.readyClass'></div>
 
 		<!-- Firebase: Real-time frontend-driven data store; http://firebase.com/ -->
 		<script src='//cdn.firebase.com/v0/firebase.js'></script>

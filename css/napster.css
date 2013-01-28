@@ -61,7 +61,7 @@ body
 
 
 
-#page-loading-overlay.loading, [hash-location='#login'].active ~ #page-loading-overlay
+#page-loading-overlay:not(.ready), [hash-location='#login'].active ~ #page-loading-overlay
 {
 	background-color	: rgba(145, 180, 235, 0.80);
 	position			: fixed;
@@ -71,7 +71,7 @@ body
 	left				: 0px;
 	z-index				: 100;
 }
-#page-loading-spinner.loading
+#page-loading-spinner:not(.ready)
 {
 	background			: url('/apple-touch-icon.png') no-repeat;
 	opacity				: 0.80;
@@ -273,16 +273,16 @@ body
 }
 
 
-#library-table
+.track-table
 {
 	width				: 100%;
 	text-align			: left;
 }
-#library-table th
+.track-table th
 {
 	cursor 				: pointer;
 }
-#library-table [ng-repeat] [ng-click]
+.track-table [ng-repeat] [ng-click]
 {
 	height				: 22px;
 	width				: 100%;
@@ -294,6 +294,25 @@ body
 {
 	background-color	: rgba(0, 50, 255, 0.30);
 }
+
+
+#search-title, #search-artist
+{
+	width				: 80%;
+}
+
+#search-noresults
+{
+	font-weight			: bold;
+	font-size			: 90%;
+	margin-top			: 30px;
+	margin-left			: 20px;
+}
+#search-noresults:not(.active)
+{
+	display				: none;
+}
+
 
 
 /***** Bootstrap navbar adjustments *****/
