@@ -180,12 +180,12 @@ body
 	font-weight			: bold;
 	padding				: 3px 1px;
 	border-radius		: 7.5px;
-	border				: 1px solid #C7C7C7;
+	border				: none;
 	background			: none;
 }
 #player .repeat-button.active, #player .shuffle-button.active
 {
-	background-color	: rgba(0, 40, 110, 0.80);
+	background-color	: rgba(80, 120, 195, 0.80);
 	color				: rgba(255, 255, 255, 0.80);
 }
 
