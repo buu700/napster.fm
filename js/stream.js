@@ -209,9 +209,9 @@ self.init	= function () {
 		});
 	};
 
-	datastore.user().nowPlayingChild.isPlaying.setOnDisconnect(false);
-	datastore.user().nowPlayingChild.lastChange.setOnDisconnect(0);
-	datastore.user().nowPlayingChild.manualSet.setOnDisconnect(true);
+	datastore.user().nowPlayingChild.isPlaying.onDisconnect().set(false);
+	datastore.user().nowPlayingChild.lastChange.onDisconnect().set(0);
+	datastore.user().nowPlayingChild.manualSet.onDisconnect().set(true);
 };
 
 
@@ -434,7 +434,7 @@ self.updatePlayer	= function (manualSet) {
 
 	ui.update();
 
-	self.newTime && datastore.user().nowPlayingChild.time.setOnDisconnect(self.newTime);
+	self.newTime && datastore.user().nowPlayingChild.time.onDisconnect().set(self.newTime);
 	self.autoSetLock	=  false;
 };
 
