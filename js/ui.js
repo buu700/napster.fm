@@ -13,6 +13,11 @@ var self	= this;
 
 
 
+/**
+* @field
+* @property {string}
+*/
+var libraryEmptyClass;
 
 /**
 * @field
@@ -159,6 +164,7 @@ self.loginUsername	= function () {
 };
 
 self.update	= function () {
+	self.libraryEmptyClass		= goog.object.getCount(datastore.data.user.current.library) ? '' : 'active';
 	self.playButtonClass		= stream.isPlaying ? 'playing' : 'paused';
 	self.readyClass				= !window.isNaN(stream.newTime) && !services.isSearchInProgress ? 'ready' : '';
 	self.repeatButtonClass		= stream.isRepeating ? 'active' : '';

@@ -149,10 +149,10 @@ body
 }
 #player:after {
 	top					: 0px;
-	left				: 0px;
 	height				: 75px;
 	width				: 200%;
 	margin-top			: -50px;
+	margin-left			: -50%;
 	background-color	: rgba(250, 250, 250, 0.80);
 	content				: ' ';
 	display				: block;
@@ -301,14 +301,14 @@ body
 	width				: 80%;
 }
 
-#search-noresults
+.empty-track-table
 {
 	font-weight			: bold;
 	font-size			: 90%;
 	margin-top			: 30px;
 	margin-left			: 20px;
 }
-#search-noresults:not(.active)
+.empty-track-table:not(.active)
 {
 	display				: none;
 }
