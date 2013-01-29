@@ -129,7 +129,7 @@ self.init	= function () {
 	if (self.token) {
 		datastore.root.auth(self.token);
 		datastore.user().isOnline.set(true);
-		datastore.user().isOnline.setOnDisconnect(false);
+		datastore.user().isOnline.onDisconnect().set(false);
 		datastore.user().username.set(self.username);
 		datastore.username().set(self.userid);
 	}

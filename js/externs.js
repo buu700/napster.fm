@@ -8,7 +8,7 @@ Firebase.prototype.off;
 Firebase.prototype.on;
 Firebase.prototype.once;
 Firebase.prototype.set;
-Firebase.prototype.setOnDisconnect;
+Firebase.prototype.onDisconnect().set;
 Firebase.prototype.startAt;
 Firebase.prototype.unauth;
 
