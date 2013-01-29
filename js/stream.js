@@ -305,8 +305,14 @@ self.play	= function (shouldPlay, manualSet) {
 
 
 self.processTime	= function (time) {
-	time	= time || 0;
-	return (time < 60 ? '0:' : '') + (time < 10 ? '0' : '') + ([].add(new Date (0, 0, 0, 0, 0, time).toLocaleTimeString().match(/[^0:].*/))[0] || 0);
+	time		= time || 0;
+	var date	= new Date (0, 0, 0, 0, 0, time);
+	
+	var hours	= date.getHours();
+	var minutes	= date.getMinutes();
+	var seconds	= date.getSeconds();
+	
+	return '{0}{1}:{2}'.assign({0: hours ? hours + ':' : '', 1: minutes.pad(hours ? 2 : 1), 2: seconds.pad(2)});
 };
 
 
