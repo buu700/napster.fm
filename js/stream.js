@@ -312,7 +312,7 @@ self.processTime	= function (time) {
 	var minutes	= date.getMinutes();
 	var seconds	= date.getSeconds();
 	
-	return '{0}{1}:{2}'.assign({0: hours ? hours + ':' : '', 1: minutes, 2: seconds});
+	return '{0}{1}:{2}'.assign({0: hours ? hours + ':' : '', 1: minutes.pad(hours ? 2 : 1), 2: seconds.pad(2)});
 };
 
 
