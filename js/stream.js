@@ -46,6 +46,12 @@ var isShuffling;
 
 /**
 * @field
+* @property {bool}
+*/
+var loadTrackLock;
+
+/**
+* @field
 * @property {int}
 */
 var newTime;
@@ -226,6 +232,12 @@ self.length	= function () {
 
 
 self.loadTrack	= function (trackid, callback, manualSet) {
+	if (self.loadTrackLock || trackid == self.currentTrack) {
+		return;
+	}
+
+
+	self.loadTrackLock	= true;
 	self.autoSetLock	= true;
 
 	self.mute(true);
@@ -239,6 +251,8 @@ self.loadTrack	= function (trackid, callback, manualSet) {
 
 		self.play(manualSet || self.isPlaying === true, manualSet);
 		self.time(0, manualSet);
+
+		self.loadTrackLock	= false;
 
 		window.setTimeout(callback, 1000);
 	};
