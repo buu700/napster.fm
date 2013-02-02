@@ -9,6 +9,7 @@
 
 		<link rel='stylesheet' href='//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css'>
 		<link rel='stylesheet' href='//netdna.bootstrapcdn.com/bootswatch/2.1.1/cosmo/bootstrap.min.css'>
+		<link rel='stylesheet' href='//netdna.bootstrapcdn.com/font-awesome/3.0.2/css/font-awesome.css'>
 		<link rel='stylesheet' href='css/napster.css'>
 
 		<!--[if lt IE 9]>
@@ -48,8 +49,8 @@
 			<div class='slider'></div>
 			<span class='track'>"{{datastore.data.user.current.nowPlaying.track.title}}" by {{datastore.data.user.current.nowPlaying.track.artist}}</span>
 			<span class='time'>{{stream.newTimeProcessed}} / {{datastore.data.user.current.nowPlaying.track.length}}</span>
-			<button onclick='stream.repeat()' class='repeat-button' ng-class='ui.repeatButtonClass'></button>
-			<button onclick='stream.shuffle()' class='shuffle-button' ng-class='ui.shuffleButtonClass'></button>
+			<button onclick='stream.repeat()' class='repeat-button icon-refresh' ng-class='ui.repeatButtonClass'></button>
+			<button onclick='stream.shuffle()' class='shuffle-button icon-random' ng-class='ui.shuffleButtonClass'></button>
 			<input onchange='stream.syncByUsername(this.value)' id='following' class='pull-right' type='text' />
 			<label for='following' class='pull-right'>Following:</label>
 		</div>
