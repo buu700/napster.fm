@@ -165,7 +165,7 @@ self.loginUsername	= function () {
 
 self.update	= function () {
 	self.libraryEmptyClass		= goog.object.getCount(datastore.data.user.current.library) ? '' : 'active';
-	self.playButtonClass		= stream.isPlaying ? 'playing' : 'paused';
+	self.playButtonClass		= stream.isPlaying ? 'icon-pause' : 'icon-play';
 	self.readyClass				= !window.isNaN(stream.newTime) && !services.isSearchInProgress ? 'ready' : '';
 	self.repeatButtonClass		= stream.isRepeating ? 'active' : '';
 	self.searchNoResultsClass	= services.searchResults && services.searchResults.length ? '' : 'active';
