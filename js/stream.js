@@ -435,6 +435,7 @@ self.updatePlayer	= function (manualSet) {
 
 	var oldTime	= ui.slider.getValue();
 	var length	= self.length();
+	
 	if (Math.abs(self.newTime - oldTime) >= 2 || self.newTime > oldTime) {
 		ui.slider.removeEventListener(goog.ui.Component.EventType.CHANGE, ui.slider.onchange);
 		ui.slider.animatedSetValue(self.newTime);
