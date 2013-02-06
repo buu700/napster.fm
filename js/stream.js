@@ -434,16 +434,16 @@ self.updatePlayer	= function (manualSet) {
 
 
 	var oldTime	= ui.slider.getValue();
+	var length	= self.length();
 	if (Math.abs(self.newTime - oldTime) >= 2 || self.newTime > oldTime) {
 		ui.slider.removeEventListener(goog.ui.Component.EventType.CHANGE, ui.slider.onchange);
 		ui.slider.animatedSetValue(self.newTime);
+		ui.slider.setMaximum(length);
 		ui.slider.addEventListener(goog.ui.Component.EventType.CHANGE, ui.slider.onchange);
 	}
 
-	var length	= self.length();
 	var track	= datastore.data.track[self.currentTrack];
 	self.currentTrack && track && length && Math.ceil(track.length) != Math.ceil(length) && datastore.track(self.currentTrack).length.set(length);
-	ui.slider.setMaximum(length);
 
 
 	ui.update();
