@@ -400,7 +400,7 @@ self.syncByUsername	= function (username) {
 self.time	= function (newTime, manualSet) {
 	self.autoSetLock	= true;
 	
-	newTime	= newTime === 0 ? 1 : newTime;
+	newTime	= newTime === 0 ? 0.01 : newTime;
 
 	if (newTime) {
 		self.mute(true);
