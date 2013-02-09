@@ -41,6 +41,10 @@ js/closure-library/closure/bin/build/closurebuilder.py --root=js $namespaceArgs 
 # mv js/napster.js.tmp js/napster.js
 
 
+# HTML5 Application Cache
+./appcache.sh > napster.appcache
+
+
 git add .
 chmod 777 -R .
 git commit -a -m 'deployment'
