@@ -1,6 +1,6 @@
-goog.provide('init');
+goog.provide('napster.init');
 
-goog.require('exports');
+goog.require('napster.exports');
 
 authentication.init();
 ui.init();

@@ -1,32 +1,32 @@
-goog.provide('exports');
-goog.require('require');
-goog.require('authentication');
+goog.provide('napster.exports');
+goog.require('napster.require');
+goog.require('napster.authentication');
 /** @expose */
 authentication;
-goog.require('closurequery');
+goog.require('napster.closurequery');
 /** @expose */
 closurequery;
-goog.require('controllers');
+goog.require('napster.controllers');
 /** @expose */
 controllers;
-goog.require('datahelpers');
+goog.require('napster.datahelpers');
 /** @expose */
 datahelpers;
-goog.require('datastore');
+goog.require('napster.datastore');
 /** @expose */
 datastore;
-goog.require('debug');
+goog.require('napster.debug');
 /** @expose */
 debug;
-goog.require('require');
+goog.require('napster.require');
 /** @expose */
 require;
-goog.require('services');
+goog.require('napster.services');
 /** @expose */
 services;
-goog.require('stream');
+goog.require('napster.stream');
 /** @expose */
 stream;
-goog.require('ui');
+goog.require('napster.ui');
 /** @expose */
 ui;

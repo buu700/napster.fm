@@ -1,4 +1,4 @@
-goog.provide('datastore');
+goog.provide('napster.datastore');
 
 
 var datastore	= new function () {

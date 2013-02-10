@@ -1,4 +1,4 @@
-goog.provide('controllers');
+goog.provide('napster.controllers');
 
 
 angular.module('Napster', []).controller('Controller', ['$scope', function ($scope) {

@@ -5,7 +5,7 @@ namespaces=(`grep -l 'goog.provide' js/*.js | while read namespace ; do echo -n 
 
 namespaceArgs=''
 for namespace in "${namespaces[@]}" ; do
-	namespaceArgs+="-n ${namespace} "
+	namespaceArgs+="-n napster.${namespace} "
 done
 
 
@@ -31,11 +31,11 @@ cd ..
 
 
 initText="`cat js/init.js`"
-echo -e "goog.provide('init');\n\ngoog.require('exports');\n\n${initText}" > js/init.js
+echo -e "goog.provide('napster.init');\n\ngoog.require('napster.exports');\n\n${initText}" > js/init.js
 
 ./export.sh "${namespaces[@]}"
 
-js/closure-library/closure/bin/build/closurebuilder.py --root=js $namespaceArgs -n exports -n init --output_mode=compiled --compiler_jar=compiler.jar --compiler_flags="--compilation_level=SIMPLE_OPTIMIZATIONS" --compiler_flags="--externs=js/externs.js" --output_file=js/napster.js
+js/closure-library/closure/bin/build/closurebuilder.py --root=js $namespaceArgs -n napster.exports -n napster.init --output_mode=compiled --compiler_jar=compiler.jar --compiler_flags="--compilation_level=SIMPLE_OPTIMIZATIONS" --compiler_flags="--externs=js/externs.js" --output_file=js/napster.js
 
 # java -jar yuicompressor.jar --nomunge --type js -o js/napster.js.tmp js/napster.js
 # mv js/napster.js.tmp js/napster.js

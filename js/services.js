@@ -1,4 +1,4 @@
-goog.provide('services');
+goog.provide('napster.services');
 
 
 var services	= new function () {

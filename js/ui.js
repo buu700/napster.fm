@@ -1,4 +1,4 @@
-goog.provide('ui');
+goog.provide('napster.ui');
 
 
 var ui	= new function () {
