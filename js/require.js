@@ -1,4 +1,4 @@
-goog.provide('require')
+goog.provide('napster.require')
 
 
 goog.require('goog.async.ConditionalDelay');

@@ -1,4 +1,4 @@
-goog.provide('stream');
+goog.provide('napster.stream');
 
 
 var stream	= new function () {

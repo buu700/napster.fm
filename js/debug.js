@@ -1,4 +1,4 @@
-goog.provide('debug');
+goog.provide('napster.debug');
 
 
 var debug	= new function () {

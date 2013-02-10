@@ -1,4 +1,4 @@
-goog.provide('closurequery');
+goog.provide('napster.closurequery');
 
 
 /**

@@ -1,4 +1,4 @@
-goog.provide('datahelpers');
+goog.provide('napster.datahelpers');
 
 
 var datahelpers	= new function () {

@@ -1,4 +1,4 @@
-goog.provide('authentication');
+goog.provide('napster.authentication');
 
 
 var authentication	= new function () {
