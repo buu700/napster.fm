@@ -39,6 +39,7 @@
 		"track": {
 			"$track": {
 				".write": true,
+				".validate": "!(data.child('lastPlayed').exists() && newData.child('lastPlayed').val() == null) && !(data.child('playCount').exists() && newData.child('playCount').val() == null)",
 				"artist": {
 					".validate": "newData.isString()"
 				},
