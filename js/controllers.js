@@ -3,6 +3,8 @@ goog.provide('napster.controllers');
 
 angular.module('Napster', []).controller('Controller', ['$scope', function ($scope) {
 	$scope.authentication	= authentication;
+	$scope.chat				= chat;
+	$scope.datahelpers		= datahelpers;
 	$scope.datastore		= datastore;
 	$scope.services			= services;
 	$scope.stream			= stream;

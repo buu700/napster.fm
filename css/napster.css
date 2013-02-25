@@ -24,12 +24,13 @@ body
 {
 	position			: fixed;
 	z-index				: 9999;
-	top					: 7.5%;
+	top					: 10%;
 	left				: 20%;
-	height				: 75%;
+	height				: 60%;
 	width				: 60%;
 	border-radius		: 5px;
 	opacity				: 0.95;
+	margin				: 0px;
 
 	text-align			: center;
 	padding-top			: 2.5%;
