@@ -16,19 +16,53 @@ var self	= this;
 
 /**
 * @function
+* @property {void} Adds user to group
+* @param {string} groupid
+* @param {string} opt_userid
+*/
+var addToGroup;
+
+/**
+* @function
+* @property {void} Removes user from group
+* @param {string} groupid
+* @param {string} opt_userid
+*/
+var removeFromGroup;
+
+/**
+* @function
 * @property {void} Sends message
 * @param {string} message
-* @param {int} opt_group
+* @param {string} opt_groupid
 */
 var sendMessage;
 
 
 
 
-self.sendMessage	= function (message, opt_group) {
-	datastore.group(opt_group).messages.push({author: authentication.userid, created: Date.now(), text: message});
+self.addToGroup	= function (groupid, opt_userid) {
+	var userid	= opt_userid || authentication.userid;
+
+	datastore.group(groupid).member(userid).set(userid);
+	datastore.user().group(groupid).set(groupid);
 	ui.update();
 };
+
+self.removeFromGroup	= function (groupid, opt_userid) {
+	var userid	= opt_userid || authentication.userid;
+
+	datastore.group(groupid).member(userid).set(null);
+	datastore.user().group(groupid).set(null);
+	ui.update();
+};
+
+self.sendMessage	= function (message, opt_groupid) {
+	datastore.group(opt_groupid).messages.push({author: authentication.userid, created: Date.now(), text: message});
+	ui.update();
+};
+
+
 
 
 };
