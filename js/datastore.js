@@ -31,6 +31,12 @@ var root;
 
 /**
 * @function
+* @property {void} Initialises this namespace
+*/
+var init;
+
+/**
+* @function
 * @property {Firebase}
 * @param {string} id (Optional; global group by default)
 */
@@ -59,40 +65,42 @@ var user;
 
 
 
-self.data	= {
-	group: {},
-	lastPlayed: {
-		array: []
-	},
-	track: {},
-	user: {},
-	username: {}
-};
-
-self.data.user[authentication.userid]	= {
-	following: [],
-	groups: {},
-	hotlist: {},
-	isOnline: true,
-	library: {},
-	nowPlaying: {
-		/* Defaults to rickroll if user is new or otherwise has no value set here */
-		isPlaying: false,
-		lastChange: 0,
-		manualSet: true,
-		time: 10,
-		track: '6s3m5w303h62573j214g5y84h3b42692364435w5e1q2p534ba9n7150s1b'
-	},
-	transfers: {},
-	username: authentication.username
-};
-
-self.data.user.current	= self.data.user[authentication.userid];
-
-
 self.root	= new Firebase('https://napsterfm.firebaseio.com/');
 
 
+
+
+self.init	= function () {
+	self.data	= {
+		group: {},
+		lastPlayed: {
+			array: []
+		},
+		track: {},
+		user: {},
+		username: {}
+	};
+
+	self.data.user[authentication.userid]	= {
+		following: [],
+		groups: {},
+		hotlist: {},
+		isOnline: true,
+		library: {},
+		nowPlaying: {
+			/* Defaults to rickroll if user is new or otherwise has no value set here */
+			isPlaying: false,
+			lastChange: 0,
+			manualSet: true,
+			time: 10,
+			track: '6s3m5w303h62573j214g5y84h3b42692364435w5e1q2p534ba9n7150s1b'
+		},
+		transfers: {},
+		username: authentication.username
+	};
+
+	self.data.user.current	= self.data.user[authentication.userid];
+};
 
 
 self.group	= function (id) {
