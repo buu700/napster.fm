@@ -132,9 +132,6 @@ self.init	= function () {
 		datastore.user().isOnline.onDisconnect().set(false);
 		datastore.user().username.set(self.username);
 		datastore.username().set(self.userid);
-
-		/* For now, adding all users to default group upon login */
-		// chat.addToGroup('0');
 	}
 	else
 	{

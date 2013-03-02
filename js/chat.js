@@ -16,6 +16,12 @@ var self	= this;
 
 /**
 * @function
+* @property {void} Initialises this namespace
+*/
+var init;
+
+/**
+* @function
 * @property {void} Adds user to group
 * @param {string} groupid
 * @param {string} opt_userid
@@ -40,6 +46,11 @@ var sendMessage;
 
 
 
+
+self.init	= function () {
+	/* For now, adding all users to default group upon login */
+	chat.addToGroup('0');
+};
 
 self.addToGroup	= function (groupid, opt_userid) {
 	var userid	= opt_userid || authentication.userid;
