@@ -42,7 +42,7 @@ var sendMessage;
 
 
 self.addToGroup	= function (groupid, opt_userid) {
-	var userid	= opt_userid || authentication.userid;
+	var userid	= opt_userid; // || authentication.userid;
 
 	datastore.group(groupid).member(userid).set(userid);
 	datastore.user().group(groupid).set(groupid);
