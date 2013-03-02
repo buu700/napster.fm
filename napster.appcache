@@ -1,6 +1,6 @@
 CACHE MANIFEST
 
-# 1361250477
+# 1362256662
 
 
 NETWORK:
@@ -42,6 +42,7 @@ js/require.js
 js/stream.js
 js/services.js
 js/exports.js
+js/chat.js
 js/datahelpers.js
 js/datastore.js
 js/controllers.js

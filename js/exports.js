@@ -3,6 +3,9 @@ goog.require('napster.require');
 goog.require('napster.authentication');
 /** @expose */
 authentication;
+goog.require('napster.chat');
+/** @expose */
+chat;
 goog.require('napster.closurequery');
 /** @expose */
 closurequery;
