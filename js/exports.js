@@ -8,7 +8,7 @@ goog.require('napster.chat');
 chat;
 goog.require('napster.closurequery');
 /** @expose */
-closurequery;
+$;
 goog.require('napster.controllers');
 /** @expose */
 controllers;
