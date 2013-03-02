@@ -5,7 +5,7 @@ cd js
 
 echo -e "goog.provide('napster.exports');" > exports.js
 
-echo -e "goog.require('napster.require');" >> exports.js
+cat require.js >> exports.js
 
 
 for namespace in "${@}" ; do
