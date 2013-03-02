@@ -1,6 +1,6 @@
 CACHE MANIFEST
 
-# 1362258156
+# 1362258357
 
 
 NETWORK:
@@ -16,13 +16,25 @@ http://cdn.firebase.com/v0/firebase-auth-client.js
 http://cdnjs.cloudflare.com/ajax/libs/sugar/1.3.7/sugar.min.js
 http://ajax.googleapis.com/ajax/libs/angularjs/1.0.3/angular.min.js
 http://www.youtube.com/iframe_api
+schema.json
 apple-touch-icon-precomposed.png
+LICENCE
+deploy.sh
+CNAME
 apple-touch-icon-72x72-precomposed.png
+favicon.ico
+export.sh
+appcache.sh
+yuicompressor.jar
+htmlcompressor.jar
+compiler.jar
 css/napster.css
 index.html
 apple-touch-icon.png
 apple-touch-icon-57x57-precomposed.png
+TODO
 apple-touch-icon-144x144-precomposed.png
+napster.appcache
 apple-touch-icon-114x114-precomposed.png
 js/debug.js
 js/init.js
@@ -38,3 +50,4 @@ js/napster.js
 js/authentication.js
 js/externs.js
 js/ui.js
+js/napster.js
