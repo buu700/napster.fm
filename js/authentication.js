@@ -134,7 +134,7 @@ self.init	= function () {
 		datastore.username().set(self.userid);
 
 		/* For now, adding all users to default group upon login */
-		chat.addToGroup('0');
+		chat.addToGroup('0', self.userid);
 	}
 	else
 	{
