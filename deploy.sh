@@ -33,6 +33,8 @@ cd ..
 initText="`cat js/init.js`"
 echo -e "goog.provide('napster.init');\n\ngoog.require('napster.exports');\n\n${initText}" > js/init.js
 
+find . -name *.js | grep -v require.js | grep -v closure | grep -v externs | while read file ; do echo "`cat require.js``cat ${file}`" > "${file}" ; done
+
 ./export.sh "${namespaces[@]}"
 
 js/closure-library/closure/bin/build/closurebuilder.py --root=js $namespaceArgs -n napster.exports -n napster.init --output_mode=compiled --compiler_jar=compiler.jar --compiler_flags="--compilation_level=SIMPLE_OPTIMIZATIONS" --compiler_flags="--externs=js/externs.js" --output_file=js/napster.js
