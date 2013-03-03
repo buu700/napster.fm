@@ -33,7 +33,7 @@ cd ..
 initText="`cat js/init.js`"
 echo -e "goog.provide('napster.init');\n\ngoog.require('napster.exports');\n\n${initText}" > js/init.js
 
-find . -name *.js | grep -v require.js | grep -v closure | grep -v externs | while read file ; do echo "`cat js/require.js``cat ${file}`" > "${file}" ; done
+find . -name *.js | grep -v require.js | grep -v closure | grep -v externs | while read file ; do text="`cat "${file}"`" ; cat js/require.js > "${file}" ; echo >> "${file}" ; echo "${text}" >> "${file}" ; done
 
 ./export.sh "${namespaces[@]}"
 

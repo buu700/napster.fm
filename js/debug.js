@@ -14,7 +14,9 @@ goog.require('goog.net.Jsonp');
 goog.require('goog.object');
 goog.require('goog.ui.Component');
 goog.require('goog.ui.Slider');
-goog.require('goog.ui.TableSorter');goog.provide('napster.debug');
+goog.require('goog.ui.TableSorter');
+
+goog.provide('napster.debug');
 
 
 var debug	= new function () {
