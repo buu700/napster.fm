@@ -163,11 +163,11 @@ self.init	= function () {
 	self.slider.decorate($('#player .slider')[0]);
 
 
-	/*** Trigger change when enter is pressed on inputs ***/
+	/*** Trigger submit when enter is pressed on inputs ***/
 	$('input[type="text"]').each(function ($elem) {
 		goog.events.listen($elem, goog.events.KeyHandler.EventType.KEY, function(e) {
 			if (e.keyCode == goog.events.KeyCodes.ENTER) {
-				goog.events.dispatchEvent(this, goog.events.EventType.CHANGE);
+				goog.events.dispatchEvent(this, goog.events.EventType.SUBMIT);
 			}
 		});
 	});
