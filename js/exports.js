@@ -9,7 +9,6 @@ goog.require('goog.dom.classes');
 goog.require('goog.dom.query');
 goog.require('goog.events');
 goog.require('goog.events.KeyCodes');
-goog.require('goog.events.KeyHandler');
 goog.require('goog.net.cookies');
 goog.require('goog.net.Jsonp');
 goog.require('goog.object');
