@@ -77,8 +77,8 @@ self.metadata	= function (title, artist, callback) {
 
 		(goog.object.getValueByKeys(response, 'data', 'results') || []).slice(0, 20).forEach(function (result) {
 			var fullTitle	= (result.title || '').split('-');
-			var title		= fullTitle.slice(1).join('').trim();
-			var artist		= fullTitle[0].split('(')[0].trim();
+			var title		= fullTitle.slice(1).join('').trim().compact();
+			var artist		= fullTitle[0].split('(')[0].trim().compact();
 			var genre		= (result.genre || [])[0];
 			var year		= result.year;
 
