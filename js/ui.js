@@ -145,11 +145,13 @@ self.init	= function () {
 	self.slider.decorate($('#player .slider')[0]);
 
 
-	/*** Trigger submit when enter is pressed on inputs ***/
-	$('input[type="text"]').each(function ($elem) {
-		goog.events.listen($elem, goog.events.KeyHandler.EventType.KEY, function(e) {
+	/*** onenterpress attribute handler ***/
+	$('*').each(function ($elem) {
+		goog.events.listen($elem, goog.events.EventType.KEYPRESS, function(e) {
 			if (e.keyCode == goog.events.KeyCodes.ENTER) {
-				goog.events.dispatchEvent(this, goog.events.EventType.SUBMIT);
+				var onenterpress	= this.getAttribute('onenterpress');
+				/* N.B. do not change eval to window.eval; otherwise, 'this' within onenterpress code will point to window */
+				onenterpress && eval(onenterpress);
 			}
 		});
 	});
