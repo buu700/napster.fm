@@ -24,17 +24,29 @@ var init;
 * @function
 * @property {void} Adds user to group
 * @param {string} groupid
-* @param {string} opt_userid
 */
 var addToGroup;
 
 /**
 * @function
+* @property {void} Creates new group
+* @param {string} opt_name
+*/
+var createGroup;
+
+/**
+* @function
 * @property {void} Removes user from group
 * @param {string} groupid
-* @param {string} opt_userid
 */
 var removeFromGroup;
+
+/**
+* @function
+* @property {void} Switches active group to specified
+* @param {string} groupid
+*/
+var switchToGroup;
 
 /**
 * @function
@@ -48,24 +60,39 @@ var sendMessage;
 
 
 self.init	= function () {
-	/* For now, adding all users to default group upon login */
-	chat.addToGroup('0');
+	/* For now, adding/switching all users to default group upon login */
+	self.switchToGroup('0');
 };
 
-self.addToGroup	= function (groupid, opt_userid) {
-	var userid	= opt_userid || authentication.userid;
-
-	datastore.group(groupid).member(userid).set(userid);
+self.addToGroup	= function (groupid) {
+	datastore.group(groupid).member(authentication.userid).set(authentication.userid);
 	datastore.user().group(groupid).set(groupid);
 	ui.update();
 };
 
-self.removeFromGroup	= function (groupid, opt_userid) {
-	var userid	= opt_userid || authentication.userid;
+self.createGroup	= function (opt_name) {
+	var group	= datastore.groupRoot.push({
+		name: opt_name || 'Chat {0}'.assign({0: Date.now().toString().slice(-3)})
+	});
 
-	datastore.group(groupid).member(userid).set(null);
+	self.addToGroup(group.name());
+};
+
+self.removeFromGroup	= function (groupid) {
+	datastore.group(groupid).member(authentication.userid).set(null);
 	datastore.user().group(groupid).set(null);
 	ui.update();
+};
+
+self.switchToGroup	= function (groupid) {
+	self.addToGroup(groupid);
+
+	var wait		= new goog.async.ConditionalDelay(function () { return datastore.data.group[groupid]; });
+	wait.onSuccess	= function () {
+		datastore.data.activeGroup	= datastore.data.group[groupid];
+		ui.update();
+	};
+	wait.start(1000, 60000);
 };
 
 self.sendMessage	= function (message, opt_groupid) {

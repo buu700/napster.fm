@@ -18,6 +18,7 @@ var self	= this;
 * @function
 * @property {function} Returns generic handler for Firebase child_added event
 * @param {object} dataLocation
+* @param {function} opt_callback
 */
 var onChildAdded;
 
@@ -25,6 +26,7 @@ var onChildAdded;
 * @function
 * @property {function} Returns generic handler for Firebase child_removed event
 * @param {object} dataLocation
+* @param {function} opt_callback
 */
 var onChildRemoved;
 
@@ -33,6 +35,7 @@ var onChildRemoved;
 * @property {function} Returns generic handler for Firebase value event
 * @param {object} dataLocation
 * @param {string} key
+* @param {function} opt_callback
 */
 var onValue;
 
@@ -61,28 +64,33 @@ var syncTrack;
 
 
 
-self.onChildAdded	= function (dataLocation) {
+self.onChildAdded	= function (dataLocation, opt_callback) {
 	return function (newData) {
-		dataLocation[newData.name()]	= newData.val();
+		var key	= newData.name();
+		dataLocation[key]	= newData.val();
+		opt_callback && opt_callback(dataLocation, key, newData);
 		ui.update();
 	};
 };
 
-self.onChildRemoved	= function (dataLocation) {
+self.onChildRemoved	= function (dataLocation, opt_callback) {
 	return function (newData) {
-		if (dataLocation[newData.name()]) {
-			goog.object.remove(dataLocation, newData.name());
+		var key	= newData.name();
+		if (dataLocation[key]) {
+			goog.object.remove(dataLocation, key);
 		}
 		else {
 			goog.object.remove(dataLocation, newData.val());
 		}
+		opt_callback && opt_callback(dataLocation, key, newData);
 		ui.update();
 	};
 };
 
-self.onValue	= function (dataLocation, key) {
+self.onValue	= function (dataLocation, key, opt_callback) {
 	return function (newData) {
 		dataLocation[key]	= newData.val();
+		opt_callback && opt_callback(dataLocation, key, newData);
 		ui.update();
 	};
 };
@@ -111,8 +119,25 @@ self.syncGroup	= function (groupid, shouldStopSync) {
 	name.off('value');
 
 	if (!shouldStopSync) {
-		members.on('child_added', self.onChildAdded(datastore.data.group[groupid].members));
-		messages.on('child_added', self.onChildAdded(datastore.data.group[groupid].messages));
+		members.on('child_added', self.onChildAdded(datastore.data.group[groupid].members, function (o, k) {
+			var userid	= o[k];
+			datastore.user(userid).username.once('value', function (data) {
+				o[k]	= data.val();
+				ui.update();
+			});
+		}));
+		
+		messages.on('child_added', self.onChildAdded(datastore.data.group[groupid].messages, function (o, k) {
+			var userid	= o[k].author;
+			datastore.user(userid).username.once('value', function (data) {
+				o[k].author	= data.val();
+				ui.update();
+			});
+
+			o[k].created	= new Date(o[k].created).toLocaleString();
+			o[k].text		= o[k].text.compact().truncate(1000);
+		}));
+
 		name.on('value', self.onValue(datastore.data.group[groupid], 'name'));
 	}
 	else {

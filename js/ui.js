@@ -148,10 +148,14 @@ self.init	= function () {
 	/*** onenterpress attribute handler ***/
 	$('*').each(function ($elem) {
 		goog.events.listen($elem, goog.events.EventType.KEYPRESS, function(e) {
-			if (e.keyCode == goog.events.KeyCodes.ENTER) {
+			if (e.keyCode == goog.events.KeyCodes.ENTER && !e.shiftKey) {
 				var onenterpress	= this.getAttribute('onenterpress');
 				/* N.B. do not change eval to window.eval; otherwise, 'this' within onenterpress code will point to window */
-				onenterpress && eval(onenterpress);
+				if (onenterpress) {
+					eval(onenterpress);
+					e.preventDefault();
+				}
+
 			}
 		});
 	});

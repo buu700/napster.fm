@@ -24,6 +24,12 @@ var data;
 * @field
 * @property {Firebase}
 */
+var groupRoot;
+
+/**
+* @field
+* @property {Firebase}
+*/
 var root;
 
 
@@ -72,6 +78,7 @@ self.root	= new Firebase('https://napsterfm.firebaseio.com/');
 
 self.init	= function () {
 	self.data	= {
+		activeGroup: null,
 		group: {},
 		lastPlayed: {
 			array: []
@@ -103,10 +110,12 @@ self.init	= function () {
 };
 
 
+self.groupRoot	= self.root.child('group');
+
 self.group	= function (id) {
 	id	= (id || 0).toString();
 
-	var group	= self.root.child('group').child(id);
+	var group	= self.groupRoot.child(id);
 
 	group.members	= group.child('members');
 	group.member	= function (id) {

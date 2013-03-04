@@ -83,7 +83,23 @@
 		</div>
 
 		<div hash-location='#chat'>
-			
+			<div class='tabbar navbar'>
+				<div class='navbar-inner'>
+					<ul class='nav'>
+						<li ng-repeat='group in datastore.data.group' ng-class='{active: group == datastore.data.activeGroup}'>
+							<a ng-click='chat.switchToGroup(group.id)'>{{group.name}}</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class='chatwindow'>
+				<div ng-repeat='message in datastore.data.activeGroup.messages'>
+					<strong>{{message.author}}:</strong>
+					<span>{{message.text}}</span>
+					<span class='pull-right'>{{message.created}}</span>
+				</div>
+			</div>
+			<textarea class='chatmessage' onenterpress='chat.sendMessage(this.value, datastore.data.activeGroup.id); this.value = null;'></textarea>
 		</div>
 
 		<div hash-location='#library'>
