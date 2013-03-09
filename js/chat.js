@@ -109,7 +109,13 @@ self.switchToGroup	= function (groupid) {
 		datastore.data.activeGroup	= datastore.data.group[groupid];
 		ui.update();
 	};
-	wait.start(1000, 60000);
+
+	if (datastore.data.group[groupid]) {
+		wait.onSuccess();
+	}
+	else {
+		wait.start(1000, 60000);
+	}
 };
 
 self.sendMessage	= function (message, opt_groupid) {
