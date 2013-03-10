@@ -108,6 +108,7 @@ self.init	= function () {
 	self.data.user[authentication.userid]	= {
 		following: [],
 		groups: {},
+		groupinvites: {},
 		hotlist: {},
 		isOnline: true,
 		library: {},
@@ -193,6 +194,18 @@ self.user	= function (id) {
 	user.group	= function (id) {
 		id	= id.toString();
 		return user.groups.child(id);
+	};
+
+	user.groupinvites	= user.child('groupinvites');
+	user.groupinvite	= function (id) {
+		id	= id.toString();
+
+		var groupinvite		= user.groupinvites.child(id);
+
+		groupinvite.from	= groupinvite.child('from');
+		groupinvite.group	= groupinvite.child('group');
+
+		return groupinvite;
 	};
 	
 	user.following		= user.child('following');

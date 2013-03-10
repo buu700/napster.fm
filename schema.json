@@ -77,8 +77,18 @@
 				".write": "$user == auth.id",
 				"groups": {
 					"$group": {
-						".write": "!data.exists()",
 						".validate": "newData.isString() && root.child('group/' + newData.val()).exists()"
+					}
+				},
+				"groupinvites": {
+					"$group": {
+						".write": "!data.exists()",
+						"from": {
+							".validate": "newData.isString() && newData.val() == auth.id && root.child('user/' + newData.val()).exists()"
+						},
+						"group": {
+							".validate": "newData.isString() && root.child('group/' + newData.val()).exists()"
+						}
 					}
 				},
 				"following": {
