@@ -136,8 +136,8 @@ self.init	= function () {
 	}
 
 
-	/*** Library + Search ***/
-	$('.track-table').each(function ($elem) {
+	/*** Make all tables sortable ***/
+	$('table').each(function ($elem) {
 		var tableSorter	= new goog.ui.TableSorter();
 		tableSorter.setDefaultSortFunction(goog.ui.TableSorter.alphaSort);
 		tableSorter.decorate($elem);
@@ -163,7 +163,7 @@ self.init	= function () {
 
 
 	/*** onenterpress attribute handler ***/
-	$('*').each(function ($elem) {
+	$('[onenterpress]').each(function ($elem) {
 		goog.events.listen($elem, goog.events.EventType.KEYPRESS, function(e) {
 			if (e.keyCode == goog.events.KeyCodes.ENTER && !e.shiftKey) {
 				var onenterpress	= this.getAttribute('onenterpress');
