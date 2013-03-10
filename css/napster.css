@@ -277,16 +277,16 @@ body
 }
 
 
-.track-table
+table
 {
 	width				: 100%;
 	text-align			: left;
 }
-.track-table th
+table th
 {
 	cursor 				: pointer;
 }
-.track-table [ng-repeat] [ng-click]
+table [ng-repeat] [ng-click]
 {
 	height				: 22px;
 	width				: 100%;
@@ -341,6 +341,11 @@ body
 	max-height			: 500px;
 	overflow-y			: auto;
 	padding-right		: 10px;
+}
+
+.chatmembers
+{
+	width				: 100%;
 }
 
 .chatmessage

@@ -97,18 +97,38 @@
 					</ul>
 				</div>
 			</div>
-			<div class='chatwindow'>
-				<div ng-repeat='message in datastore.data.activeGroup.messages'>
-					<strong>{{message.author}}:</strong>
-					<span>{{message.text}}</span>
-					<span class='pull-right'>{{message.created}}</span>
+			<div class='row-fluid'>
+				<div class='chatwindow span8'>
+					<div ng-repeat='message in datastore.data.activeGroup.messages'>
+						<strong>{{message.author}}:</strong>
+						<span>{{message.text}}</span>
+						<span class='pull-right'>{{message.created}}</span>
+					</div>
+				</div>
+				<div class='span4'>
+					<table class='chatmembers'>
+						<thead>
+							<tr>
+								<th></th>
+								<th>Name</th>
+								<th>Listening To</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat='member in datastore.data.activeGroup.members'>
+								<td></td>
+								<td>{{member}}</td>
+								<td>The Chronic</td>
+							</tr>
+						</tbody>
+					</table>
 				</div>
 			</div>
 			<textarea class='chatmessage' onenterpress='chat.sendMessage(this.value, datastore.data.activeGroup.id); this.value = null;'></textarea>
 		</div>
 
 		<div hash-location='#library'>
-			<table class='track-table' id='library-table'>
+			<table id='library-table'>
 				<thead>
 					<tr>
 						<th></th>
@@ -154,7 +174,7 @@
 				</span>
 			</div>
 
-			<table class='track-table' id='search-table'>
+			<table id='search-table'>
 				<thead>
 					<tr>
 						<th></th>
@@ -197,7 +217,7 @@
 		</div>
 
 		<div hash-location='#discovery'>
-			<table class='track-table' id='discovery-table'>
+			<table id='discovery-table'>
 				<thead>
 					<tr>
 						<th></th>
