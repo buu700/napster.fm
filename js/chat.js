@@ -22,6 +22,13 @@ var init;
 
 /**
 * @function
+* @property {void} Accepts invite to group
+* @param {string} groupinviteid
+*/
+var acceptInvite;
+
+/**
+* @function
 * @property {void} Adds user to group
 * @param {string} groupid
 */
@@ -33,6 +40,21 @@ var addToGroup;
 * @param {string} opt_name
 */
 var createGroup;
+
+/**
+* @function
+* @property {void} Invites other user to group
+* @param {string} userid
+* @param {string} groupid
+*/
+var inviteToGroup;
+
+/**
+* @function
+* @property {void} Rejects invite to group
+* @param {string} groupinviteid
+*/
+var rejectInvite;
 
 /**
 * @function
@@ -64,6 +86,11 @@ self.init	= function () {
 	self.switchToGroup('0');
 };
 
+self.acceptInvite	= function (groupinviteid) {
+	self.switchToGroup(datastore.data.user.current.groupinvites[groupinviteid].groupid);
+	datastore.user().groupinvite(groupinviteid).remove();
+};
+
 self.addToGroup	= function (groupid) {
 	datastore.group(groupid).member(authentication.userid).set(authentication.userid);
 	datastore.user().group(groupid).set(groupid);
@@ -76,6 +103,15 @@ self.createGroup	= function (opt_name) {
 	});
 
 	self.addToGroup(group.name());
+};
+
+self.inviteToGroup	= function (userid, groupid) {
+	datastore.user(userid).groupinvites.push({from: authentication.userid, group: groupid});
+	ui.update();
+};
+
+self.rejectInvite	= function (groupinviteid) {
+	datastore.user().groupinvite(groupinviteid).remove();
 };
 
 self.removeFromGroup	= function (groupid) {

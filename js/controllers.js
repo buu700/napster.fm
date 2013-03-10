@@ -63,7 +63,7 @@ angular.module('Napster', []).controller('Controller', ['$scope', function ($sco
 
 	datastore.user().following.on('value', function (newData) {
 		var alreadySynced	= user.following[0];
-		var userid	= newData.val();
+		var userid			= newData.val();
 		datastore.user(userid).username.once('value', function (username) {
 			user.following	= [userid, username.val()];
 
@@ -82,6 +82,31 @@ angular.module('Napster', []).controller('Controller', ['$scope', function ($sco
 	datastore.user().groups.on('child_removed', function (newData) {
 		datahelpers.onChildRemoved(user.groups)(newData);
 		datahelpers.syncGroup(newData.val(), true);
+	});
+
+	datastore.user().groupinvites.on('child_added', function (newData) {
+		var groupinviteid	= newData.name();
+		var groupinvite		= newData.val();
+
+		/* Ignore invite if user is already in group */
+		if (user.groups[groupinvite.group]) {
+			datastore.user().groupinvite(groupinviteid).remove();
+			return;
+		}
+
+		user.groupinvites[groupinviteid]	= {groupid: groupinvite.group, id: groupinviteid};
+
+		datastore.group(groupinvite.group).name.once('value', function (groupname) {
+			user.groupinvites[groupinviteid].groupname	= groupname.val();
+
+			datastore.user(groupinvite.from).username.once('value', function (username) {
+				user.groupinvites[groupinviteid].from	= username.val();
+				ui.update();
+			});
+		});
+	});
+	datastore.user().groupinvites.on('child_removed', function (newData) {
+		datahelpers.onChildRemoved(user.groupinvites)(newData);
 	});
 
 	datastore.user().hotlist.on('child_added', function (newData) {
