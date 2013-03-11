@@ -126,6 +126,13 @@ var createTempUser;
 */
 var usernameToEmail;
 
+/**
+* @function
+* @property {string} Processes username as necessary for notifications
+* @param {string} username
+*/
+var notificationUsername;
+
 
 
 
@@ -232,6 +239,11 @@ self.createTempUser	= function () {
 
 self.usernameToEmail	= function (username) {
 	return '{0}@firebase.com'.assign({0: username});
+};
+
+
+self.notificationUsername	= function (username) {
+	return !username || username == authentication.username ? 'yourself' : username == 'yourself' ? 'a smartass' : username;
 };
 
 
