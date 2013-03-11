@@ -119,6 +119,7 @@ self.inviteToGroup	= function (userid, groupid) {
 
 self.inviteToGroupProcessor	= function (elem) {
 	var username	= elem.value;
+	
 	datastore.username(username).once('value', function (data) {
 		var userid	= data.val();
 

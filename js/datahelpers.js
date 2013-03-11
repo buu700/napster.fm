@@ -124,7 +124,8 @@ self.syncGroup	= function (groupid, shouldStopSync) {
 			datastore.user(userid).username.once('value', function (data) {
 				o[k]	= {username: data.val()};
 
-				datastore.user(userid).nowPlayingChild.track.once('value', function (data) {
+				datastore.user(userid).nowPlayingChild.track.off('value');
+				datastore.user(userid).nowPlayingChild.track.on('value', function (data) {
 					datastore.track(data.val()).title.once('value', function (data) {
 						o[k].listeningTo	= data.val();
 						ui.update();
