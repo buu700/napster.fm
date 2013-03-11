@@ -139,8 +139,14 @@ self.syncGroup	= function (groupid, shouldStopSync) {
 		members.on('child_added', self.onChildAdded(datastore.data.group[groupid].members, function (o, k) {
 			var userid	= o[k];
 			datastore.user(userid).username.once('value', function (data) {
-				o[k]	= data.val();
-				ui.update();
+				o[k]	= {username: data.val()};
+
+				datastore.user(userid).nowPlayingChild.track.once('value', function (data) {
+					datastore.track(data.val()).title.once('value', function (data) {
+						o[k].listeningTo	= data.val();
+						ui.update();
+					});
+				});
 			});
 		}));
 		
