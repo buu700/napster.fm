@@ -254,8 +254,6 @@ self.loadTrack	= function (trackid, callback, manualSet) {
 
 		self.loadTrackLock	= false;
 
-		ui.notify('"{0}" by {1}'.assign({0: datastore.data.user.current.nowPlaying.track.title, 1: datastore.data.user.current.nowPlaying.track.artist}));
-
 		window.setTimeout(callback, 1000);
 	};
 
@@ -273,10 +271,12 @@ self.loadTrack	= function (trackid, callback, manualSet) {
 	window.setTimeout(function () {
 		datastore.track(trackid).once('value', function (o) {
 			datahelpers.processTrack(o.val(), function (track) {
+				ui.notify('"{0}" by {1}'.assign({0: track.title, 1: track.artist}));
+				
 				for (var key in track) {
 					datastore.data.track[trackid][key]	= track[key];
 				}
-
+				
 				load();
 			});
 		});
