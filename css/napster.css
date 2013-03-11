@@ -292,6 +292,7 @@ table [ng-repeat] [ng-click]
 	width				: 100%;
 	position			: absolute;
 	cursor 				: pointer;
+	background			: none !important;
 }
 
 .now-playing
@@ -374,26 +375,34 @@ table [ng-repeat] [ng-click]
 
 .navbar .container
 {
-	width			: 95%;
+	width				: 95%;
 }
 
 .navbar-inner
 {
-	min-height		: 0px;
-	max-height		: 30px;
+	min-height			: 0px;
+	max-height			: 30px;
 }
 
 .navbar a
 {
-	padding-top		: 5px !important;
-	padding-bottom	: 5px !important;
+	padding-top			: 5px !important;
+	padding-bottom		: 5px !important;
 }
 
 .navbar form *
 {
-	padding-top		: 0px !important;
-	padding-bottom	: 0px !important;
-	margin-top		: 5px !important;
+	padding-top			: 0px !important;
+	padding-bottom		: 0px !important;
+	margin-top			: 5px !important;
+}
+
+/***** Bootstrap table-hover adjustments + applying the property to every table *****/
+
+.table-hover tbody tr:hover td, .table-hover tbody tr:hover th, table tbody tr:hover td, table tbody tr:hover th
+{
+	background-color	: rgba(0, 50, 255, 0.15);
+	cursor				: pointer;
 }
 
 
@@ -401,7 +410,7 @@ table [ng-repeat] [ng-click]
 
 .alert .pull-right
 {
-	margin-top		: -5px;
+	margin-top			: -5px;
 }
 
 
@@ -409,12 +418,12 @@ table [ng-repeat] [ng-click]
 
 .humane
 {
-	font-size		: 18px;
-	padding			: 10px 50px;
-	top				: 15px;
-	right			: 15px;
-	left			: auto;
-	width			: auto;
+	font-size			: 18px;
+	padding				: 10px 50px;
+	top					: 15px;
+	right				: 15px;
+	left				: auto;
+	width				: auto;
 }
 
 
@@ -425,29 +434,45 @@ table [ng-repeat] [ng-click]
 
 @font-face
 {
-	font-family: 'Open Sans';
-	font-style: normal;
-	font-weight: 400;
-	src: local('Open Sans'), local('OpenSans'), url(https://themes.googleusercontent.com/static/fonts/opensans/v6/cJZKeOuBrn4kERxqtaUH3T8E0i7KZn-EPnyo3HZu7kw.woff) format('woff');
+	font-family			: 'Open Sans';
+	font-style			: normal;
+	font-weight			: 400;
+	src					:
+		local('Open Sans'),
+		local('OpenSans'),
+		url(https://themes.googleusercontent.com/static/fonts/opensans/v6/cJZKeOuBrn4kERxqtaUH3T8E0i7KZn-EPnyo3HZu7kw.woff) format('woff')
+	;
 }
 @font-face
 {
-	font-family: 'Open Sans';
-	font-style: normal;
-	font-weight: 700;
-	src: local('Open Sans Bold'), local('OpenSans-Bold'), url(https://themes.googleusercontent.com/static/fonts/opensans/v6/k3k702ZOKiLJc3WVjuplzHhCUOGz7vYGh680lGh-uXM.woff) format('woff');
+	font-family			: 'Open Sans';
+	font-style			: normal;
+	font-weight			: 700;
+	src					:
+		local('Open Sans Bold'),
+		local('OpenSans-Bold'),
+		url(https://themes.googleusercontent.com/static/fonts/opensans/v6/k3k702ZOKiLJc3WVjuplzHhCUOGz7vYGh680lGh-uXM.woff) format('woff')
+	;
 }
 @font-face
 {
-	font-family: 'Open Sans';
-	font-style: italic;
-	font-weight: 400;
-	src: local('Open Sans Italic'), local('OpenSans-Italic'), url(https://themes.googleusercontent.com/static/fonts/opensans/v6/xjAJXh38I15wypJXxuGMBobN6UDyHWBl620a-IRfuBk.woff) format('woff');
+	font-family			: 'Open Sans';
+	font-style			: italic;
+	font-weight			: 400;
+	src					:
+		local('Open Sans Italic'),
+		local('OpenSans-Italic'),
+		url(https://themes.googleusercontent.com/static/fonts/opensans/v6/xjAJXh38I15wypJXxuGMBobN6UDyHWBl620a-IRfuBk.woff) format('woff')
+	;
 }
 @font-face
 {
-	font-family: 'Open Sans';
-	font-style: italic;
-	font-weight: 700;
-	src: local('Open Sans Bold Italic'), local('OpenSans-BoldItalic'), url(https://themes.googleusercontent.com/static/fonts/opensans/v6/PRmiXeptR36kaC0GEAetxjqR_3kx9_hJXbbyU8S6IN0.woff) format('woff');
+	font-family			: 'Open Sans';
+	font-style			: italic;
+	font-weight			: 700;
+	src					:
+		local('Open Sans Bold Italic'),
+		local('OpenSans-BoldItalic'),
+		url(https://themes.googleusercontent.com/static/fonts/opensans/v6/PRmiXeptR36kaC0GEAetxjqR_3kx9_hJXbbyU8S6IN0.woff) format('woff')
+	;
 }
