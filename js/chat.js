@@ -118,12 +118,13 @@ self.inviteToGroup	= function (userid, groupid) {
 };
 
 self.inviteToGroupProcessor	= function (elem) {
-	datastore.username(elem.value).once('value', function (data) {
+	var username	= elem.value;
+	datastore.username(username).once('value', function (data) {
 		var userid	= data.val();
 
 		if (userid != null) {
 			self.inviteToGroup(userid, datastore.data.activeGroup.id);
-			ui.notify('Invited {0} to {1}'.assign({0: elem.value, 1: datastore.data.activeGroup.name}));
+			ui.notify('Invited {0} to {1}'.assign({0: !username || username == authentication.username ? 'yourself' : username, 1: datastore.data.activeGroup.name}));
 			elem.value	= null;
 		}
 		else {
