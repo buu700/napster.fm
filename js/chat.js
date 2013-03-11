@@ -105,11 +105,11 @@ self.addToGroup	= function (groupid) {
 };
 
 self.createGroup	= function (opt_name) {
-	var group	= datastore.groupRoot.push({
-		name: opt_name || 'Chat {0}'.assign({0: Date.now().toString().slice(-3)})
-	});
+	var name	= opt_name || 'Chat {0}'.assign({0: Date.now().toString().slice(-3)});
+	var group	= datastore.groupRoot.push({name: name});
 
-	self.addToGroup(group.name());
+	self.switchToGroup(group.name());
+	ui.notify('Created group {0}'.assign({0: name}));
 };
 
 self.inviteToGroup	= function (userid, groupid) {
@@ -119,7 +119,7 @@ self.inviteToGroup	= function (userid, groupid) {
 
 self.inviteToGroupProcessor	= function (elem) {
 	var username	= elem.value;
-	
+
 	datastore.username(username).once('value', function (data) {
 		var userid	= data.val();
 

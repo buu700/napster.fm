@@ -337,6 +337,11 @@ table [ng-repeat] [ng-click]
 	padding-bottom		: 2px !important;
 }
 
+.tabbar label
+{
+	margin-bottom		: 0px;
+}
+
 
 .chatwindow
 {
@@ -369,6 +374,18 @@ table [ng-repeat] [ng-click]
 {
 	width				: 99%;
 	margin-top			: 20px;
+}
+
+#groupcreate
+{
+	height				: 18px;
+	margin				: 2px;
+	padding				: 0px
+}
+
+.icon-plus
+{
+	margin-right		: 7px;
 }
 
 
