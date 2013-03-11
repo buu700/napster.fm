@@ -169,6 +169,20 @@ var sync;
 
 /**
 * @function
+* @property {void} Syncs player state with specified user, but accepts username as input
+* @param {string} username
+*/
+var syncByUsername;
+
+/**
+* @function
+* @property {void} Helper function for sync
+* @param {Firebase} o
+*/
+var syncHelper;
+
+/**
+* @function
 * @property {int} Gets or sets time in current track
 * @param {int} newTime
 * @param {bool} manualSet
@@ -377,37 +391,10 @@ self.sync	= function (userid) {
 	userid		= (userid || datastore.data.user.current.following[0] || authentication.userid).toString();
 	var user	= datastore.user(userid);
 
-	datastore.user(datastore.data.user.current.following[0]).nowPlayingChild.lastChange.off();
+	datastore.user(datastore.data.user.current.following[0]).nowPlaying.off('value', self.syncHelper);
 	datastore.user().following.set(userid);
 
-	user.nowPlaying.on('value', function (o) {
-		var nowPlaying	= o.val();
-
-		if (nowPlaying.lastChange <= self.playerUpdated) {
-			return;
-		}
-
-		var timeOffset	= ((Date.now() - nowPlaying.lastChange) / 1000) + 1;
-		var newTime		= nowPlaying.time + (nowPlaying.isPlaying ? timeOffset : 0);
-		var update		= function () {
-			self.play(nowPlaying.isPlaying);
-			datastore.user().nowPlayingChild.track.set(nowPlaying.track);
-
-			if (nowPlaying.manualSet || self.currentTrack) {
-				self.time(newTime);
-			}
-		};
-
-		if (nowPlaying.track != self.currentTrack) {
-			self.loadTrack(nowPlaying.track, update);
-		}
-		else if (nowPlaying.isPlaying == self.isPlaying && Math.abs(newTime - self.time()) < 4) {
-			return;
-		}
-		else {
-			update();
-		}
-	});
+	user.nowPlaying.on('value', self.syncHelper);
 };
 
 
@@ -423,6 +410,35 @@ self.syncByUsername	= function (username) {
 			ui.notify('Invalid username');
 		}
 	});
+};
+
+
+self.syncHelper	= function (o) {
+	var nowPlaying	= o.val();
+
+	if (nowPlaying.lastChange <= self.playerUpdated) {
+		return;
+	}
+
+	var timeOffset	= ((Date.now() - nowPlaying.lastChange) / 1000) + 1;
+	var newTime		= nowPlaying.time + (nowPlaying.isPlaying ? timeOffset : 0);
+	var update		= function () {
+		self.play(nowPlaying.isPlaying);
+		if (nowPlaying.manualSet || self.currentTrack) {
+			self.time(newTime);
+		}
+	};
+
+	if (nowPlaying.track != self.currentTrack) {
+		self.loadTrack(nowPlaying.track, update);
+		datastore.user().nowPlayingChild.track.set(nowPlaying.track);
+	}
+	else if (nowPlaying.isPlaying == self.isPlaying && Math.abs(newTime - self.time()) < 4) {
+		return;
+	}
+	else {
+		update();
+	}
 };
 
 

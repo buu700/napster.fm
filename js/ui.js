@@ -221,8 +221,11 @@ self.update	= function () {
 		o.nowPlayingClass	= o.id == stream.currentTrack && 'now-playing';
 	});
 
-	var following	= datastore.data.user.current.following[1];
-	$('#following')[0].value	= (!following || following == authentication.username) ? '' : following;
+	var $following	= $('#following')[0];
+	if ($following != document.activeElement) {
+		var following		= datastore.data.user.current.following[1];
+		$following.value	= (!following || following == authentication.username) ? '' : following;
+	}
 
 	self.postUpdate && self.postUpdate();
 };
