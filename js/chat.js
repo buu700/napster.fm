@@ -140,7 +140,7 @@ self.inviteToGroupProcessor	= function (elem) {
 
 		if (userid != null) {
 			self.inviteToGroup(userid, datastore.data.activeGroup.id);
-			ui.notify('{0} invited to {1}'.assign({0: elem.value, 1: datastore.data.activeGroup.name}));
+			ui.notify('Invited {0} to {1}'.assign({0: elem.value, 1: datastore.data.activeGroup.name}));
 			elem.value	= null;
 		}
 		else {
