@@ -200,7 +200,7 @@ self.init	= function () {
 			self.volume(100);
 			self.sync();
 		};
-		wait.start(1000, 60000);
+		wait.start(0, 60000);
 	};
 
 	var onYouTubePlayerStateChange = function (state) {
@@ -408,8 +408,16 @@ self.sync	= function (userid) {
 
 
 self.syncByUsername	= function (username) {
-	datastore.username(username).once('value', function (userid) {
-		self.sync(userid.val());
+	datastore.username(username).once('value', function (data) {
+		var userid	= data.val();
+
+		if (userid != null) {
+			self.sync(userid);
+			ui.notify('Now following {0}'.assign({0: !username || username == authentication.username ? 'yourself' : username}));
+		}
+		else {
+			ui.notify('Invalid username');
+		}
 	});
 };
 
