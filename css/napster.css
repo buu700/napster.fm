@@ -346,7 +346,7 @@ table [ng-repeat] [ng-click]
 .chatmembersheader
 {
 	display				: block;
-	width				: 100%;
+	width				: 95%;
 	margin-bottom		: 10px;
 	border-bottom		: 1px solid #333;
 }
