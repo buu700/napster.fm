@@ -200,6 +200,7 @@ body
 	width				: 97.3%;
 	height				: 50px;
 	top					: 50px;
+	z-index				: 1000;
 }
 #player:after {
 	top					: 0px;
