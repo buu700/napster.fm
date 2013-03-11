@@ -92,7 +92,7 @@
 			<div class='tabbar navbar'>
 				<div class='navbar-inner'>
 					<ul class='nav'>
-						<li ng-repeat='group in datastore.data.group' ng-class='{active: group == datastore.data.activeGroup}'>
+						<li ng-repeat='group in datastore.data.group' ng-class='{active: group.id == datastore.data.activeGroup.id}'>
 							<a ng-click='chat.switchToGroup(group.id)'>{{group.name}}</a>
 						</li>
 					</ul>
