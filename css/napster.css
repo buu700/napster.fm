@@ -436,6 +436,7 @@ table [ng-repeat] [ng-click]
 
 .humane
 {
+	pointer-events		: none;
 	font-size			: 18px;
 	padding				: 10px 50px;
 	top					: 15px;
