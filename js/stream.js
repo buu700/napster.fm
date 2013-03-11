@@ -394,6 +394,11 @@ self.sync	= function (userid) {
 	datastore.user(datastore.data.user.current.following[0]).nowPlaying.off('value', self.syncHelper);
 	datastore.user().following.set(userid);
 
+	/* Forces syncHelper to grab other user's state the first time the Firebase event fires */
+	if (userid != authentication.userid) {
+		self.playerUpdated	= 0;
+	}
+
 	user.nowPlaying.on('value', self.syncHelper);
 };
 
