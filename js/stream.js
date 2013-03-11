@@ -392,7 +392,7 @@ self.syncByUsername	= function (username) {
 
 		if (userid != null) {
 			self.sync(userid);
-			ui.notify('Now following {0}'.assign({0: !username || username == authentication.username ? 'yourself' : username}));
+			ui.notify('Now following {0}'.assign({0: authentication.notificationUsername(username)}));
 		}
 		else {
 			ui.notify('Invalid username');
