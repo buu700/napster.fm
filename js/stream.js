@@ -271,6 +271,8 @@ self.loadTrack	= function (trackid, callback, manualSet) {
 
 		self.loadTrackLock	= false;
 
+		ui.notify('"{0}" by {1}'.assign({0: datastore.data.user.current.nowPlaying.track.title, 1: datastore.data.user.current.nowPlaying.track.artist}));
+
 		window.setTimeout(callback, 1000);
 	};
 
