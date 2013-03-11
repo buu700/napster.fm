@@ -343,9 +343,24 @@ table [ng-repeat] [ng-click]
 	padding-right		: 10px;
 }
 
+.chatmembersheader
+{
+	display				: block;
+	width				: 100%;
+	margin-bottom		: 10px;
+	border-bottom		: 1px solid #333;
+}
+
 .chatmembers
 {
 	width				: 100%;
+	margin-top			: 25px;
+}
+
+#chatinvite
+{
+	width				: 50%;
+	margin-left			: 20px;
 }
 
 .chatmessage
@@ -387,6 +402,19 @@ table [ng-repeat] [ng-click]
 .alert .pull-right
 {
 	margin-top		: -5px;
+}
+
+
+/***** Humane.js notification adjustments *****/
+
+.humane
+{
+	font-size		: 18px;
+	padding			: 10px 50px;
+	top				: 15px;
+	right			: 15px;
+	left			: auto;
+	width			: auto;
 }
 
 

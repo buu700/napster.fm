@@ -10,6 +10,7 @@
 		<link rel='stylesheet' href='//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css' />
 		<link rel='stylesheet' href='//netdna.bootstrapcdn.com/bootswatch/2.1.1/cosmo/bootstrap.min.css' />
 		<link rel='stylesheet' href='//netdna.bootstrapcdn.com/font-awesome/3.0.2/css/font-awesome.css' />
+		<link rel='stylesheet' href='//cdnjs.cloudflare.com/ajax/libs/humane-js/3.0.6/themes/original.css' />
 		<link rel='stylesheet' href='css/napster.css' />
 
 		<!--[if lt IE 9]>
@@ -106,6 +107,12 @@
 					</div>
 				</div>
 				<div class='span4'>
+					<strong class='chatmembersheader'>Members</strong>
+					<label for='chatinvite' class='pull-left'>
+						<span class='icon-plus' style='margin-right: 7px;'></span>
+						Invite friend:
+					</label>
+					<input onenterpress='chat.inviteToGroupProcessor(this)' id='chatinvite' class='pull-left' type='text' />
 					<table class='chatmembers'>
 						<thead>
 							<tr>
@@ -312,6 +319,9 @@
 
 		<!-- AngularJS: Declarative MVC framework; http://angularjs.org/ -->
 		<script src='//ajax.googleapis.com/ajax/libs/angularjs/1.0.3/angular.min.js'></script>
+
+		<!-- Humane.js: Notification library; http://wavded.github.com/humane-js/ -->
+		<script src='//cdnjs.cloudflare.com/ajax/libs/humane-js/3.0.6/humane.min.js'></script>
 
 
 		<!-- COMPILE START -->

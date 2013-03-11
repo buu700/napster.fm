@@ -21,6 +21,12 @@ var libraryEmptyClass;
 
 /**
 * @field
+* @property {Humane}
+*/
+var notifier;
+
+/**
+* @field
 * @property {string}
 */
 var playButtonClass;
@@ -84,6 +90,13 @@ var loginUsername;
 
 /**
 * @function
+* @property {void} Displays a non-interactive Growl-style notification to user
+* @param {string} message
+*/
+var notify;
+
+/**
+* @function
 * @property {void} Runs after update
 */
 var postUpdate;
@@ -93,6 +106,11 @@ var postUpdate;
 * @property {void} Updates UI
 */
 var update;
+
+
+
+
+self.notifier	= humane.create({timeout: 2500});
 
 
 
@@ -167,6 +185,10 @@ self.loginPassword	= function () {
 
 self.loginUsername	= function () {
 	return $('#login-username')[0].value;
+};
+
+self.notify	= function (message) {
+	self.notifier.log(message);
 };
 
 self.update	= function () {
