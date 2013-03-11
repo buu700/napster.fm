@@ -31,6 +31,7 @@ angular.module('Napster', []).controller('Controller', ['$scope', function ($sco
 	$scope.chat				= chat;
 	$scope.datahelpers		= datahelpers;
 	$scope.datastore		= datastore;
+	$scope.library			= library;
 	$scope.services			= services;
 	$scope.stream			= stream;
 	$scope.ui				= ui;

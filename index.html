@@ -197,7 +197,7 @@
 				</thead>
 				<tbody>
 					<tr ng-repeat='track in services.searchResults' ng-class='track.nowPlayingClass'>
-						<td ng-click='datastore.user().library.push(track.id)' onclick='document.location.hash = "#library"'></td>
+						<td ng-click='library.addTrack(track.id)' onclick='document.location.hash = "#library"'></td>
 						<td>{{track.title}}</td>
 						<td>{{track.artist}}</td>
 						<td>{{track.genre}}</td>
@@ -240,7 +240,7 @@
 				</thead>
 				<tbody>
 					<tr ng-repeat='track in datastore.data.lastPlayed.array' ng-class='track.nowPlayingClass'>
-						<td ng-click='datastore.user().library.push(track.id)' onclick='document.location.hash = "#library"'></td>
+						<td ng-click='library.addTrack(track.id)' onclick='document.location.hash = "#library"'></td>
 						<td>{{track.title}}</td>
 						<td>{{track.artist}}</td>
 						<td>{{track.genre}}</td>
@@ -339,6 +339,7 @@
 		<script src='js/debug.js'></script>
 		<script src='js/services.js'></script>
 		<script src='js/stream.js'></script>
+		<script src='js/library.js'></script>
 		<script src='js/ui.js'></script>
 		<script src='js/controllers.js'></script>
 		
