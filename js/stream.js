@@ -289,11 +289,11 @@ self.loadTrack	= function (trackid, callback, manualSet) {
 		datastore.track(trackid).once('value', function (o) {
 			datahelpers.processTrack(o.val(), function (track) {
 				ui.notify('"{0}" by {1}'.assign({0: track.title, 1: track.artist}));
-				
+
 				for (var key in track) {
 					datastore.data.track[trackid][key]	= track[key];
 				}
-				
+
 				load();
 			});
 		});
@@ -388,9 +388,11 @@ self.sync	= function (userid) {
 		}
 
 		var timeOffset	= ((Date.now() - nowPlaying.lastChange) / 1000) + 1;
-		var newTime	= nowPlaying.time + (nowPlaying.isPlaying ? timeOffset : 0);
-		var update	= function () {
+		var newTime		= nowPlaying.time + (nowPlaying.isPlaying ? timeOffset : 0);
+		var update		= function () {
 			self.play(nowPlaying.isPlaying);
+			datastore.user().nowPlayingChild.track.set(nowPlaying.track);
+
 			if (nowPlaying.manualSet || self.currentTrack) {
 				self.time(newTime);
 			}
@@ -471,7 +473,7 @@ self.updatePlayer	= function (manualSet) {
 	}
 
 	var track	= datastore.data.track[self.currentTrack];
-	self.currentTrack && track && length && Math.ceil(track.length) != Math.ceil(length) && datastore.track(self.currentTrack).length.set(length);
+	self.currentTrack && track && length && Math.abs(Math.ceil(track.length) - Math.ceil(length)) > 2 && datastore.track(self.currentTrack).length.set(length);
 
 
 	ui.update();
