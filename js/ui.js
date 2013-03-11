@@ -222,7 +222,7 @@ self.update	= function () {
 	});
 
 	var $following	= $('#following')[0];
-	if ($following != document.activeElement) {
+	if ($following != $(document).getActiveElement()) {
 		var following		= datastore.data.user.current.following[1];
 		$following.value	= (!following || following == authentication.username) ? '' : following;
 	}
