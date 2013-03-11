@@ -36,6 +36,9 @@ datastore;
 goog.require('napster.debug');
 /** @expose */
 debug;
+goog.require('napster.library');
+/** @expose */
+library;
 goog.require('napster.services');
 /** @expose */
 services;
