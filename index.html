@@ -91,6 +91,7 @@
 			</div>
 			<div class='tabbar navbar'>
 				<div class='navbar-inner'>
+					<button onclick='chat.removeFromGroup(datastore.data.activeGroup.id)' class='icon-remove btn pull-left'></button>
 					<ul class='nav'>
 						<li ng-repeat='group in datastore.data.group' ng-class='{active: group.id == datastore.data.activeGroup.id}'>
 							<a ng-click='chat.switchToGroup(group.id)'>{{group.name}}</a>
@@ -264,7 +265,7 @@
 		</div>
 
 		<div hash-location='#login'>
-			<a href='#home'>&#10007;</a>
+			<a href='#home' class='icon-remove'></a>
 			<div class='row-fluid'>
 				<h4>LOG IN OR REGISTER</h4>
 			</div>

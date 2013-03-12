@@ -41,8 +41,8 @@ body
 	position			: absolute;
 	top					: 10px;
 	right				: 10px;
-	font-size			: 20px;
-	font-weight			: bold;
+	font-size			: 16px;
+	font-weight			: normal;
 	text-decoration		: none !important;
 	opacity				: 0.8;
 	color				: #272727;
@@ -335,6 +335,16 @@ table [ng-repeat] [ng-click]
 {
 	padding-top			: 2px !important;
 	padding-bottom		: 2px !important;
+}
+
+.tabbar .navbar-inner > .icon-remove
+{
+	margin				: 5px 20px;
+	margin-left			: 0px;
+	padding				: 0px;
+	color				: inherit;
+	background			: none;
+	border 				: none;
 }
 
 .tabbar label
