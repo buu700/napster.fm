@@ -139,7 +139,14 @@ self.syncGroup	= function (groupid, shouldStopSync) {
 		members.on('child_added', self.onChildAdded(datastore.data.group[groupid].members, function (o, k) {
 			var userid	= o[k];
 			datastore.user(userid).username.once('value', function (data) {
-				o[k]	= {username: data.val()};
+				var username	= data.val();
+
+				/* Exclude temp users from member list */
+				if (username.startsWith('temporary-account')) {
+					return;
+				}
+
+				o[k]	= {username: username};
 
 				datastore.user(userid).nowPlayingChild.track.off('value');
 				datastore.user(userid).nowPlayingChild.track.on('value', function (data) {
