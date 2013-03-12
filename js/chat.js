@@ -158,7 +158,10 @@ self.rejectInvite	= function (groupinviteid) {
 self.removeFromGroup	= function (groupid) {
 	datastore.group(groupid).member(authentication.userid).set(null);
 	datastore.user().group(groupid).set(null);
-	ui.update();
+
+	/* Switch to arbitrary remaining group after removal when applicable */
+	var newGroup	= goog.object.getKeys(datastore.data.user.current.groups).remove(groupid)[0];
+	newGroup && self.switchToGroup(newGroup);
 };
 
 self.switchToGroup	= function (groupid) {
