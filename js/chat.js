@@ -161,7 +161,7 @@ self.removeFromGroup	= function (groupid) {
 
 	/* Switch to arbitrary remaining group after removal when applicable */
 	var newGroup	= goog.object.getKeys(datastore.data.user.current.groups).remove(groupid)[0];
-	newGroup && self.switchToGroup(newGroup);
+	newGroup ? self.switchToGroup(newGroup) : ui.update();
 };
 
 self.switchToGroup	= function (groupid) {
