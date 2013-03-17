@@ -282,6 +282,7 @@ table
 {
 	width				: 100%;
 	text-align			: left;
+	position			: relative;
 }
 table th
 {
@@ -296,7 +297,7 @@ table [ng-repeat] [ng-click]
 	background			: none !important;
 }
 
-.now-playing
+.now-playing, .hotlistactive
 {
 	background-color	: rgba(0, 50, 255, 0.30);
 }
@@ -374,7 +375,7 @@ table [ng-repeat] [ng-click]
 	margin-top			: 25px;
 }
 
-#chatinvite
+#chatinvite, #hotlistinvite
 {
 	width				: 50%;
 	margin-left			: 20px;
