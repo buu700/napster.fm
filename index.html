@@ -125,14 +125,12 @@
 					<table class='chatmembers'>
 						<thead>
 							<tr>
-								<th></th>
 								<th>Name</th>
 								<th>Listening To</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr ng-repeat='member in datastore.data.activeGroup.members'>
-								<td></td>
 								<td>{{member.username}}</td>
 								<td>{{member.listeningTo}}</td>
 							</tr>
@@ -263,7 +261,6 @@
 					<table class='chatmembers'>
 						<thead>
 							<tr>
-								<th></th>
 								<th>Name</th>
 								<th>Listening To</th>
 							</tr>
@@ -274,7 +271,6 @@
 								ng-click='library.switchActiveHotlistMember(member.id)'
 								ng-class='{hotlistactive: member.id == datastore.data.activeHotlistMember.id}'
 							>
-								<td></td>
 								<td>{{member.username}}</td>
 								<td>{{member.listeningTo}}</td>
 							</tr>
