@@ -79,6 +79,7 @@ angular.module('Napster', []).controller('Controller', ['$scope', function ($sco
 		datastore.data.lastPlayed.array	= goog.object.getValues(datastore.data.lastPlayed).slice(1).unique().reverse();
 	});
 
+
 	datastore.user().following.on('value', function (newData) {
 		var alreadySynced	= user.following[0];
 		var userid			= newData.val();
@@ -92,6 +93,7 @@ angular.module('Napster', []).controller('Controller', ['$scope', function ($sco
 		});
 	});
 
+
 	datastore.user().groups.on('child_added', function (newData) {
 		var groupid	= newData.val();
 		datahelpers.syncGroup(groupid);
@@ -101,6 +103,7 @@ angular.module('Napster', []).controller('Controller', ['$scope', function ($sco
 		datahelpers.onChildRemoved(user.groups)(newData);
 		datahelpers.syncGroup(newData.val(), true);
 	});
+
 
 	datastore.user().groupinvites.on('child_added', function (newData) {
 		var groupinviteid	= newData.name();
@@ -127,21 +130,46 @@ angular.module('Napster', []).controller('Controller', ['$scope', function ($sco
 		datahelpers.onChildRemoved(user.groupinvites)(newData);
 	});
 
+
+	datastore.eventHandlers.hotlistLibrary		= {};
+	datastore.eventHandlers.hotlistNowPlaying	= {};
+
 	datastore.user().hotlist.on('child_added', function (newData) {
 		var userid	= newData.val();
 		datastore.user(userid).username.once('value', function (username) {
-			user.hotlist[userid]	= username.val();
+			user.hotlist[userid]	= {id: userid, username: username.val(), library: {}, listeningTo: null};
 			ui.update();
+
+			datastore.eventHandlers.hotlistLibrary[userid]	= datastore.user(userid).library.on('child_added', function (newData) {
+				var trackid	= newData.val();
+				datahelpers.syncTrack(trackid);
+				user.hotlist[userid].library[trackid]	= datastore.data.track[trackid];
+				ui.update();
+			});
+			datastore.eventHandlers.hotlistNowPlaying[userid]	= datastore.user(userid).nowPlayingChild.track.on('value', function (data) {
+				datastore.track(data.val()).title.once('value', function (data) {
+					user.hotlist[userid].listeningTo	= data.val();
+					ui.update();
+				});
+			});
 		});
 	});
-	datastore.user().hotlist.on('child_removed', datahelpers.onChildRemoved(user.hotlist));
+	datastore.user().hotlist.on('child_removed', function (newData) {
+		var userid	= newData.val();
+
+		datahelpers.onChildRemoved(user.hotlist)(newData);
+		datastore.user(newData.val()).library.off('child_added', datastore.eventHandlers.hotlistLibrary[userid]);
+		datastore.user(userid).nowPlayingChild.track.off('value', datastore.eventHandlers.hotlistNowPlaying[userid]);
+	});
 	
+
 	datastore.user().isOnline.on('value', function (newData) {
 		if (newData.val() == false) {
 			datastore.user().isOnline.set(true);
 			ui.update();
 		}
 	});
+
 
 	datastore.user().library.on('child_added', function (newData) {
 		var trackid	= newData.val();
@@ -152,6 +180,7 @@ angular.module('Napster', []).controller('Controller', ['$scope', function ($sco
 		datahelpers.onChildRemoved(user.library)(newData);
 		/* Not stopping track sync in case lastPlayed and library have overlap */
 	});
+
 
 	datastore.user().nowPlaying.on('value', function (newData) {
 		var newVal	= newData.val();
@@ -168,6 +197,7 @@ angular.module('Napster', []).controller('Controller', ['$scope', function ($sco
 		datahelpers.syncTrack(trackid);
 		user.nowPlaying.track	= datastore.data.track[trackid];
 	});
+
 
 	datastore.user().transfers.on('child_added', function (newData) {
 		var key			= newData.name();

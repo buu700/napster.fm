@@ -33,13 +33,56 @@ var self	= this;
 
 /**
 * @function
+* @property {void} Adds user to Hot List
+* @param {string} userid
+*/
+var addToHotlist;
+
+/**
+* @function
+* @property {void} Processes input for addToHotlist
+* @param {Element} elem
+*/
+var addToHotlistProcessor;
+
+/**
+* @function
 * @property {void} Adds track to library
 * @param {string} trackid
 */
 var addTrack;
 
+/**
+* @function
+* @property {void} Switches active Hot List member
+* @param {string} userid
+*/
+var switchActiveHotlistMember;
 
 
+
+
+self.addToHotlist	= function (userid) {
+	datastore.user().hotlistMember(userid).set(userid);
+	ui.update();
+};
+
+self.addToHotlistProcessor	= function (elem) {
+	var username	= elem.value;
+
+	datastore.username(username).once('value', function (data) {
+		var userid	= data.val();
+
+		if (userid != null) {
+			self.addToHotlist(userid);
+			ui.notify('Added {0} to Hot List'.assign({0: authentication.notificationUsername(username)}));
+			elem.value	= null;
+		}
+		else {
+			ui.notify('Invalid username');
+		}
+	});
+};
 
 self.addTrack	= function (trackid) {
 	datastore.user().library.push(trackid);
@@ -49,6 +92,11 @@ self.addTrack	= function (trackid) {
 		ui.notify('Added "{0}" by {1}'.assign({0: datastore.data.track[trackid].title, 1: datastore.data.track[trackid].artist}));
 	};
 	wait.start(0, 60000);
+};
+
+self.switchActiveHotlistMember	= function (userid) {
+	datastore.data.activeHotlistMember	= datastore.data.user.current.hotlist[userid];
+	ui.update();
 };
 
 

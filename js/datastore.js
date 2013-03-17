@@ -39,6 +39,12 @@ var data;
 
 /**
 * @field
+* @property {object (function)}
+*/
+var eventHandlers;
+
+/**
+* @field
 * @property {Firebase}
 */
 var groupRoot;
@@ -88,7 +94,8 @@ var user;
 
 
 
-self.root	= new Firebase('https://napsterfm.firebaseio.com/');
+self.eventHandlers	= {};
+self.root			= new Firebase('https://napsterfm.firebaseio.com/');
 
 
 

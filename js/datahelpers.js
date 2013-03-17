@@ -125,18 +125,23 @@ self.processTrack	= function (track, callback) {
 };
 
 self.syncGroup	= function (groupid, shouldStopSync) {
+	datastore.eventHandlers.syncGroup			= datastore.eventHandlers.syncGroup || {};
+	datastore.eventHandlers.syncGroup[groupid]	= datastore.eventHandlers.syncGroup[groupid] || {};
+	var eventHandlers	= datastore.eventHandlers.syncGroup[groupid];
+
+
 	datastore.data.group[groupid]	= datastore.data.group[groupid] || {id: groupid, members: {}, messages: {}, name: ''};
 
 	var members		= datastore.group(groupid).members.limit(500);
 	var messages	= datastore.group(groupid).messages.limit(500);
 	var name		= datastore.group(groupid).name;
 
-	members.off('child_added');
-	messages.off('child_added');
-	name.off('value');
+	members.off('child_added', eventHandlers.members);
+	messages.off('child_added', eventHandlers.messages);
+	name.off('value', eventHandlers.name);
 
 	if (!shouldStopSync) {
-		members.on('child_added', self.onChildAdded(datastore.data.group[groupid].members, function (o, k) {
+		eventHandlers.members	= members.on('child_added', self.onChildAdded(datastore.data.group[groupid].members, function (o, k) {
 			var userid	= o[k];
 			datastore.user(userid).username.once('value', function (data) {
 				var username	= data.val();
@@ -148,8 +153,8 @@ self.syncGroup	= function (groupid, shouldStopSync) {
 
 				o[k]	= {username: username};
 
-				datastore.user(userid).nowPlayingChild.track.off('value');
-				datastore.user(userid).nowPlayingChild.track.on('value', function (data) {
+				datastore.user(userid).nowPlayingChild.track.off('value', eventHandlers.memberTracks);
+				eventHandlers.memberTracks	= datastore.user(userid).nowPlayingChild.track.on('value', function (data) {
 					datastore.track(data.val()).title.once('value', function (data) {
 						o[k].listeningTo	= data.val();
 						ui.update();
@@ -158,7 +163,7 @@ self.syncGroup	= function (groupid, shouldStopSync) {
 			});
 		}));
 		
-		messages.on('child_added', self.onChildAdded(datastore.data.group[groupid].messages, function (o, k) {
+		eventHandlers.messages	= messages.on('child_added', self.onChildAdded(datastore.data.group[groupid].messages, function (o, k) {
 			var userid	= o[k].author;
 			datastore.user(userid).username.once('value', function (data) {
 				o[k].author	= data.val();
@@ -169,7 +174,7 @@ self.syncGroup	= function (groupid, shouldStopSync) {
 			o[k].text		= o[k].text.compact().truncate(1000);
 		}));
 
-		name.on('value', self.onValue(datastore.data.group[groupid], 'name'));
+		eventHandlers.name	= name.on('value', self.onValue(datastore.data.group[groupid], 'name'));
 	}
 	else {
 		goog.object.remove(datastore.data.group, groupid);
@@ -177,14 +182,16 @@ self.syncGroup	= function (groupid, shouldStopSync) {
 };
 
 self.syncTrack	= function (trackid, shouldStopSync) {
+	datastore.eventHandlers.syncTrackHelper	= datastore.eventHandlers.syncTrackHelper || {};
+
 	datastore.data.track[trackid]	= datastore.data.track[trackid] || {id: trackid};
 
 	var track	= datastore.track(trackid);
 
-	track.off('value');
+	track.off('value', datastore.eventHandlers.syncTrackHelper[trackid]);
 
 	if (!shouldStopSync) {
-		track.on('value', function (newData) {
+		datastore.eventHandlers.syncTrackHelper[trackid]	= track.on('value', function (newData) {
 			self.processTrack(newData.val(), function (processedTrack) {
 				goog.object.forEach(processedTrack, function (value, key) {
 					datastore.data.track[trackid][key]	= value;
