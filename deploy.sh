@@ -22,6 +22,10 @@ cp -rfa `ls --ignore build` build/
 cd build
 
 
+# HTML5 Application Cache
+./appcache.sh > napster.appcache
+
+
 ls *.html | while read file ; do cat "${file}" | tr '\n' ' ' | sed 's/<!-- COMPILE START -->.*<!-- COMPILE END -->/\<script src="js\/napster.js"\>\<\/script\>/' > "${file}.tmp" ; java -jar htmlcompressor.jar -o "${file}" "${file}.tmp" ; rm "${file}.tmp" ; done
 
 
@@ -41,10 +45,6 @@ js/closure-library/closure/bin/build/closurebuilder.py --root=js $namespaceArgs 
 
 # java -jar yuicompressor.jar --nomunge --type js -o js/napster.js.tmp js/napster.js
 # mv js/napster.js.tmp js/napster.js
-
-
-# HTML5 Application Cache
-./appcache.sh > napster.appcache
 
 
 git add .
