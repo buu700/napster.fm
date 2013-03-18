@@ -23,7 +23,8 @@ cd build
 
 
 # HTML5 Application Cache
-./appcache.sh > napster.appcache
+# ./appcache.sh > napster.appcache
+echo > napster.appcache
 
 
 ls *.html | while read file ; do cat "${file}" | tr '\n' ' ' | sed 's/<!-- COMPILE START -->.*<!-- COMPILE END -->/\<script src="js\/napster.js"\>\<\/script\>/' > "${file}.tmp" ; java -jar htmlcompressor.jar -o "${file}" "${file}.tmp" ; rm "${file}.tmp" ; done
