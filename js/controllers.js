@@ -202,13 +202,15 @@ angular.module('Napster', []).controller('Controller', ['$scope', function ($sco
 		var transfer	= newData.val();
 		var trackid		= transfer.track;
 		var userid		= transfer.from;
-		datahelpers.onChildAdded(user, 'transfers')(newData);
+		datahelpers.onChildAdded(user.transfers)(newData);
 		datahelpers.syncTrack(trackid);
+		user.transfers[key].id		= key;
 		user.transfers[key].track	= datastore.data.track[trackid];
 		datastore.user(userid).username.once('value', function (username) {
-			user.transfers[key].from	= [userid, username.val()];
+			user.transfers[key].from	= {id: userid, username: username.val()};
 		});
 	});
+	datastore.user().transfers.on('child_removed', datahelpers.onChildRemoved(user.transfers));
 }]);
 
 
