@@ -131,6 +131,7 @@ self.syncGroup	= function (groupid, shouldStopSync) {
 
 				/* Exclude temp users from member list */
 				if (username.startsWith('temporary-account')) {
+					goog.object.remove(o, k);
 					return;
 				}
 
