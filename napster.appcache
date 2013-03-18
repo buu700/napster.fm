@@ -1,12 +1,20 @@
 CACHE MANIFEST
 
-# 1363571840
+# 1363571897
 
 
 NETWORK:
 *
 
 CACHE:
+http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css
+http://netdna.bootstrapcdn.com/bootswatch/2.1.1/cosmo/bootstrap.min.css
+http://netdna.bootstrapcdn.com/font-awesome/3.0.2/css/font-awesome.css
+http://cdnjs.cloudflare.com/ajax/libs/humane-js/3.0.6/themes/original.css
+http://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js
+http://cdnjs.cloudflare.com/ajax/libs/sugar/1.3.7/sugar.min.js
+http://ajax.googleapis.com/ajax/libs/angularjs/1.0.3/angular.min.js
+http://cdnjs.cloudflare.com/ajax/libs/humane-js/3.0.6/humane.min.js
 apple-touch-icon-precomposed.png
 apple-touch-icon-72x72-precomposed.png
 css/napster.css
