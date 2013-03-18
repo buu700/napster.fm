@@ -277,6 +277,11 @@ body
 	position			: absolute;
 }
 
+label[for="following"]
+{
+	margin-right		: 10px;
+}
+
 
 table
 {
@@ -432,6 +437,33 @@ table [ng-repeat] [ng-click]
 {
 	background-color	: rgba(0, 50, 255, 0.15);
 	cursor				: pointer;
+}
+
+/***** Bootstrap Hero Unit adjustments *****/
+
+.hero-unit
+{
+	padding				: 30px;
+}
+
+.hero-unit h3
+{
+	font-size			: 20px;
+}
+
+.hero-unit h4
+{
+	font-size			: 18px;
+}
+
+.hero-unit p, .hero-unit .btn
+{
+	font-size			: 16px;
+}
+
+.hero-unit .btn
+{
+	padding				: 10px 30px;
 }
 
 
