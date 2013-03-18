@@ -61,7 +61,7 @@
 		<div hash-location='#home'>
 			<div class='hero-unit'>
 				<h1>Napster.fm</h1>
-				<h2>Like OG Napster, but cooler</h2>
+				<h2>Like OG Napster, but slightly cooler</h2>
 				<br />
 				<p><a class='btn btn-primary btn-large' href='#about'>Learn more &raquo;</a></p>
 			</div>
@@ -282,7 +282,63 @@
 
 
 		<div hash-location='#transfer'>
-			
+			<div class='alert alert-info' ng-repeat='transfer in datastore.data.user.current.transfers'>
+				{{transfer.from.username}} has requested that you add "{{transfer.track.title}}" by {{transfer.track.artist}}!
+				<button class='btn pull-right' ng-click='library.rejectTransfer(transfer.id)'>Reject Transfer</button>
+				<button class='btn btn-inverse pull-right' ng-click='library.acceptTransfer(transfer.id)'>Accept Transfer</button>
+			</div>
+			<div class='row-fluid'>
+				<div class='span8'>
+					<table id='transfer-library'>
+						<thead>
+							<tr>
+								<th></th>
+								<th>Title</th>
+								<th>Artist</th>
+								<th>Genre</th>
+								<th>Year</th>
+								<th>Length</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat='track in datastore.data.user.current.library' ng-class='track.nowPlayingClass'>
+								<td ng-click='library.transferTrack(track.id)'></td>
+								<td>{{track.title}}</td>
+								<td>{{track.artist}}</td>
+								<td>{{track.genre}}</td>
+								<td>{{track.year}}</td>
+								<td>{{track.length}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class='span4' ng-class='{hide: library.trackToTransfer == null}'>
+					<strong class='chatmembersheader'>Friends</strong>
+					<label for='hotlistinvite' class='pull-left'>
+						<span class='icon-plus'></span>
+						Add friend:
+					</label>
+					<input onenterpress='library.addToHotlistProcessor(this)' id='hotlistinvite' class='pull-left' type='text' />
+					<table class='chatmembers'>
+						<thead>
+							<tr>
+								<th>Name</th>
+								<th>Listening To</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr
+								ng-repeat='member in datastore.data.user.current.hotlist'
+								ng-click='library.transferTrack(undefined, member.id)'
+								ng-class='{hotlistactive: member.id == datastore.data.activeHotlistMember.id}'
+							>
+								<td>{{member.username}}</td>
+								<td>{{member.listeningTo}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
 		</div>
 
 
