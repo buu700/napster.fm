@@ -88,7 +88,7 @@
 				   </div>
 					<div class='span5'>
 						<h3>You won't get arrested</h3>
-						<p><a class='btn btn-primary' href='#about'>Learn more &raquo;</a></p>
+						<p><a class='btn btn-primary' href='#about'>Learn more &raquo;</a> (or just start using it now)</p>
 					</div>
 				</div>
 			</div>
@@ -109,7 +109,7 @@
 							<a ng-click='chat.switchToGroup(group.id)'>{{group.name}}</a>
 						</li>
 					</ul>
-					<input onenterpress='chat.createGroup(this.value); this.value = null;' id='groupcreate' class='pull-right' type='text' />
+					<input onenterpress='chat.createGroup(this.value); this.value = "";' id='groupcreate' class='pull-right' type='text' />
 					<label for='groupcreate' class='pull-right'>
 						<span class='icon-plus'></span>
 						Create group:
@@ -147,7 +147,7 @@
 					</table>
 				</div>
 			</div>
-			<textarea class='chatmessage' onenterpress='chat.sendMessage(this.value, datastore.data.activeGroup.id); this.value = null;'></textarea>
+			<textarea class='chatmessage' onenterpress='chat.sendMessage(this.value, datastore.data.activeGroup.id); this.value = "";'></textarea>
 		</div>
 
 
@@ -384,7 +384,74 @@
 
 
 		<div hash-location='#about'>
+			<h3>Frequently Asked Questions</h3>
+
+
+			<h4>Will I be sued for using this?</h4>
 			
+			<p>Absolutely.</p>
+			
+			
+			<h4>Holy shit, seriously?</h4>
+			
+			<p>No.</p>
+			
+			
+			<h4>Then how does this work?</h4>
+			
+			<p>As far as the streaming music, I'm essentially just grabbing existing content on YouTube based on metadata (titles, artists, etc.) from the <a href='//discogs.com/'>Discogs</a> database.</p>
+			
+			
+			<h4>So the entire service is dependent on minor inefficiencies in YouTube's piracy-detection system?</h4>
+			
+			<p>Shhh... They probably don't hurt, but no, not necessarily; just don't be too selective about which version of a song you're after.</p>
+			
+			
+			<h4>Cool. So why does Napster.fm vaguely resemble Windows 8?</h4>
+			
+			<p>Windows 8 introduced some interesting ideas and a nearly passable UX, but for the most part I just think the new Metro style / flat trend looks cool.</p>
+			
+			<p>Also, I liked the idea of reimagining Napster &ndash; originally a Windows 95 desktop interface &ndash; as a Windows 8-ish modern Web application.</p>
+			
+			
+			<h4>Speaking of the desktop, where are my native and mobile apps? When can I run this on my toaster?</h4>
+			
+			<p>Stay tuned; I have some ideas about that. If you really care, just <a onclick='ui.scrollToBottom()'>shoot me an email</a> and I'll let you know as soon as I have an update.</p>
+			
+			
+			<h4>Who are you?</h4>
+			
+			<p>My alias online is buu700, but I most often go by Ryan Lester IRL. I'm a student at Carnegie Mellon, currently taking a fev years off to work at SpaceX and do other stuff.</p>
+			
+			
+			<h4>I'd like to make a small inquiry of you / spam you / ask you out on a date / give you money / take you to court / send you a comment. How can I contact you?</h4>
+			
+			<p><a onclick='ui.scrollToBottom()'>Scroll down</a>.</p>
+			
+			
+			<h4>I have nothing better to do with my life and would like to contribute to Napster.fm. What should I do?</h4>
+			
+			<p>As mentioned on the home page, everything is developed in the open on GitHub, and any extra hands would be brilliant. Email me or something before sending any pull requests, but please don't hesitate to log any bug reports or feature requests in the <a href='//github.com/buu700/napster.fm/issues'>issues system</a>.</p>
+			
+			
+			<h4>If I should decide to contribute, what technical specifics regarding Napster.fm should I be aware of?</h4>
+			
+			<p>1. To manage all of our data, I'm using the fantastic real-time "serverless" data store <a href='//firebase.com/'>Firebase</a> (YC S11). As a consequence, aside from a set of Firebase validation rules, this is pure client-side engineering; grade-A JS hackers only.</p>
+			
+			<p>2. Other than the Firebase SDK and the YouTube API, the major libraries and frameworks I'm using are: <a href='//code.google.com/p/closure-library'>Google Closure</a>, <a href='//angularjs.org'>AngularJS</a>, <a href='//sugarjs.com'>Sugar</a>, and <a href='//getbootstrap.com'>Bootstrap</a> (they're all brilliant).</p>
+			
+			<p>3. If you're used to traversing the DOM with jQuery, my Closure-based <a href='//github.com/buu700/napster.fm/blob/master/js/closurequery.js'>ClosureQuery</a> may look a bit familiar.</p>
+			
+			
+			<h4>What specifically could you use help with?</h4>
+			
+			<p>To preface, I'm open to any proposed contribution to the project. That being said:</p>
+			
+			<p>1. Automated testing: Napster.fm currently has zero unit test coverage and I've no plans to write any myself in the near future; this could be a project for someone else to handle.</p>
+			
+			<p>2. Artwork: I'm currently borrowing the <a href='//en.wikipedia.org/wiki/Akonadi'>Akonadi</a> logo for the Napster.fm favicon (no special significance; KDE's just awesome) and have no official Napster.fm logo.</p>
+			
+			<p>3. User documentation: there is none at the moment.</p>
 		</div>
 
 

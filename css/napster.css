@@ -186,6 +186,18 @@ body
 
 
 
+[hash-location="#about"]
+{
+	padding				: 30px;
+}
+[hash-location="#about"] h4
+{
+	font-weight			: bold;
+	margin-top			: 30px;
+}
+
+
+
 #stream, #streamPlayer
 {
 	position			: fixed;
@@ -464,6 +476,7 @@ table [ng-repeat] [ng-click]
 .hero-unit .btn
 {
 	padding				: 10px 30px;
+	margin-right		: 10px;
 }
 
 
