@@ -131,7 +131,7 @@ self.init	= function () {
 			}
 		};
 
-		setActive('.navbar a', 'href', function ($elem) { return $elem.parentNode; });
+		setActive('#navbar a', 'href', function ($elem) { return $elem.parentNode; });
 		setActive('[hash-location]', 'hash-location');
 	};
 
@@ -172,7 +172,6 @@ self.init	= function () {
 
 	/* Open all links to external resources in new tabs */
 	$('a[href^="//"]').each(function ($elem) { $elem.setProperties({'target': '_blank'}); });
-
 
 
 	/*** onenterpress attribute handler ***/
@@ -217,7 +216,7 @@ self.update	= function () {
 	self.tempUserClass			= self.tempUserClass || (authentication.username && authentication.username.startsWith('temporary-account-') ? 'temp-user' : '');
 
 	goog.object.forEach(datastore.data.user.current.library, function (o) {
-		o.nowPlayingClass	= o.id == stream.currentTrack && 'now-playing';
+		o.nowPlayingClass	= o.id == stream.currentTrack ? 'now-playing' : '';
 	});
 
 	var $following	= $('#following')[0];
