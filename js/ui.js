@@ -186,6 +186,12 @@ self.init	= function () {
 	self.slider.decorate($('#player .slider')[0]);
 
 
+
+	/* Open all links to external resources in new tabs */
+	$('a[href^="//"]').each(function ($elem) { $elem.setProperties({'target': '_blank'}); });
+
+
+
 	/*** onenterpress attribute handler ***/
 	$('[onenterpress]').each(function ($elem) {
 		goog.events.listen($elem, goog.events.EventType.KEYPRESS, function(e) {
