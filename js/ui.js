@@ -144,7 +144,7 @@ self.init	= function () {
 
 
 	/*** Make all tables sortable ***/
-	$('table').each(function ($elem) {
+	$('table:not(.nosort)').each(function ($elem) {
 		var tableSorter	= new goog.ui.TableSorter();
 		tableSorter.setDefaultSortFunction(goog.ui.TableSorter.alphaSort);
 		tableSorter.decorate($elem);
