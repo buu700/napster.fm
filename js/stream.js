@@ -191,7 +191,7 @@ var volume;
 
 self.init	= function () {
 	var onYouTubePlayerReady = function () {
-		var wait		= new goog.async.ConditionalDelay(function () { return datastore.data.user.current.nowPlaying.track; });
+		var wait		= new goog.async.ConditionalDelay(function () { return authentication.userid && datastore.data.user.current.nowPlaying.track; });
 		wait.onSuccess	= function () {
 			self.onFinished();
 			self.volume(100);

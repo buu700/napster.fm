@@ -16,6 +16,12 @@ var self	= this;
 
 /**
 * @field
+* @property {Firebase}
+*/
+var authClient;
+
+/**
+* @field
 * @property {object}
 */
 var data;
@@ -79,6 +85,7 @@ var user;
 
 self.eventHandlers	= {};
 self.root			= new Firebase('https://napsterfm.firebaseio.com/');
+self.authClient		= new FirebaseAuthClient(self.root, function () {});
 
 
 

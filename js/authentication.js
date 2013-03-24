@@ -156,7 +156,7 @@ self.login	= function (username, password, callback) {
 	username	= username || ui.loginUsername();
 	password	= password || ui.loginPassword();
 
-	new FirebaseAuthClient(datastore.root).login('password', self.usernameToEmail(username), password, function (error, token, user) {
+	new FirebaseAuthClient(datastore.root, function (error, token, user) {
 		if (!error) {
 			goog.net.cookies.set(_tokenKey, token, self.cookieAge);
 			goog.net.cookies.set(_useridKey, user.id, self.cookieAge);
@@ -168,7 +168,7 @@ self.login	= function (username, password, callback) {
 		{
 			callback(error);
 		}
-	});
+	}).login('password', {email: self.usernameToEmail(username), password: password});
 };
 
 
@@ -187,7 +187,7 @@ self.createUser	= function (username, password, callback) {
 	username	= username || ui.loginUsername();
 	password	= password || ui.loginPassword();
 	
-	new FirebaseAuthClient(datastore.root).createUser(self.usernameToEmail(username), password, function (error, user) {
+	datastore.authClient.createUser(self.usernameToEmail(username), password, function (error, user) {
 		if (!error) {
 			self.login(username, password, callback);
 		}
@@ -200,7 +200,7 @@ self.createUser	= function (username, password, callback) {
 
 
 self.changePassword	= function (username, oldPassword, newPassword, callback) {
-	new FirebaseAuthClient(datastore.root).changePassword(self.usernameToEmail(username), oldPassword, newPassword, function (error, success) {
+	datastore.authClient.changePassword(self.usernameToEmail(username), oldPassword, newPassword, function (error, success) {
 		if (!error) {
 			/* TODO: Do something here */
 		}
