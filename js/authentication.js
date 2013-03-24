@@ -22,6 +22,12 @@ var cookieAge;
 
 /**
 * @field
+* @property {Firebase}
+*/
+var datastoreAuthClient;
+
+/**
+* @field
 * @property {string}
 */
 var token;
@@ -127,13 +133,30 @@ var _usernameKey		= 'napsterfm-username';
 
 
 self.init	= function () {
+	self.datastoreAuthClient	= new FirebaseAuthClient(datastore.root, function (error, user) {
+		if (user && !error) {
+			goog.net.cookies.set(_tokenKey, user.firebaseAuthToken, self.cookieAge);
+			goog.net.cookies.set(_useridKey, user.id, self.cookieAge);
+			goog.net.cookies.set(_usernameKey, user.email.split('@')[0], self.cookieAge);
+
+			document.location.href	= '/';
+		}
+		/*
+		else
+		{
+			callback(error);
+		}
+		*/
+	});
+
+
 	self.cookieAge	= 5000000;
 	self.token		= goog.net.cookies.get(_tokenKey);
 	self.userid		= goog.net.cookies.get(_useridKey);
 	self.username	= goog.net.cookies.get(_usernameKey);
 
 	/* Authenticate on startup when possible */
-	if (self.token) {
+	if (self.token && !['null', 'undefined'].find(self.token)) {
 		datastore.root.auth(self.token);
 		datastore.user().isOnline.set(true);
 		datastore.user().isOnline.onDisconnect().set(false);
@@ -156,19 +179,7 @@ self.login	= function (username, password, callback) {
 	username	= username || ui.loginUsername();
 	password	= password || ui.loginPassword();
 
-	new FirebaseAuthClient(datastore.root, function (error, token, user) {
-		if (!error) {
-			goog.net.cookies.set(_tokenKey, token, self.cookieAge);
-			goog.net.cookies.set(_useridKey, user.id, self.cookieAge);
-			goog.net.cookies.set(_usernameKey, username, self.cookieAge);
-
-			document.location.href	= '/';
-		}
-		else
-		{
-			callback(error);
-		}
-	}).login('password', {email: self.usernameToEmail(username), password: password});
+	self.datastoreAuthClient.login('password', {email: self.usernameToEmail(username), password: password, rememberMe: true});
 };
 
 
@@ -187,7 +198,7 @@ self.createUser	= function (username, password, callback) {
 	username	= username || ui.loginUsername();
 	password	= password || ui.loginPassword();
 	
-	datastore.authClient.createUser(self.usernameToEmail(username), password, function (error, user) {
+	self.datastoreAuthClient.createUser(self.usernameToEmail(username), password, function (error, user) {
 		if (!error) {
 			self.login(username, password, callback);
 		}
@@ -200,7 +211,7 @@ self.createUser	= function (username, password, callback) {
 
 
 self.changePassword	= function (username, oldPassword, newPassword, callback) {
-	datastore.authClient.changePassword(self.usernameToEmail(username), oldPassword, newPassword, function (error, success) {
+	self.datastoreAuthClient.changePassword(self.usernameToEmail(username), oldPassword, newPassword, function (error, success) {
 		if (!error) {
 			/* TODO: Do something here */
 		}
