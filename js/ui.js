@@ -120,6 +120,12 @@ var postUpdate;
 
 /**
 * @function
+* @property {void} Scrolls to bottom of page
+*/
+var scrollToBottom;
+
+/**
+* @function
 * @property {void} Updates UI
 */
 var update;
@@ -206,6 +212,10 @@ self.loginUsername	= function () {
 
 self.notify	= function (message) {
 	self.notifier.log(message);
+};
+
+self.scrollToBottom	= function () {
+	window.scrollTo(0, document.body.scrollHeight);
 };
 
 self.update	= function () {
