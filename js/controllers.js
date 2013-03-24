@@ -76,7 +76,7 @@ angular.module('Napster', []).controller('Controller', ['$scope', function ($sco
 		/* Using newData.name() for key because lastPlayed is ordered data */
 		datastore.data.lastPlayed[newData.name()]	= datastore.data.track[trackid];
 
-		datastore.data.lastPlayed.array	= goog.object.getValues(datastore.data.lastPlayed).slice(1).unique().reverse();
+		datastore.data.lastPlayed.array	= goog.object.getValues(datastore.data.lastPlayed).slice(1).reverse().unique();
 	});
 	
 	
