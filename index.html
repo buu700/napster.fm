@@ -368,7 +368,7 @@
 				</thead>
 				<tbody>
 					<tr ng-repeat='track in datastore.data.lastPlayed.array' ng-class='track.nowPlayingClass'>
-						<td ng-click='library.addTrack(track.id)' onclick='document.location.hash = "#library"'></td>
+						<td ng-click='library.addTrack(track.id); stream.loadTrack(track.id, undefined, true);'></td>
 						<td>{{track.title}}</td>
 						<td>{{track.artist}}</td>
 						<td>{{track.genre}}</td>
