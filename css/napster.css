@@ -7,11 +7,7 @@ body
 
 
 
-#user-greeting.temp-user
-{
-	display				: none;
-}
-#login-greeting:not(.temp-user)
+#user-greeting.temp-user, #logout.temp-user, #login-greeting:not(.temp-user)
 {
 	display				: none;
 }
