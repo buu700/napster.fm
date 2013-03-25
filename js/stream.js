@@ -421,7 +421,7 @@ self.syncByUsername	= function (username) {
 self.syncHelper	= function (o) {
 	var nowPlaying	= o.val();
 
-	if (nowPlaying.lastChange <= self.playerUpdated) {
+	if (!nowPlaying || nowPlaying.lastChange <= self.playerUpdated) {
 		return;
 	}
 
