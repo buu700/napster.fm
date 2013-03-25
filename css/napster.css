@@ -314,6 +314,19 @@ table [ng-repeat] [ng-click]
 	background			: none !important;
 }
 
+table th.remove
+{
+	width				: 20px;
+}
+table td.icon-remove
+{
+	display				: none;
+}
+table tr:hover td.icon-remove
+{
+	display				: block;
+}
+
 .now-playing, .hotlistactive
 {
 	background-color	: rgba(0, 50, 255, 0.30);

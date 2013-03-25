@@ -164,6 +164,7 @@
 						<th>Last Played By</th>
 						<th>Last Played</th>
 						<th>Plays</th>
+						<th class='remove'></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -177,6 +178,7 @@
 						<td>{{track.lastPlayedBy}}</td>
 						<td>{{track.lastPlayed}}</td>
 						<td>{{track.playCount}}</td>
+						<td class='icon-remove' ng-click='library.removeTrack(track.id)'></td>
 					</tr>
 				</tbody>
 			</table>
