@@ -74,6 +74,13 @@ var rejectTransfer;
 
 /**
 * @function
+* @property {void} Removes track from library
+* @param {string} trackid
+*/
+var removeTrack;
+
+/**
+* @function
 * @property {void} Switches active Hot List member
 * @param {string} userid
 */
@@ -125,7 +132,7 @@ self.addToHotlistProcessor	= function (elem) {
 };
 
 self.addTrack	= function (trackid) {
-	datastore.user().library.push(trackid);
+	datastore.user().library.child(trackid).set(trackid);
 
 	var wait		= new goog.async.ConditionalDelay(function () { return datastore.data.track[trackid]; });
 	wait.onSuccess	= function () {
@@ -138,6 +145,11 @@ self.rejectTransfer	= function (transferid) {
 	datastore.user().transfer(transferid).remove();
 	ui.update();
 	ui.notify('Rejected transfer');
+};
+
+self.removeTrack	= function (trackid) {
+	ui.notify('Removed "{0}" by {1}'.assign({0: datastore.data.track[trackid].title, 1: datastore.data.track[trackid].artist}));
+	datastore.user().library.child(trackid).remove();
 };
 
 self.switchActiveHotlistMember	= function (userid) {
