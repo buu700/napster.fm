@@ -3,6 +3,8 @@ body
 	margin				: 20px;
 	margin-top			: 50px;
 	overflow-x			: hidden;
+	font-family			: Calibri, Candara, "Open Sans", Arial, sans-serif;
+	-webkit-font-smoothing		: subpixel-antialiased;
 }
 
 
