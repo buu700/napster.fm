@@ -676,19 +676,5 @@ datastore.user().groupinvites.on("child_removed",datahelpers.onChildRemoved(b.gr
 b.hotlist[d].library[a]=datastore.data.track[a];ui.update()});datastore.eventHandlers.hotlistNowPlaying[d]=datastore.user(d).nowPlayingChild.track.on("value",function(a){datastore.track(a.val()).title.once("value",function(a){b.hotlist[d].listeningTo=a.val();ui.update()})})})});datastore.user().hotlist.on("child_removed",function(a){var d=a.val();datahelpers.onChildRemoved(b.hotlist)(a);datastore.user(a.val()).library.off("child_added",datastore.eventHandlers.hotlistLibrary[d]);datastore.user(d).nowPlayingChild.track.off("value",
 datastore.eventHandlers.hotlistNowPlaying[d])});datastore.user().isOnline.on("value",function(a){!1==a.val()&&(datastore.user().isOnline.set(!0),ui.update())});datastore.user().library.on("child_added",function(a){a=a.val();datahelpers.syncTrack(a);b.library[a]=datastore.data.track[a]});datastore.user().library.on("child_removed",function(a){datahelpers.onChildRemoved(b.library)(a)});datastore.user().nowPlaying.on("value",function(a){var d=a.val();!d||!d.track?datastore.data.user.current.nowPlaying.track&&
 datastore.user().nowPlaying.set(datastore.data.user.current.nowPlaying):(d=d.track,datahelpers.onValue(b,"nowPlaying")(a),datahelpers.syncTrack(d),b.nowPlaying.track=datastore.data.track[d])});datastore.user().transfers.on("child_added",function(a){var d=a.name(),e=a.val(),f=e.track,g=e.from;datahelpers.onChildAdded(b.transfers)(a);datahelpers.syncTrack(f);b.transfers[d].id=d;b.transfers[d].track=datastore.data.track[f];datastore.user(g).username.once("value",function(a){b.transfers[d].from={id:g,
-username:a.val()}})});datastore.user().transfers.on("child_removed",datahelpers.onChildRemoved(b.transfers))}])}};napster.exports={};napster.init={};controllers.init();authentication.init();datastore.init();ui.init();stream.init();chat.init();window.setTimeout(function(){ui.readyClass||document.location.reload(!0)},6E4);
-
-
-
-
-
-/* Google Analytics */
-var _gaq = _gaq || [];
-_gaq.push(['_setAccount', 'UA-25158938-3']);
-_gaq.push(['_trackPageview']);
-
-(function() {
- var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-	ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-	var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-})();
+username:a.val()}})});datastore.user().transfers.on("child_removed",datahelpers.onChildRemoved(b.transfers))}])}};napster.exports={};napster.init={};controllers.init();authentication.init();datastore.init();ui.init();stream.init();chat.init();window.setTimeout(function(){ui.readyClass||document.location.reload(!0)},6E4);var _gaq=_gaq||[];_gaq.push(["_setAccount","UA-25158938-3"]);_gaq.push(["_trackPageview"]);
+(function(){var a=document.createElement("script");a.type="text/javascript";a.async=!0;a.src=("https:"==document.location.protocol?"https://ssl":"http://www")+".google-analytics.com/ga.js";var b=document.getElementsByTagName("script")[0];b.parentNode.insertBefore(a,b)})();
