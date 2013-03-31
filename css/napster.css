@@ -476,6 +476,7 @@ table tr:hover td.icon-remove
 .hero-unit
 {
 	padding				: 30px;
+	padding-top			: 15px;
 }
 
 .hero-unit h3
