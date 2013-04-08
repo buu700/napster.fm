@@ -27,9 +27,9 @@ stream.init();
 chat.init();
 
 
-/* Fallback in case Firebase fails to load something */
+/* Fallback in case YouTube/Firebase fails to load something */
 window.setTimeout(function () {
-	if (!ui.readyClass) {
+	if (!stream.isReady) {
 		document.location.reload(true);
 	}
 }, 60000);

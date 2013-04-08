@@ -108,6 +108,12 @@ var isFinished;
 
 /**
 * @function
+* @property {bool} Indicates whether or not player/Napster.fm is ready to be used (should always be true after initial load)
+*/
+var isReady;
+
+/**
+* @function
 * @property {int} Length of current track
 */
 var length;
@@ -210,6 +216,7 @@ self.init	= function () {
 	var onYouTubePlayerReady = function () {
 		var wait		= new goog.async.ConditionalDelay(function () { return authentication.userid && datastore.data.user.current.nowPlaying.track; });
 		wait.onSuccess	= function () {
+			self.isReady	= true;
 			self.onFinished();
 			self.volume(100);
 			self.sync();
