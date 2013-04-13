@@ -21,7 +21,7 @@ body
 [hash-location='#login'].active
 {
 	position			: fixed;
-	z-index				: 9999;
+	z-index				: 999;
 	top					: 10%;
 	left				: 20%;
 	height				: 60%;
@@ -56,6 +56,28 @@ body
 [hash-location='#login'].active .btn
 {
 	color				: #333;
+}
+
+
+[hash-location='#home']:not(.ready)
+{
+	z-index				: 1500;
+	position			: fixed;
+	display				: block;
+	top					: 0px;
+	left				: 0px;
+	margin				: 0px;
+	padding				: 110px 30px;
+	height				: 100%;
+	width				: 100%;
+	opacity				: 0.9;
+}
+[hash-location='#home']:not(.ready) ~ #page-loading-spinner
+{
+	z-index				: 2000;
+	top					: 50px;
+	right				: 150px;
+	left				: auto;
 }
 
 
@@ -444,10 +466,13 @@ table tr:hover td.icon-remove
 	width				: 95%;
 }
 
-.navbar-inner
+@media (min-width: 980px)
 {
-	min-height			: 0px;
-	max-height			: 30px;
+	.navbar-inner
+	{
+		min-height		: 0px;
+		max-height		: 30px;
+	}
 }
 
 .navbar a

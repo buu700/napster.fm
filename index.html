@@ -54,11 +54,11 @@
 			<button onclick='stream.repeat()' class='repeat-button icon-refresh' ng-class='ui.repeatButtonClass'></button>
 			<button onclick='stream.shuffle()' class='shuffle-button icon-random' ng-class='ui.shuffleButtonClass'></button>
 			<input onenterpress='stream.syncByUsername(this.value)' id='following' class='pull-right' type='text' />
-			<label for='following' class='pull-right'>Following:</label>
+			<label for='following' class='pull-right'>Sync with:</label>
 		</div>
 
 
-		<div hash-location='#home'>
+		<div hash-location='#home' ng-class='{ready: stream.isReady}'>
 			<div class='hero-unit'>
 				<h1><img src='/logo.hero.png' /></h1>
 				<h2>Free music and stuff</h2>
@@ -389,6 +389,11 @@
 			<h3>Frequently Asked Questions</h3>
 
 
+			<h4>Is Napster.fm in any way affiliated with or derived from Napster?</h4>
+			
+			<p>No, 100% no.</p>
+
+
 			<h4>Will I be sued for using this?</h4>
 			
 			<p>Absolutely.</p>
@@ -423,7 +428,7 @@
 			
 			<h4>Who are you?</h4>
 			
-			<p>My alias online is buu700, but I most often go by Ryan Lester IRL. I'm a student at Carnegie Mellon, currently taking a few years off to work at SpaceX and do other stuff.</p>
+			<p>My alias online is buu700, but I most often go by Ryan Lester IRL. I'm a student at Carnegie Mellon, currently taking a few years off to work at SpaceX and do other stuff. In my free time, I contribute to <a href='//w3sec.org/about'>w3sec</a>.</p>
 			
 			
 			<h4>I'd like to make a small inquiry of you / spam you / ask you out on a date / give you money / take you to court / send you a comment. How can I contact you?</h4>
@@ -501,6 +506,8 @@
 					<a href='mailto:hacker@linux.com'>hacker@linux.com</a>
 						&nbsp;&bull;&nbsp;
 					+1(337) 935 0016
+						&nbsp;&bull;&nbsp;
+					<a href='//plus.google.com/102924227355926902317/'>Google+</a>
 
 					<a id='logout' onclick='authentication.logout()' ng-class='ui.tempUserClass' class='pull-right'>Log Out</a>
 				</p>

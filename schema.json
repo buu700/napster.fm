@@ -1,17 +1,18 @@
 {
 	"rules": {
-		".read": true,
 		".write": false,
 		"group": {
 			"$group": {
 				".write": "!data.exists()",
 				"members": {
+					".read": true,
 					"$member": {
 						".write": "!data.exists() || data.val() == auth.id",
 						".validate": "newData.isString() && root.child('user/' + newData.val()).exists()"
 					}
 				},
 				"messages": {
+					".read": "root.child('group/' + $group + '/members/' + auth.id).exists()",
 					"$message": {
 						".write": "!data.exists()",
 						"author": {
@@ -26,17 +27,20 @@
 					}
 				},
 				"name": {
+					".read": true,
 					".validate": "newData.isString()"
 				}
 			}
 		},
 		"lastPlayed": {
+			".read": true,
 			"$track": {
 				".write": "!data.exists()",
 				".validate": "newData.isString() && root.child('track/' + newData.val()).exists()"
 			}
 		},
 		"track": {
+			".read": true,
 			"$track": {
 				".write": true,
 				".validate": "!(data.child('lastPlayed').exists() && newData.child('lastPlayed').val() == null) && !(data.child('playCount').exists() && newData.child('playCount').val() == null)",
@@ -73,6 +77,7 @@
 			}
 		},
 		"user": {
+			".read": true,
 			"$user": {
 				".write": "$user == auth.id",
 				"groups": {
@@ -141,6 +146,7 @@
 			}
 		},
 		"username": {
+			".read": true,
 			"$username": {
 				".write": "($username + '@firebase.com') == auth.email",
 				".validate": "newData.isString() && newData.val() == auth.id"
