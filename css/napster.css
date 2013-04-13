@@ -201,6 +201,68 @@ footer a
 
 
 
+#footer.flash
+{
+	-webkit-animation-name				: flash;
+	-webkit-animation-duration			: 1.5s;
+	-webkit-animation-iteration-count	: 1;
+	-webkit-animation-timing-function	: ease-in-out;
+	-moz-animation-name					: flash;
+	-moz-animation-duration				: 1.5s;
+	-moz-animation-iteration-count		: 1;
+	-moz-animation-timing-function		: ease-in-out;
+	-ms-animation-name					: flash;
+	-ms-animation-duration				: 1.5s;
+	-ms-animation-iteration-count		: 1;
+	-ms-animation-timing-function		: ease-in-out;
+	-o-animation-name					: flash;
+	-o-animation-duration				: 1.5s;
+	-o-animation-iteration-count		: 1;
+	-o-animation-timing-function		: ease-in-out;
+	animation-name						: flash;
+	animation-duration					: 1.5s;
+	animation-iteration-count			: 1;
+	animation-timing-function			: ease-in-out;
+}
+
+@-webkit-keyframes flash
+{
+	50%
+	{
+		background-color				: rgba(75, 0, 120, 0.40);
+	}
+}
+@-moz-keyframes flash
+{
+	50%
+	{
+		background-color				: rgba(75, 0, 120, 0.40);
+	}
+}
+@-ms-keyframes flash
+{
+	50%
+	{
+		background-color				: rgba(75, 0, 120, 0.40);
+	}
+}
+@-o-keyframes flash
+{
+	50%
+	{
+		background-color				: rgba(75, 0, 120, 0.40);
+	}
+}
+@keyframes flash
+{
+	50%
+	{
+		background-color				: rgba(75, 0, 120, 0.40);
+	}
+}
+
+
+
 [hash-location]
 {
 	background-color	: #eee;
