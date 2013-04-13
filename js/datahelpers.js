@@ -132,7 +132,7 @@ self.syncGroup	= function (groupid, shouldStopSync) {
 
 	datastore.data.group[groupid]	= datastore.data.group[groupid] || {id: groupid, members: {}, messages: {}, name: ''};
 
-	var members		= datastore.group(groupid).members.limit(500);
+	var members		= datastore.group(groupid).members.limit(50);
 	var messages	= datastore.group(groupid).messages.limit(500);
 	var name		= datastore.group(groupid).name;
 
