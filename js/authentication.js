@@ -146,7 +146,12 @@ self.init	= function () {
 			goog.net.cookies.set(_useridKey, user.id, self.cookieAge);
 			goog.net.cookies.set(_usernameKey, user.email.split('@')[0], self.cookieAge);
 
-			document.location.reload(true);
+			if (document.location.hash.startsWith('#login')) {
+				document.location	= '/';
+			}
+			else {
+				document.location.reload(true);
+			}
 		}
 		else
 		{
