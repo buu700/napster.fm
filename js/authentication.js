@@ -267,7 +267,7 @@ self.notificationUsername	= function (username) {
 
 
 self.notifyError	= function (error) {
-	ui.notify(error.message.replace(/email/g, 'username'));
+	error && error.message && ui.notify(error.message.replace(/email/g, 'username'));
 };
 
 
