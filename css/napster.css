@@ -496,10 +496,13 @@ table tr:hover td.icon-remove
 	margin-bottom		: 0px;
 }
 
+.chatwindow, .chatwindow + div
+{
+	max-height			: 500px;
+}
 
 .chatwindow
 {
-	max-height			: 500px;
 	overflow-y			: auto;
 	padding-right		: 10px;
 }
