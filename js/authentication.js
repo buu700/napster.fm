@@ -156,7 +156,7 @@ self.init	= function () {
 			goog.net.cookies.set(_useridKey, user.id, self.cookieAge);
 			goog.net.cookies.set(_usernameKey, user.email.split('@')[0], self.cookieAge);
 
-			document.location.href	= '/';
+			document.location.reload(true);
 		}
 		/*
 		else

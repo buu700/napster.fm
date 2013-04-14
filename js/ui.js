@@ -114,6 +114,12 @@ var notify;
 
 /**
 * @function
+* @property {void} Switches notReady loading screen from #home to #about
+*/
+var notReadyAbout;
+
+/**
+* @function
 * @property {void} Runs after update
 */
 var postUpdate;
@@ -217,6 +223,10 @@ self.loginUsername	= function () {
 
 self.notify	= function (message) {
 	self.notifier.log(message);
+};
+
+self.notReadyAbout	= function () {
+	goog.dom.classes.add($('[hash-location="#home"]')[0], 'notready-about');
 };
 
 self.scrollToBottom	= function () {

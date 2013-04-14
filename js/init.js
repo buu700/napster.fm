@@ -19,6 +19,13 @@ goog.provide('napster.init');
 
 goog.require('napster.exports');
 
+/* NotReady loading screen handling */
+if (window.location.hash.startsWith('#about')) {
+	ui.notReadyAbout();
+}
+
+
+/* Init application code */
 controllers.init();
 authentication.init();
 datastore.init();
