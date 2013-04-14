@@ -251,35 +251,35 @@ footer a
 {
 	50%
 	{
-		background-color				: rgba(75, 0, 120, 0.30);
+		background-color				: rgba(75, 0, 120, 0.40);
 	}
 }
 @-moz-keyframes flash
 {
 	50%
 	{
-		background-color				: rgba(75, 0, 120, 0.30);
+		background-color				: rgba(75, 0, 120, 0.40);
 	}
 }
 @-ms-keyframes flash
 {
 	50%
 	{
-		background-color				: rgba(75, 0, 120, 0.30);
+		background-color				: rgba(75, 0, 120, 0.40);
 	}
 }
 @-o-keyframes flash
 {
 	50%
 	{
-		background-color				: rgba(75, 0, 120, 0.30);
+		background-color				: rgba(75, 0, 120, 0.40);
 	}
 }
 @keyframes flash
 {
 	50%
 	{
-		background-color				: rgba(75, 0, 120, 0.30);
+		background-color				: rgba(75, 0, 120, 0.40);
 	}
 }
 
