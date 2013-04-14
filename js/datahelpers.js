@@ -155,7 +155,7 @@ self.syncGroup	= function (groupid, shouldStopSync) {
 			});
 
 			o[k].created	= new Date(o[k].created).toLocaleString();
-			o[k].text		= o[k].text.compact().truncate(1000);
+			o[k].text		= o[k].text.compact().truncate(1000, undefined, undefined, '... [message truncated]');
 		}));
 
 		eventHandlers.name	= name.on('value', self.onValue(datastore.data.group[groupid], 'name'));
