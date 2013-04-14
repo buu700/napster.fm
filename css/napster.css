@@ -413,7 +413,7 @@ table th
 {
 	cursor 				: pointer;
 }
-table [ng-repeat] [ng-click]
+table [ng-repeat] [ng-click], table [ng-repeat] [ng-href]
 {
 	height				: 22px;
 	width				: 100%;

@@ -129,16 +129,26 @@ self.notifier	= humane.create({timeout: 2500});
 
 self.init	= function () {
 	window.onhashchange	= function () {
+		var hashArgs	= window.location.hash.split('/');
+		var location	= hashArgs[0];
+		var trackid		= hashArgs[1];
+
 		var setActive	= function (selector, attribute, target) {
-			var $elements	= $(selector);
-			for (var i = 0 ; i < $elements.length ; ++i) {
-				var $elem	= $elements[i];
-				goog.dom.classes.enable(target ? target($elem) : $elem, 'active', $elem.getAttribute(attribute) == window.location.hash);
-			}
+			$(selector).each(function ($elem) {
+				goog.dom.classes.enable(target ? target($elem) : $elem, 'active', $elem.getAttribute(attribute) == location);
+			});
 		};
 
 		setActive('#navbar a', 'href', function ($elem) { return $elem.parentNode; });
 		setActive('[hash-location]', 'hash-location');
+
+		if (trackid) {
+			var wait		= new goog.async.ConditionalDelay(function () { return stream.isReady && !stream.loadTrackLock; });
+			wait.onSuccess	= function () {
+				stream.loadTrack(trackid, undefined, true);
+			};
+			wait.start(0, 5000);
+		}
 	};
 
 	if (window.location.hash) {
@@ -239,6 +249,14 @@ self.update	= function () {
 		var following		= datastore.data.user.current.following[1];
 		$following.value	= (!following || following == authentication.username) ? '' : following;
 	}
+
+	/* Enable href in non-a and non-link elements */
+	$('[href]:not(a):not(link):not(.href-enabled)').each(function ($elem) {
+		goog.dom.classes.add($elem, 'href-enabled');
+		goog.events.listen($elem, goog.events.EventType.CLICK, function(e) {
+			document.location	= this.getAttribute('href');
+		});
+	});
 
 	self.postUpdate && self.postUpdate();
 };

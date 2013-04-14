@@ -169,7 +169,7 @@
 				</thead>
 				<tbody>
 					<tr ng-repeat='track in datastore.data.user.current.library' ng-class='track.nowPlayingClass'>
-						<td ng-click='stream.loadTrack(track.id, undefined, true)'></td>
+						<td ng-href='#library/{{track.id}}'></td>
 						<td>{{track.title}}</td>
 						<td>{{track.artist}}</td>
 						<td>{{track.genre}}</td>
@@ -252,7 +252,7 @@
 						</thead>
 						<tbody>
 							<tr ng-repeat='track in datastore.data.activeHotlistMember.library' ng-class='track.nowPlayingClass'>
-								<td ng-click='library.addTrack(track.id); stream.loadTrack(track.id, undefined, true);'></td>
+								<td ng-click='library.addTrack(track.id)' ng-href='#hotlist/{{track.id}}'></td>
 								<td>{{track.title}}</td>
 								<td>{{track.artist}}</td>
 								<td>{{track.genre}}</td>
@@ -370,7 +370,7 @@
 				</thead>
 				<tbody>
 					<tr ng-repeat='track in datastore.data.lastPlayed.array' ng-class='track.nowPlayingClass'>
-						<td ng-click='library.addTrack(track.id); stream.loadTrack(track.id, undefined, true);'></td>
+						<td ng-click='library.addTrack(track.id)' ng-href='#discovery/{{track.id}}'></td>
 						<td>{{track.title}}</td>
 						<td>{{track.artist}}</td>
 						<td>{{track.genre}}</td>

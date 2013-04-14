@@ -29,7 +29,11 @@ var $	= function (selector) {
 		elements[key]	= elements[0] && elements[0][key];
 	}
 
-	elements.each	= function (f) { Array.prototype.clone.call(elements).forEach(f); };
+	elements.each	= function (f) {
+		if (!isEmpty) {
+			Array.prototype.clone.call(elements).forEach(f);
+		}
+	};
 
 	return elements;
 };
