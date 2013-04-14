@@ -139,6 +139,13 @@ var usernameToEmail;
 */
 var notificationUsername;
 
+/**
+* @function
+* @property {string} Notifies user of authentication failure
+* @param {FirebaseAuthError} error
+*/
+var notifyError;
+
 
 
 
@@ -158,12 +165,10 @@ self.init	= function () {
 
 			document.location.reload(true);
 		}
-		/*
 		else
 		{
-			callback(error);
+			self.notifyError(error);
 		}
-		*/
 	});
 
 
@@ -217,7 +222,8 @@ self.createUser	= function (username, password, callback) {
 		}
 		else
 		{
-			callback(error);
+			self.notifyError(error);
+			callback && callback(error);
 		}
 	});
 };
@@ -230,7 +236,8 @@ self.changePassword	= function (username, oldPassword, newPassword, callback) {
 		}
 		else
 		{
-			callback(error);
+			self.notifyError(error);
+			callback && callback(error);
 		}
 	});
 };
@@ -251,6 +258,11 @@ self.usernameToEmail	= function (username) {
 
 self.notificationUsername	= function (username) {
 	return !username || username == authentication.username ? 'yourself' : username == 'yourself' ? 'a smartass' : username;
+};
+
+
+self.notifyError	= function (error) {
+	ui.notify(error.message.replace(/email/g, 'username'));
 };
 
 
