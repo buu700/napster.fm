@@ -184,12 +184,8 @@ self.login	= function (username, password, callback) {
 
 
 self.logout	= function () {
+	goog.net.cookies.clear();
 	datastore.root.unauth();
-
-	goog.net.cookies.remove(_tokenKey);
-	goog.net.cookies.remove(_useridKey);
-	goog.net.cookies.remove(_usernameKey);
-
 	document.location.reload(true);
 };
 
