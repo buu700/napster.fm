@@ -204,11 +204,11 @@ self.notify	= function (message) {
 
 self.scrollToBottom	= function () {
 	window.scrollTo(0, document.body.scrollHeight);
-	
+
 	var $footer	= $('#footer')[0];
 	var flash	= 'flash';
 	goog.dom.classes.remove($footer, flash);
-	window.setTimeout(function () { goog.dom.classes.add($footer, flash); }, 100);
+	window.setTimeout(function () { goog.dom.classes.add($footer, flash); }, 10);
 };
 
 self.update	= function () {
