@@ -29,13 +29,18 @@ chat.init();
 /* Fallback in case YouTube/Firebase fails to load something */
 window.setTimeout(function () {
 	if (!stream.isReady) {
+		/* Handles possible edge case of bad state */
+		if (goog.net.cookies.get(slowCookie) == slowCookieOn) {
+			goog.net.cookies.clear();
+		}
+
 		goog.net.cookies.set(slowCookie, slowCookieOn);
 		document.location.reload(true);
 	}
 	else {
 		goog.net.cookies.remove(slowCookie);
 	}
-}, 20000);
+}, 15000);
 
 
 /* Google Analytics */
