@@ -102,6 +102,22 @@ footer a
 	left				: 0px;
 	z-index				: 100;
 }
+
+#page-loading-slow
+{
+	display				: none;
+}
+#page-loading-spinner:not(.ready) ~ #page-loading-slow.active
+{
+	display				: block;
+	position			: fixed;
+	z-index				: 9999;
+	top					: 40px;
+	left				: 20px;
+	font-size			: 20px;
+	font-weight			: bold;
+}
+
 #page-loading-spinner:not(.ready)
 {
 	background			: url('/apple-touch-icon.png') no-repeat;

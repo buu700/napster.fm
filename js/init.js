@@ -1,3 +1,16 @@
+/* Slow load constants */
+var slowCookie		= 'napsterfm-slow';
+var slowCookieOn	= 'on';
+var slowClass		= 'active';
+var slowSelector	= '#page-loading-slow'
+
+
+/* Slow load handling */
+if (goog.net.cookies.get(slowCookie) == slowCookieOn) {
+	goog.dom.classes.add($(slowSelector)[0], slowClass);
+}
+
+
 /* NotReady loading screen handling */
 if (window.location.hash.startsWith('#about')) {
 	ui.notReadyAbout();
@@ -16,9 +29,13 @@ chat.init();
 /* Fallback in case YouTube/Firebase fails to load something */
 window.setTimeout(function () {
 	if (!stream.isReady) {
+		goog.net.cookies.set(slowCookie, slowCookieOn);
 		document.location.reload(true);
 	}
-}, 60000);
+	else {
+		goog.net.cookies.remove(slowCookie);
+	}
+}, 20000);
 
 
 /* Google Analytics */
