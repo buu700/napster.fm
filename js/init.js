@@ -1,3 +1,10 @@
+/* NotReady loading screen handling */
+if (window.location.hash.startsWith('#about')) {
+	ui.notReadyAbout();
+}
+
+
+/* Init application code */
 controllers.init();
 authentication.init();
 datastore.init();

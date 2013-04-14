@@ -59,7 +59,8 @@ body
 }
 
 
-[hash-location='#home']:not(.ready)
+[hash-location='#home']:not(.ready):not(.notready-about),
+[hash-location='#home']:not(.ready).notready-about ~ [hash-location='#about']
 {
 	z-index				: 1500;
 	position			: fixed;
