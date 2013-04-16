@@ -562,10 +562,12 @@ table tr:hover td.icon-remove
 	}
 }
 
-.navbar a
+.navbar a,
+#user-greeting
 {
 	padding-top			: 5px !important;
 	padding-bottom		: 5px !important;
+	display				: block;
 }
 
 .navbar form *
