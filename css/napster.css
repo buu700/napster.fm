@@ -636,6 +636,13 @@ table tr:hover td.icon-remove
 	width				: auto;
 }
 
+/***** Override Bootstrap label alignment on Search page *****/
+
+label[for="search-title"], label[for="search-artist"]
+{
+	line-height			: 30px;
+}
+
 
 
 
