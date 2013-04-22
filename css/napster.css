@@ -636,13 +636,6 @@ table tr:hover td.icon-remove
 	width				: auto;
 }
 
-/***** Override Bootstrap label alignment *****/
-
-label
-{
-	line-height			: 30px;
-}
-
 
 
 
