@@ -47,6 +47,10 @@ js/closure-library/closure/bin/build/closurebuilder.py --root=js $namespaceArgs 
 # mv js/napster.js.tmp js/napster.js
 
 
+# Generates HTML snapshots and sitemaps for Google crawling; see: https://developers.google.com/webmasters/ajax-crawling/docs/getting-started
+./crawl.py
+
+
 git add .
 chmod 777 -R .
 git commit -a -m 'deployment'
