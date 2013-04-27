@@ -150,6 +150,13 @@ self.init	= function () {
 		var location	= hashArgs[0];
 		var trackid		= hashArgs[1];
 
+		/* Google AJAX crawling handler */
+		if (location.startsWith('#!')) {
+			window.location.hash	= '#' + window.location.hash.substring(2);
+			return;
+		}
+
+
 		var setActive	= function (selector, attribute, target) {
 			$(selector).each(function ($elem) {
 				goog.dom.classes.enable(target ? target($elem) : $elem, 'active', $elem.getAttribute(attribute) == location);
