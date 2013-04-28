@@ -19,8 +19,6 @@ f			= open('snapshot.html', 'r')
 snapshot	= f.read().decode(codec)
 f.close()
 
-genericSnapshot	= snapshot.replace(u'TITLE', u'Genocidée').replace(u'ARTIST', u'Zed Sin').encode(codec)
-
 sitemap		= open('sitemap.xml', 'w')
 sitemap.write(u'<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">')
 sitemap.write(u'<url><loc>' + url + u'</loc><priority>1.0</priority></url>')
@@ -28,7 +26,7 @@ sitemap.write(u'<url><loc>' + url + u'</loc><priority>1.0</priority></url>')
 
 for section in sections:
 	f		= open(urllib.quote_plus(prefix + section), 'w')
-	f.write(genericSnapshot)
+	f.write(snapshot.replace(u'"TITLE" by ARTIST', section[0].upper() + section[1:]).encode(codec))
 	f.close()
 	
 	sitemap.write(u'<url><loc>' + url + hashbang + section + u'</loc><priority>0.8</priority></url>')
