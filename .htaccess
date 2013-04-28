@@ -1,0 +1,4 @@
+RewriteEngine on
+
+RewriteCond %{THE_REQUEST} [\?]+
+RewriteRule ^/?$ /\%3F%{QUERY_STRING} [QSA]
