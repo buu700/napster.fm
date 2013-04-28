@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import urllib
 import urllib2
 import json
 
@@ -26,7 +27,7 @@ sitemap.write(u'<url><loc>' + url + u'</loc><priority>1.0</priority></url>')
 
 
 for section in sections:
-	f		= open(prefix + section, 'w')
+	f		= open(urllib.quote_plus(prefix + section), 'w')
 	f.write(genericSnapshot)
 	f.close()
 	
@@ -35,11 +36,11 @@ for section in sections:
 
 for k in lastPlayed:
 	track	= tracks[k]
-	path	= home + u'%2F' + k
-	f		= open(prefix + path, 'w')
+	path	= home + u'/' + k
+	f		= open(urllib.quote_plus(prefix + path), 'w')
 	f.write(snapshot.replace(u'TITLE', track['title']).replace(u'ARTIST', track['artist']).encode(codec))
 	f.close()
-	
+
 	sitemap.write(u'<url><loc>' + url + hashbang + path + u'</loc><priority>0.5</priority></url>')
 
 
