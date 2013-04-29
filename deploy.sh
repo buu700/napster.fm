@@ -18,7 +18,7 @@ git pull . gh-pages
 git push
 rm -rf *
 cd ..
-cp -rfa `ls --ignore build` build/
+cp -rfa `ls -a --ignore . --ignore .. --ignore .git --ignore build` build/
 cd build
 
 
