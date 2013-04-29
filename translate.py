@@ -16,7 +16,7 @@ def translate(text, language):
 			return re.sub(u'peer.fm', u'Peer.fm', translation, flags = re.IGNORECASE)
 		except Exception, e:
 			f	= open('translate.log', 'w+')
-			f.write(e)
+			f.write(str(e))
 			f.close()
 			time.sleep(60)
 
@@ -98,5 +98,5 @@ for language in languages:
 		f.close()
 	except Exception, e:
 		f	= open('translate.log', 'w+')
-		f.write(e)
+		f.write(str(e))
 		f.close()
