@@ -9,16 +9,19 @@ from bs4 import BeautifulSoup
 # https://github.com/openlabs/Microsoft-Translator-Python-API
 # Also, yes, my API key is public
 from microsofttranslator import Translator
+translator	= Translator('peerfm', 'bJHtNJK4zTLAGtaoyxnO5wI1N3XHN8Fygz2pEn11WTQ=')
 def translate(text, language):
+	global translator
 	for i in range(3):
 		try:
-			translation	= Translator('peerfm', 'bJHtNJK4zTLAGtaoyxnO5wI1N3XHN8Fygz2pEn11WTQ=').translate(text, language)
+			translation	= translator.translate(text, language)
 			return re.sub(u'peer.fm', u'Peer.fm', translation, flags = re.IGNORECASE)
 		except Exception, e:
 			f	= open('translate.log', 'w+')
-			f.write(e)
+			f.write(str(e))
 			f.close()
 			time.sleep(60)
+			translator	= Translator('peerfm', 'bJHtNJK4zTLAGtaoyxnO5wI1N3XHN8Fygz2pEn11WTQ=')
 
 def swapStringWithChild(elem, s, child):
 	newElem	= BeautifulSoup(unicode(elem).replace(unicode(s), unicode(child))).find_all()[2]
@@ -98,5 +101,5 @@ for language in languages:
 		f.close()
 	except Exception, e:
 		f	= open('translate.log', 'w+')
-		f.write(e)
+		f.write(str(e))
 		f.close()
