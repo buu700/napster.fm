@@ -17,11 +17,11 @@ def translate(text, language):
 			translation	= translator.translate(text, language)
 			return re.sub(u'peer.fm', u'Peer.fm', translation, flags = re.IGNORECASE)
 		except Exception, e:
-			translator	= Translator('peerfm', 'bJHtNJK4zTLAGtaoyxnO5wI1N3XHN8Fygz2pEn11WTQ=')
 			f	= open('translate.log', 'w+')
 			f.write(str(e))
 			f.close()
 			time.sleep(60)
+			translator	= Translator('peerfm', 'bJHtNJK4zTLAGtaoyxnO5wI1N3XHN8Fygz2pEn11WTQ=')
 
 def swapStringWithChild(elem, s, child):
 	newElem	= BeautifulSoup(unicode(elem).replace(unicode(s), unicode(child))).find_all()[2]
