@@ -15,7 +15,12 @@ def translate(text, language):
 	for i in range(3):
 		try:
 			translation	= translator.translate(text, language)
+			
+			if 'ArgumentException' in translation:
+				raise Exception(translation)
+			
 			return re.sub(u'peer.fm', u'Peer.fm', translation, flags = re.IGNORECASE)
+			
 		except Exception, e:
 			f	= open('translate.log', 'w+')
 			f.write(str(e))
