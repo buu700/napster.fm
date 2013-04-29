@@ -189,7 +189,7 @@ self.init	= function () {
 		}
 	}, 500);
 
-	window.setTimeout(function () { self.slider.decorate($('#player .slider')[0]); }, 5000);
+	self.slider.decorate($('#player .slider')[0]);
 
 
 
