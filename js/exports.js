@@ -15,3 +15,36 @@ goog.require('goog.object');
 goog.require('goog.ui.Component');
 goog.require('goog.ui.Slider');
 goog.require('goog.ui.TableSorter');
+goog.require('napster.authentication');
+/** @expose */
+authentication;
+goog.require('napster.chat');
+/** @expose */
+chat;
+goog.require('napster.closurequery');
+/** @expose */
+$;
+goog.require('napster.controllers');
+/** @expose */
+controllers;
+goog.require('napster.datahelpers');
+/** @expose */
+datahelpers;
+goog.require('napster.datastore');
+/** @expose */
+datastore;
+goog.require('napster.debug');
+/** @expose */
+debug;
+goog.require('napster.library');
+/** @expose */
+library;
+goog.require('napster.services');
+/** @expose */
+services;
+goog.require('napster.stream');
+/** @expose */
+stream;
+goog.require('napster.ui');
+/** @expose */
+ui;
