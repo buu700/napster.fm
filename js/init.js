@@ -90,3 +90,7 @@ if (window.location.pathname == '/' && window.languageCodes && language) {
 		}
 	});
 }
+
+if (!['/', '/en.html', '/en', '/index.html', '/index'].find(window.location.pathname)) {
+	window.isTranslated	= true;
+}

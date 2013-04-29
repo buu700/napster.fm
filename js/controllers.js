@@ -52,6 +52,7 @@ angular.module('Napster', []).controller('Controller', ['$scope', function ($sco
 	$scope.services			= services;
 	$scope.stream			= stream;
 	$scope.ui				= ui;
+	$scope.window			= window;
 	
 	
 	var user	= datastore.data.user.current;

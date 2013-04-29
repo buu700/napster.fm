@@ -52,9 +52,10 @@ js/closure-library/closure/bin/build/closurebuilder.py --root=js $namespaceArgs 
 
 
 # Generates translations
-mv js/napster.js js/napster.temp.js
-echo -e "window.languageCodes = `cat languages.json`;\n\n`cat js/napster.temp.js`" > js/napster.js
-rm js/napster.temp.js
+mv js/napster.js js/napster.js.tmp
+echo -e "window.languageCodes = `cat languages.json`;\n\n" > js/napster.js
+cat js/napster.js.tmp >> js/napster.js
+rm js/napster.js.tmp
 cp index.html en.html
 ./translate.py
 
