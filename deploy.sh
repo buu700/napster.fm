@@ -18,7 +18,7 @@ git pull . gh-pages
 git push
 rm -rf *
 cd ..
-cp -rfa `ls --ignore build` build/
+cp -rfa `ls -a --ignore . --ignore .. --ignore .git --ignore build` build/
 cd build
 
 
@@ -49,6 +49,14 @@ js/closure-library/closure/bin/build/closurebuilder.py --root=js $namespaceArgs 
 
 # Generates HTML snapshots and sitemaps for Google crawling; see: https://developers.google.com/webmasters/ajax-crawling/docs/getting-started
 ./crawl.py
+
+
+# Generates translations
+mv js/napster.js js/napster.temp.js
+echo -e "window.languageCodes = `cat languages.json`;\n\n`cat js/napster.temp.js`" > js/napster.js
+rm js/napster.temp.js
+cp index.html en.html
+./translate.py
 
 
 git add .
