@@ -10,12 +10,15 @@ from bs4 import BeautifulSoup
 # Also, yes, my API key is public
 from microsofttranslator import Translator
 def translate(text, language):
-	while True:
+	for i in range(3):
 		try:
 			translation	= Translator('peerfm', 'bJHtNJK4zTLAGtaoyxnO5wI1N3XHN8Fygz2pEn11WTQ=').translate(text, language)
 			return re.sub(u'peer.fm', u'Peer.fm', translation, flags = re.IGNORECASE)
-		except:
-			time.sleep(10)
+		except Exception, e:
+			f	= open('translate.log', 'w+')
+			f.write(e)
+			f.close()
+			time.sleep(60)
 
 def swapStringWithChild(elem, s, child):
 	newElem	= BeautifulSoup(unicode(elem).replace(unicode(s), unicode(child))).find_all()[2]
