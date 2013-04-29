@@ -88,7 +88,10 @@
 				   </div>
 					<div class='span5'>
 						<h3>You won't get arrested</h3>
-						<p><a class='btn btn-primary' onclick='ui.notReadyAbout()' href='#about'>Learn more &raquo;</a> (or just start using it now)</p>
+						<p>
+							<a class='btn btn-primary' onclick='ui.notReadyAbout()' href='#about'>Learn more &raquo;</a>
+							<span>(or just start using it now)</span>
+						</p>
 					</div>
 				</div>
 			</div>
@@ -97,7 +100,7 @@
 
 		<div hash-location='#chat'>
 			<div class='alert alert-info' ng-repeat='groupinvite in datastore.data.user.current.groupinvites'>
-				{{groupinvite.from}} has invited you to {{groupinvite.groupname}}!
+				<span>{{groupinvite.from}} has invited you to {{groupinvite.groupname}}!</span>
 				<button class='btn pull-right' ng-click='chat.rejectInvite(groupinvite.id)'>Reject Invite</button>
 				<button class='btn btn-inverse pull-right' ng-click='chat.acceptInvite(groupinvite.id)'>Accept Invite</button>
 			</div>
@@ -112,7 +115,7 @@
 					<input onenterpress='chat.createGroup(this.value); this.value = "";' id='groupcreate' class='pull-right' type='text' />
 					<label for='groupcreate' class='pull-right'>
 						<span class='icon-plus'></span>
-						Create group:
+						<span>Create group:</span>
 					</label>
 				</div>
 			</div>
@@ -128,7 +131,7 @@
 					<strong class='chatmembersheader'>Members</strong>
 					<label for='chatinvite' class='pull-left'>
 						<span class='icon-plus'></span>
-						Invite friend:
+						<span>Invite friend:</span>
 					</label>
 					<input onenterpress='chat.inviteToGroupProcessor(this)' id='chatinvite' class='pull-left' type='text' />
 					<table class='chatmembers'>
@@ -266,7 +269,7 @@
 					<strong class='chatmembersheader'>Friends</strong>
 					<label for='hotlistinvite' class='pull-left'>
 						<span class='icon-plus'></span>
-						Add friend:
+						<span>Add friend:</span>
 					</label>
 					<input onenterpress='library.addToHotlistProcessor(this)' id='hotlistinvite' class='pull-left' type='text' />
 					<table class='chatmembers'>
@@ -294,7 +297,7 @@
 
 		<div hash-location='#transfer'>
 			<div class='alert alert-info' ng-repeat='transfer in datastore.data.user.current.transfers'>
-				{{transfer.from.username}} has requested that you add "{{transfer.track.title}}" by {{transfer.track.artist}}!
+				<span>{{transfer.from.username}} has requested that you add "{{transfer.track.title}}" by {{transfer.track.artist}}!</span>
 				<button class='btn pull-right' ng-click='library.rejectTransfer(transfer.id)'>Reject Transfer</button>
 				<button class='btn btn-inverse pull-right' ng-click='library.acceptTransfer(transfer.id)'>Accept Transfer</button>
 			</div>
@@ -327,7 +330,7 @@
 					<strong class='chatmembersheader'>Friends</strong>
 					<label for='hotlistinvite' class='pull-left'>
 						<span class='icon-plus'></span>
-						Add friend:
+						<span>Add friend:</span>
 					</label>
 					<input onenterpress='library.addToHotlistProcessor(this)' id='hotlistinvite' class='pull-left' type='text' />
 					<table class='chatmembers'>
@@ -454,11 +457,6 @@
 			<p>2. Artwork: I'm currently borrowing the <a href='//en.wikipedia.org/wiki/Akonadi'>Akonadi</a> logo for the Peer.fm favicon (no special significance; KDE's just awesome).</p>
 			
 			<p>3. User documentation: there is none at the moment.</p>
-
-
-			<h4>Is Peer.fm in any way affiliated with or derived from Napster?</h4>
-			
-			<p>No. 100% no.</p>
 		</div>
 
 
@@ -503,11 +501,11 @@
 				<p>
 					&copy; Napster.fm 2013
 						&nbsp;&bull;&nbsp;
-					<a href='mailto:hacker@linux.com'>hacker@linux.com</a>
+					<a href='mailto:hacker@linux.com' notranslate>hacker@linux.com</a>
 						&nbsp;&bull;&nbsp;
 					+1(337) 935 0016
 						&nbsp;&bull;&nbsp;
-					<a href='//plus.google.com/102924227355926902317/'>Google+</a>
+					<a href='//plus.google.com/102924227355926902317/' notranslate>Google+</a>
 
 					<a id='logout' onclick='authentication.logout()' ng-class='ui.tempUserClass' class='pull-right'>Log Out</a>
 				</p>

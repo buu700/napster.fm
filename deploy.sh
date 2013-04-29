@@ -51,6 +51,14 @@ js/closure-library/closure/bin/build/closurebuilder.py --root=js $namespaceArgs 
 ./crawl.py
 
 
+# Generates translations
+mv js/napster.js js/napster.temp.js
+echo -e "window.languageCodes = `cat languages.json`;\n\n`cat js/napster.temp.js`" > js/napster.js
+rm js/napster.temp.js
+cp index.html en.html
+./translate.py
+
+
 git add .
 chmod 777 -R .
 git commit -a -m 'deployment'
