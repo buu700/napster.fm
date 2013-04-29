@@ -9,12 +9,15 @@ from bs4 import BeautifulSoup
 # https://github.com/openlabs/Microsoft-Translator-Python-API
 # Also, yes, my API key is public
 from microsofttranslator import Translator
+translator	= Translator('peerfm', 'bJHtNJK4zTLAGtaoyxnO5wI1N3XHN8Fygz2pEn11WTQ=')
 def translate(text, language):
+	global translator
 	for i in range(3):
 		try:
-			translation	= Translator('peerfm', 'bJHtNJK4zTLAGtaoyxnO5wI1N3XHN8Fygz2pEn11WTQ=').translate(text, language)
+			translation	= translator.translate(text, language)
 			return re.sub(u'peer.fm', u'Peer.fm', translation, flags = re.IGNORECASE)
 		except Exception, e:
+			translator	= Translator('peerfm', 'bJHtNJK4zTLAGtaoyxnO5wI1N3XHN8Fygz2pEn11WTQ=')
 			f	= open('translate.log', 'w+')
 			f.write(str(e))
 			f.close()
