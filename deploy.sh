@@ -58,6 +58,7 @@ cat js/napster.js.tmp >> js/napster.js
 rm js/napster.js.tmp
 cp index.html en.html
 ./translate.py
+ls *.html | xargs -I% echo % | perl -pe 's/(.*)\.html$/\1/' | xargs -I% ln -s %.html %
 
 
 git add .

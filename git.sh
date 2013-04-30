@@ -6,6 +6,6 @@ while read comment ; do
 	git add .
 	git commit -a -m "${comment}"
 	git push
-	echo -e "Line count: `ls schema.json *.html css/*.css js/*.js | grep -v externs.js | xargs cat | wc -l`\n\n\n"
+	echo -e "Line count: `ls schema.json *.html css/*.css js/*.js *.py *.sh | grep -v externs.js | xargs cat | wc -l`\n\n\n"
 	# ./deploy.sh
 done
