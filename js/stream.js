@@ -243,12 +243,17 @@ self.init	= function () {
 
 	window.onYouTubeIframeAPIReady	= function () {
 		self.player	= new YT.Player($('#stream')[0], {
-			height: '390',
-			width: '640',
+			height: '200',
+			width: '300',
+			playerVars: {
+				controls: 0,
+				disablekb: 1,
+				rel: 0
+			},
 			events: {
-				'onReady': onYouTubePlayerReady,
-				'onStateChange': onYouTubePlayerStateChange,
-				'onError': onYouTubePlayerError
+				onReady: onYouTubePlayerReady,
+				onStateChange: onYouTubePlayerStateChange,
+				onError: onYouTubePlayerError
 			}
 		});
 	};
