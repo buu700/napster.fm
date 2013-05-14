@@ -61,13 +61,13 @@
 		<div hash-location='#home' ng-class='{ready: stream.isReady}'>
 			<div class='hero-unit'>
 				<h1><img src='/logo.hero.png' /></h1>
-				<h2>Napster reimagined for the modern Web</h2>
+				<h2>Peer-to-peer streaming for the modern Web</h2>
 
 				<br />
 
 				<div class='row-fluid'>
 					<div class='span12'>
-						<h4>A few features that make Peer.fm (formerly Napster.fm) better than Napster OG:</h4>
+						<h4>A few features that make <strike>Napster.fm</strike> Peer.fm better than Napster OG:</h4>
 					</div>
 				</div>
 				<div class='row-fluid'>
@@ -514,11 +514,14 @@
 
 					<a id='logout' onclick='authentication.logout()' ng-class='ui.tempUserClass' class='pull-right'>Log Out</a>
 				</p>
+				<p>
+					<div id='stream'></div>
+					<div id='videoCover'></div>
+				</p>
 			</footer>
 		</div>
 
 
-		<div id='stream'></div>
 		<div id='page-loading-overlay' ng-class='ui.readyClass'></div>
 		<div id='page-loading-spinner' ng-class='ui.readyClass'></div>
 		<div id='page-loading-slow'>
