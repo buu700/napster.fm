@@ -1,8 +1,0 @@
-* Move every state variable appended to the window object to an existing class or to a new one
-
-* Timeouts are gross; it's possible that I'm bumping into a hard limit of YouTube's API, but the timeouts in stream.loadTrack and stream.sync absolutely need to go if at all possible
-
-* Overall control flow needs to be refactored and simplified
-
-* There's a fair amount of magic going on under the hood and very little commenting; comment everything
-
