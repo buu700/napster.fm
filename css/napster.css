@@ -120,7 +120,7 @@ footer a
 
 #page-loading-spinner:not(.ready)
 {
-	background			: url('/apple-touch-icon.png') no-repeat;
+	background			: url('/img/apple-touch-icon.png') no-repeat;
 	opacity				: 0.80;
 	position			: fixed;
 	top					: 47.5%;
