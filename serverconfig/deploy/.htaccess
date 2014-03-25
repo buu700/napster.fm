@@ -1,0 +1,4 @@
+AuthName "Fuck Maine"
+AuthType Basic
+AuthUserFile /etc/apache2/htpasswd
+Require valid-user
