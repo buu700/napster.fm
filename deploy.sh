@@ -26,11 +26,11 @@ cd build
 # ./appcache.sh > napster.appcache
 
 
-ls *.html | while read file ; do cat "${file}" | tr '\n' ' ' | sed 's/<!-- COMPILE START -->.*<!-- COMPILE END -->/\<script src="js\/napster.js"\>\<\/script\>/' > "${file}.tmp" ; java -jar htmlcompressor.jar -o "${file}" "${file}.tmp" ; rm "${file}.tmp" ; done
+ls *.html | while read file ; do cat "${file}" | tr '\n' ' ' | sed 's/<!-- COMPILE START -->.*<!-- COMPILE END -->/\<script src="js\/napster.js"\>\<\/script\>/' > "${file}.tmp" ; java -jar compilers/htmlcompressor.jar -o "${file}" "${file}.tmp" ; rm "${file}.tmp" ; done
 
 
 cd css
-ls *.css | while read file ; do java -jar ../yuicompressor.jar --type css -o "${file}.tmp" "${file}" ; mv "${file}.tmp" "${file}" ; done
+ls *.css | while read file ; do java -jar ../compilers/yuicompressor.jar --type css -o "${file}.tmp" "${file}" ; mv "${file}.tmp" "${file}" ; done
 cd ..
 
 
@@ -41,9 +41,9 @@ find . -name *.js | grep -v require.js | grep -v closure | grep -v externs | whi
 
 ./export.sh "${namespaces[@]}"
 
-js/closure-library/closure/bin/build/closurebuilder.py --root=js $namespaceArgs -n napster.exports -n napster.init --output_mode=compiled --compiler_jar=compiler.jar --compiler_flags="--compilation_level=SIMPLE_OPTIMIZATIONS" --compiler_flags="--externs=js/externs.js" --output_file=js/napster.js
+js/closure-library/closure/bin/build/closurebuilder.py --root=js $namespaceArgs -n napster.exports -n napster.init --output_mode=compiled --compiler_jar=compilers/compiler.jar --compiler_flags="--compilation_level=SIMPLE_OPTIMIZATIONS" --compiler_flags="--externs=js/externs.js" --output_file=js/napster.js
 
-# java -jar yuicompressor.jar --nomunge --type js -o js/napster.js.tmp js/napster.js
+# java -jar compilers/yuicompressor.jar --nomunge --type js -o js/napster.js.tmp js/napster.js
 # mv js/napster.js.tmp js/napster.js
 
 
